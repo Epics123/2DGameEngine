@@ -16,11 +16,11 @@ public:
 
 
 	//Math operators
-	Vector3D& operator += (const Vector3D& rhs);
-	Vector3D& operator -= (const Vector3D& rhs);
-	Vector3D& operator *= (float mult);
-	Vector3D& operator /= (float div);
-	Vector3D& operator = (const Vector3D& rhs);
+	Vector3D& operator+= (const Vector3D& rhs);
+	Vector3D& operator-= (const Vector3D& rhs);
+	Vector3D& operator*= (float mult);
+	Vector3D& operator/= (float div);
+	Vector3D& operator= (const Vector3D& rhs);
 
 	bool operator== (const Vector3D& rhs) const;
 	bool operator!= (const Vector3D& rhs) const;
@@ -48,7 +48,7 @@ public:
 	Vector3D getNormalizedVector() const; // returns a vector of length 1 but leaves the original vector unchanged
 	float dotProduct(const Vector3D& other) const;
 	float dotProduct(const Vector3D& other, float theta) const;
-	Vector3D crossProduct(const Vector3D & other) const;
+	Vector3D crossProduct(const Vector3D& other) const;
 
 private:
 	float mX;

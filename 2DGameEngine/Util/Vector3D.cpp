@@ -154,7 +154,7 @@ Vector3D Vector3D::getNormalizedVector() const
 
 float Vector3D::dotProduct(const Vector3D& other) const
 {
-	return mX + other.mX + mY + other.mY + mZ + other.mZ;
+	return (mX * other.mX) + (mY * other.mY) + (mZ * other.mZ);
 }
 
 float Vector3D::dotProduct(const Vector3D& other, float theta) const
@@ -164,7 +164,14 @@ float Vector3D::dotProduct(const Vector3D& other, float theta) const
 
 Vector3D Vector3D::crossProduct(const Vector3D& other) const
 {
-	return Vector3D();
+	Vector3D crsProduct;
+
+	float x = (mY * other.getZ()) - (mZ * other.getY());
+	float y = (mZ * other.getX()) - (mX * other.getZ());
+	float z = (mX * other.getY()) - (mY * other.getX());
+
+	crsProduct = Vector3D(x, y, z);
+	return crsProduct;
 }
 
 std::ostream& operator<<(std::ostream& output, const Vector3D& vector)
