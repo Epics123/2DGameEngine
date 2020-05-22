@@ -11,12 +11,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Mayhem\Log.h" />
     <ClInclude Include="src\Mayhem.h" />
     <ClInclude Include="src\Mayhem\Application.h" />
     <ClInclude Include="src\Mayhem\Core.h" />
     <ClInclude Include="src\Mayhem\EntryPoint.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Mayhem\Log.cpp" />
     <ClCompile Include="src\Mayhem\Application.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -67,6 +69,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>MH_PLATFORM_WINDOWS;MH_BUILD_DLL;_WINDLL;MH_BUILD_DLL_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)Mayhem\vendor\spdlog\include;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -81,6 +84,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>MH_PLATFORM_WINDOWS;MH_BUILD_DLL;_WINDLL;MH_BUILD_DLLNDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)Mayhem\vendor\spdlog\include;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
