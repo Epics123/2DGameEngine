@@ -1,1 +1,4 @@
 
+[submodule "Mayhem/Mayhem/vendor/spdlog"]
+	path = Mayhem/Mayhem/vendor/spdlog
+	url = https://github.com/gabime/spdlog
