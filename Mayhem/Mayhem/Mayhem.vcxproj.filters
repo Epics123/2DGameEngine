@@ -4,6 +4,9 @@
     <Filter Include="Mayhem">
       <UniqueIdentifier>{C6A79BC2-B249-C698-9B04-DAEC87454DE9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Mayhem\Events">
+      <UniqueIdentifier>{EA187ADE-56D9-F514-1F14-3F928B933AF1}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Mayhem\Util">
       <UniqueIdentifier>{D38A5CFA-3F40-D5EF-C834-CFC634E9CBF3}</UniqueIdentifier>
     </Filter>
@@ -19,6 +22,9 @@
     <ClInclude Include="src\Mayhem\EntryPoint.h">
       <Filter>Mayhem</Filter>
     </ClInclude>
+    <ClInclude Include="src\Mayhem\Events\Event.h">
+      <Filter>Mayhem\Events</Filter>
+    </ClInclude>
     <ClInclude Include="src\Mayhem\Log.h">
       <Filter>Mayhem</Filter>
     </ClInclude>
@@ -31,7 +37,6 @@
     <ClInclude Include="src\Mayhem\Util\Vector3D.h">
       <Filter>Mayhem\Util</Filter>
     </ClInclude>
-    <ClInclude Include="src\Mayhem\Events\Event.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Mayhem\Application.cpp">
