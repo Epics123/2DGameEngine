@@ -1,0 +1,14 @@
+#pragma once
+
+#include "Mayhem/Core.h"
+
+namespace Mayhem
+{
+	enum class EventType
+	{
+		NONE = 0,
+		WINDOW_CLOSE, WINDOW_RESIZE, WINDOW_FOCUS, WINDOW_LOST_FOCUS, WINDOW_MOVED,
+		KEY_PRESSED, KEY_RELEASED,
+		MOUSE_BUTTON_PRESSED, MOUSE_BUTTON_RELEASED, MOUSE_MOVE, MOUSE_SCROLL
+	};
+}
