@@ -2,6 +2,7 @@
 
 #include "Core.h"
 #include "Window.h"
+#include "Events/ApplicationEvent.h"
 
 namespace Mayhem
 {
@@ -13,9 +14,13 @@ namespace Mayhem
 
 		void run();
 
+		void onEvent(Event& event);
+
 	private:
 		std::unique_ptr<Window> mWindow;
 		bool mRunning = true;
+
+		bool onWindowClosed(WindowCloseEvent& event);
 	};
 
 	//To be defined in client
