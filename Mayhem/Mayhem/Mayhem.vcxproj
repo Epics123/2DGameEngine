@@ -63,14 +63,14 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>..\bin\-windows-x86_64\Mayhem\</OutDir>
-    <IntDir>..\bin-int\-windows-x86_64\Mayhem\Debug\</IntDir>
+    <IntDir>..\bin-int\-windows-x86_64\Mayhem\Release\</IntDir>
     <TargetName>Mayhem</TargetName>
     <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>..\bin\-windows-x86_64\Mayhem\</OutDir>
-    <IntDir>..\bin-int\-windows-x86_64\Mayhem\Debug\</IntDir>
+    <IntDir>..\bin-int\-windows-x86_64\Mayhem\Dist\</IntDir>
     <TargetName>Mayhem</TargetName>
     <TargetExt>.dll</TargetExt>
   </PropertyGroup>
@@ -143,7 +143,10 @@
     <ClInclude Include="src\Mayhem\Application.h" />
     <ClInclude Include="src\Mayhem\Core.h" />
     <ClInclude Include="src\Mayhem\EntryPoint.h" />
+    <ClInclude Include="src\Mayhem\Events\ApplicationEvent.h" />
     <ClInclude Include="src\Mayhem\Events\Event.h" />
+    <ClInclude Include="src\Mayhem\Events\KeyEvent.h" />
+    <ClInclude Include="src\Mayhem\Events\MouseEvent.h" />
     <ClInclude Include="src\Mayhem\Log.h" />
     <ClInclude Include="src\Mayhem\Util\UtilMath.h" />
     <ClInclude Include="src\Mayhem\Util\Vector2D.h" />

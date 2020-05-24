@@ -10,3 +10,4 @@
 	#error Mayhem only supports Windows!
 #endif // MH_PLATFORM_WINDOWS
 
+//#define BIT(x) = (1 << x)

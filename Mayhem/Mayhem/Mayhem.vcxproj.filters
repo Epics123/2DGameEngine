@@ -37,6 +37,9 @@
     <ClInclude Include="src\Mayhem\Util\Vector3D.h">
       <Filter>Mayhem\Util</Filter>
     </ClInclude>
+    <ClInclude Include="src\Mayhem\Events\KeyEvent.h" />
+    <ClInclude Include="src\Mayhem\Events\MouseEvent.h" />
+    <ClInclude Include="src\Mayhem\Events\ApplicationEvent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Mayhem\Application.cpp">
