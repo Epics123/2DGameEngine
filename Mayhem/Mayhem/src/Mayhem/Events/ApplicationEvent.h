@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Event.h"
-#include <sstream>
 
 namespace Mayhem
 {
@@ -17,7 +16,7 @@ namespace Mayhem
 		std::string toString() const override
 		{
 			std::stringstream ss;
-			ss << "WindowResizeEvent:  " << mWidth << ", " << mHeight;
+			ss << "WindowResizeEvent: " << mWidth << ", " << mHeight;
 			return ss.str();
 		}
 

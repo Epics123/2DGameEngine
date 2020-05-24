@@ -18,6 +18,9 @@ project "Mayhem"
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
+	pchheader "mpch.h"
+	pchsource "Mayhem/src/mpch.cpp"
+
 	files
 	{
 		"%{prj.name}/src/**.h",

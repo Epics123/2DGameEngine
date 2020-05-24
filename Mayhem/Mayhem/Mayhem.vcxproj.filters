@@ -22,7 +22,16 @@
     <ClInclude Include="src\Mayhem\EntryPoint.h">
       <Filter>Mayhem</Filter>
     </ClInclude>
+    <ClInclude Include="src\Mayhem\Events\ApplicationEvent.h">
+      <Filter>Mayhem\Events</Filter>
+    </ClInclude>
     <ClInclude Include="src\Mayhem\Events\Event.h">
+      <Filter>Mayhem\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mayhem\Events\KeyEvent.h">
+      <Filter>Mayhem\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mayhem\Events\MouseEvent.h">
       <Filter>Mayhem\Events</Filter>
     </ClInclude>
     <ClInclude Include="src\Mayhem\Log.h">
@@ -37,9 +46,7 @@
     <ClInclude Include="src\Mayhem\Util\Vector3D.h">
       <Filter>Mayhem\Util</Filter>
     </ClInclude>
-    <ClInclude Include="src\Mayhem\Events\KeyEvent.h" />
-    <ClInclude Include="src\Mayhem\Events\MouseEvent.h" />
-    <ClInclude Include="src\Mayhem\Events\ApplicationEvent.h" />
+    <ClInclude Include="src\mpch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Mayhem\Application.cpp">
@@ -57,5 +64,6 @@
     <ClCompile Include="src\Mayhem\Util\Vector3D.cpp">
       <Filter>Mayhem\Util</Filter>
     </ClCompile>
+    <ClCompile Include="src\mpch.cpp" />
   </ItemGroup>
 </Project>

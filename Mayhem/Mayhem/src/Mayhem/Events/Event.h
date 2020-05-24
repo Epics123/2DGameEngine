@@ -1,8 +1,6 @@
 #pragma once
 
 #include "Mayhem/Core.h"
-#include <functional>
-#include <string>
 
 namespace Mayhem
 {
@@ -42,4 +40,33 @@ namespace Mayhem
 	protected:
 		bool mHandled = false;
 	};
+
+	class MAYHEM_API EventDispatcher
+	{
+		template <typename T>
+		using EventFn = std::function<bool(T&)>;
+
+	public:
+		EventDispatcher(Event& event)
+			:mEvent(event){}
+
+		template <typename T>
+		bool dispatchEvent(EventFn<T> func)
+		{
+			if (mEvent.getEventType() == T::getStaticType())
+			{
+				mEvent.mHandled = func(*(T*)& mEvent);
+				return true;
+			}
+			return false;
+		}
+
+	private:
+		Event& mEvent;
+	};
+
+	inline std::ostream& operator<< (std::ostream& output, const Event& e)
+	{
+		return output << e.toString();
+	}
 }
