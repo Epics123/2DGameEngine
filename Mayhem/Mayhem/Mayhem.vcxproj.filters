@@ -47,6 +47,8 @@
       <Filter>Mayhem\Util</Filter>
     </ClInclude>
     <ClInclude Include="src\mpch.h" />
+    <ClInclude Include="src\Mayhem\Window.h" />
+    <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Mayhem\Application.cpp">
@@ -65,5 +67,6 @@
       <Filter>Mayhem\Util</Filter>
     </ClCompile>
     <ClCompile Include="src\mpch.cpp" />
+    <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
   </ItemGroup>
 </Project>

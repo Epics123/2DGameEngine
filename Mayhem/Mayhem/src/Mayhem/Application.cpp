@@ -1,12 +1,15 @@
 #include "mpch.h"
 #include "Application.h"
+
 #include "Events/ApplicationEvent.h"
-#include "Log.h"
+
+#include <GLFW/glfw3.h>
 
 namespace Mayhem
 {
 	Application::Application()
 	{
+		mWindow = std::unique_ptr<Window>(Window::createWindow());
 	}
 
 	Application::~Application()
@@ -15,9 +18,11 @@ namespace Mayhem
 
 	void Application::run()
 	{
-		WindowResizeEvent e(1200, 720);
-		MH_TRACE(e);
-
-		while (true);
+		while (mRunning)
+		{
+			glClearColor(1, 1, 1, 1);
+			glClear(GL_COLOR_BUFFER_BIT);
+			mWindow->onUpdate();
+		}
 	}
 }

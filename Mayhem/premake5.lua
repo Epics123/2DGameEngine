@@ -10,6 +10,12 @@ workspace "Mayhem"
 
 outputdir = "%{cfg.buidlcfg}-%{cfg.system}-%{cfg.architecture}"
 
+--Include directories relative to root folder (solution directory)
+IncludeDir = {}
+IncludeDir["GLFW"] = "Mayhem/vendor/GLFW/include"
+
+include "Mayhem/vendor/GLFW"
+
 project "Mayhem"
 	location "Mayhem"
 	kind "SharedLib"
@@ -30,7 +36,14 @@ project "Mayhem"
 	includedirs
 	{
 		"%{prj.name}/src", 
-		"%{prj.name}/vendor/spdlog/include"
+		"%{prj.name}/vendor/spdlog/include",
+		"%{IncludeDir.GLFW}"
+	}
+	
+	links
+	{
+		"GLFW",
+		"opengl32.lib"
 	}
 
 	filter "system:windows"
