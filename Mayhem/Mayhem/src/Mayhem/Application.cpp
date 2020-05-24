@@ -23,16 +23,37 @@ namespace Mayhem
 		{
 			glClearColor(1, 1, 1, 1);
 			glClear(GL_COLOR_BUFFER_BIT);
+
+			for (Layer* layer : mLayerStack)
+				layer->onUpdate();
+
 			mWindow->onUpdate();
 		}
 	}
+
 	void Application::onEvent(Event& event)
 	{
 		EventDispatcher dispatcher(event);
 		dispatcher.dispatchEvent<WindowCloseEvent>(BIND_EVENT_FN(onWindowClosed));
 
-		MH_CORE_TRACE("{0}", event);
+		for (auto it = mLayerStack.end(); it != mLayerStack.begin();)
+		{
+			(*--it)->onEvent(event);
+			if (event.mHandled)
+				break;
+		}
 	}
+
+	void Application::pushLayer(Layer* layer)
+	{
+		mLayerStack.pushLayer(layer);
+	}
+
+	void Application::pushOverlay(Layer* overlay)
+	{
+		mLayerStack.pushLayer(overlay);
+	}
+
 	bool Application::onWindowClosed(WindowCloseEvent& event)
 	{
 		mRunning = false;

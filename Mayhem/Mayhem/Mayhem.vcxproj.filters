@@ -10,6 +10,12 @@
     <Filter Include="Mayhem\Util">
       <UniqueIdentifier>{D38A5CFA-3F40-D5EF-C834-CFC634E9CBF3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Platform">
+      <UniqueIdentifier>{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platform\Windows">
+      <UniqueIdentifier>{64FBD71A-50F4-F66C-7926-DCF1657ED678}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Mayhem.h" />
@@ -34,6 +40,12 @@
     <ClInclude Include="src\Mayhem\Events\MouseEvent.h">
       <Filter>Mayhem\Events</Filter>
     </ClInclude>
+    <ClInclude Include="src\Mayhem\Layer.h">
+      <Filter>Mayhem</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mayhem\LayerStack.h">
+      <Filter>Mayhem</Filter>
+    </ClInclude>
     <ClInclude Include="src\Mayhem\Log.h">
       <Filter>Mayhem</Filter>
     </ClInclude>
@@ -46,12 +58,22 @@
     <ClInclude Include="src\Mayhem\Util\Vector3D.h">
       <Filter>Mayhem\Util</Filter>
     </ClInclude>
+    <ClInclude Include="src\Mayhem\Window.h">
+      <Filter>Mayhem</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\Windows\WindowsWindow.h">
+      <Filter>Platform\Windows</Filter>
+    </ClInclude>
     <ClInclude Include="src\mpch.h" />
-    <ClInclude Include="src\Mayhem\Window.h" />
-    <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Mayhem\Application.cpp">
+      <Filter>Mayhem</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mayhem\Layer.cpp">
+      <Filter>Mayhem</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mayhem\LayerStack.cpp">
       <Filter>Mayhem</Filter>
     </ClCompile>
     <ClCompile Include="src\Mayhem\Log.cpp">
@@ -66,7 +88,9 @@
     <ClCompile Include="src\Mayhem\Util\Vector3D.cpp">
       <Filter>Mayhem\Util</Filter>
     </ClCompile>
+    <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
+      <Filter>Platform\Windows</Filter>
+    </ClCompile>
     <ClCompile Include="src\mpch.cpp" />
-    <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
   </ItemGroup>
 </Project>

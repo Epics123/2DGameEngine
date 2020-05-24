@@ -65,14 +65,17 @@ project "Mayhem"
 	filter "configurations:Debug"
 		defines "MH_DEBUG"
 		symbols "On"
+		buildoptions "/MDd"
 
 	filter "configurations:Release"
 		defines "MH_RELEASE"
 		optimize "On"
+		buildoptions "/MD"
 
 	filter "configurations:Dist"
 		defines "MH_DIST"
 		symbols "On"
+		buildoptions "/MD"
 
 
 project "Sandbox"
@@ -114,11 +117,14 @@ project "Sandbox"
 	filter "configurations:Debug"
 		defines "MH_DEBUG"
 		symbols "On"
+		buildoptions "/MDd"
 
 	filter "configurations:Release"
 		defines "MH_RELEASE"
 		optimize "On"
+		buildoptions "/MD"
 
 	filter "configurations:Dist"
 		defines "MH_DIST"
 		symbols "On"
+		buildoptions "/MD"

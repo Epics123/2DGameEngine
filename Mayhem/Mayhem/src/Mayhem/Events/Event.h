@@ -37,9 +37,10 @@ namespace Mayhem
 		{
 			return getCategoryFlags() & category;
 		}
+		
+		bool mHandled = false;
 
 	protected:
-		bool mHandled = false;
 	};
 
 	class MAYHEM_API EventDispatcher

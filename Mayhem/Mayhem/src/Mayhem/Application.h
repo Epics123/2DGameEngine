@@ -2,6 +2,7 @@
 
 #include "Core.h"
 #include "Window.h"
+#include "LayerStack.h"
 #include "Events/ApplicationEvent.h"
 
 namespace Mayhem
@@ -16,9 +17,13 @@ namespace Mayhem
 
 		void onEvent(Event& event);
 
+		void pushLayer(Layer* layer);
+		void pushOverlay(Layer* overlay);
+
 	private:
 		std::unique_ptr<Window> mWindow;
 		bool mRunning = true;
+		LayerStack mLayerStack;
 
 		bool onWindowClosed(WindowCloseEvent& event);
 	};
