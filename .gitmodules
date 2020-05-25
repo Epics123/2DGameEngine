@@ -2,4 +2,6 @@
 [submodule "Mayhem/Mayhem/vendor/spdlog"]
 	path = Mayhem/Mayhem/vendor/spdlog
 	url = https://github.com/gabime/spdlog
-
+[submodule "Mayhem/Mayhem/vendor/GLFW"]
+	path = Mayhem/Mayhem/vendor/GLFW
+	url = https://github.com/TheCherno/GLFW
