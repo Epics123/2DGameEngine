@@ -7,11 +7,17 @@
     <Filter Include="Mayhem\Events">
       <UniqueIdentifier>{EA187ADE-56D9-F514-1F14-3F928B933AF1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Mayhem\ImGui">
+      <UniqueIdentifier>{70591045-5CBC-9FE9-0542-D89FF1836B6C}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Mayhem\Util">
       <UniqueIdentifier>{D38A5CFA-3F40-D5EF-C834-CFC634E9CBF3}</UniqueIdentifier>
     </Filter>
     <Filter Include="Platform">
       <UniqueIdentifier>{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platform\OpenGL">
+      <UniqueIdentifier>{1E7D2C1D-8A08-9AE1-9319-1DD6FF23F6E1}</UniqueIdentifier>
     </Filter>
     <Filter Include="Platform\Windows">
       <UniqueIdentifier>{64FBD71A-50F4-F66C-7926-DCF1657ED678}</UniqueIdentifier>
@@ -40,6 +46,9 @@
     <ClInclude Include="src\Mayhem\Events\MouseEvent.h">
       <Filter>Mayhem\Events</Filter>
     </ClInclude>
+    <ClInclude Include="src\Mayhem\ImGui\ImGuiLayer.h">
+      <Filter>Mayhem\ImGui</Filter>
+    </ClInclude>
     <ClInclude Include="src\Mayhem\Layer.h">
       <Filter>Mayhem</Filter>
     </ClInclude>
@@ -61,6 +70,9 @@
     <ClInclude Include="src\Mayhem\Window.h">
       <Filter>Mayhem</Filter>
     </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.h">
+      <Filter>Platform\OpenGL</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h">
       <Filter>Platform\Windows</Filter>
     </ClInclude>
@@ -69,6 +81,9 @@
   <ItemGroup>
     <ClCompile Include="src\Mayhem\Application.cpp">
       <Filter>Mayhem</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mayhem\ImGui\ImGuiLayer.cpp">
+      <Filter>Mayhem\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="src\Mayhem\Layer.cpp">
       <Filter>Mayhem</Filter>
@@ -87,6 +102,9 @@
     </ClCompile>
     <ClCompile Include="src\Mayhem\Util\Vector3D.cpp">
       <Filter>Mayhem\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.cpp">
+      <Filter>Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
       <Filter>Platform\Windows</Filter>
