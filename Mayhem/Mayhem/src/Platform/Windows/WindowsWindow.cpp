@@ -5,6 +5,8 @@
 #include "Mayhem/Events/KeyEvent.h"
 #include "Mayhem/Events/MouseEvent.h"
 
+#include <glad/glad.h>
+
 namespace Mayhem
 {
 	static bool sGLFWInitialized = false;
@@ -64,6 +66,8 @@ namespace Mayhem
 
 		mWindow = glfwCreateWindow((int)props.Width, (int)props.Height, props.Title.c_str(), nullptr, nullptr);
 		glfwMakeContextCurrent(mWindow);
+		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+		MH_CORE_ASSERT(status, "Failed to initialize Glad!");
 		glfwSetWindowUserPointer(mWindow, &mData);
 		setVsync(true);
 

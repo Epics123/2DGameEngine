@@ -13,8 +13,10 @@ outputdir = "%{cfg.buidlcfg}-%{cfg.system}-%{cfg.architecture}"
 --Include directories relative to root folder (solution directory)
 IncludeDir = {}
 IncludeDir["GLFW"] = "Mayhem/vendor/GLFW/include"
+IncludeDir["Glad"] = "Mayhem/vendor/Glad/include"
 
 include "Mayhem/vendor/GLFW"
+include "Mayhem/vendor/Glad"
 
 project "Mayhem"
 	location "Mayhem"
@@ -37,12 +39,14 @@ project "Mayhem"
 	{
 		"%{prj.name}/src", 
 		"%{prj.name}/vendor/spdlog/include",
-		"%{IncludeDir.GLFW}"
+		"%{IncludeDir.GLFW}",
+		"%{IncludeDir.Glad}"
 	}
 	
 	links
 	{
 		"GLFW",
+		"Glad",
 		"opengl32.lib"
 	}
 
@@ -54,7 +58,8 @@ project "Mayhem"
 		defines
 		{
 			"MH_PLATFORM_WINDOWS",
-			"MH_BUILD_DLL"
+			"MH_BUILD_DLL",
+			"GLFW_INCLUDE_NONE"
 		}
 
 		postbuildcommands
