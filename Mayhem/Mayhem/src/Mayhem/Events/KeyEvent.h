@@ -58,4 +58,24 @@ namespace Mayhem
 		virtual EventType getEventType() const override { return getStaticType(); }
 		virtual const char* getName() const override { return "KeyReleased"; }
 	};
+
+	class MAYHEM_API KeyTypedEvent : public KeyEvent
+	{
+	public:
+		KeyTypedEvent(int keyCode)
+			: KeyEvent(keyCode)
+		{
+		}
+
+		std::string toString() const override
+		{
+			std::stringstream ss;
+			ss << "KeyTypedEvent: " << mKeyCode;
+			return ss.str();
+		}
+
+		static EventType getStaticType() { return EventType::KEY_TYPED; }
+		virtual EventType getEventType() const override { return getStaticType(); }
+		virtual const char* getName() const override { return "KeyTyped"; }
+	};
 }

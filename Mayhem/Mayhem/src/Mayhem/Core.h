@@ -18,5 +18,6 @@
 	#define MH_CORE_ASSERT(x, ...)
 #endif // MH_ENABLE_ASSERS
 
+#define MH_BIND_EVENT_FN(fn) std::bind(&fn, this, std::placeholders::_1)
 
 //#define BIT(x) = (1 << x)
