@@ -79,6 +79,8 @@
     <ClInclude Include="src\mpch.h" />
     <ClInclude Include="src\Mayhem\Input.h" />
     <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
+    <ClInclude Include="src\Mayhem\KeyCodes.h" />
+    <ClInclude Include="src\Mayhem\MouseButtonCodes.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Mayhem\Application.cpp">

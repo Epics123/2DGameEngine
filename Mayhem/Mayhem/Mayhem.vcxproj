@@ -159,9 +159,11 @@
     <ClInclude Include="src\Mayhem\Events\MouseEvent.h" />
     <ClInclude Include="src\Mayhem\ImGui\ImGuiLayer.h" />
     <ClInclude Include="src\Mayhem\Input.h" />
+    <ClInclude Include="src\Mayhem\KeyCodes.h" />
     <ClInclude Include="src\Mayhem\Layer.h" />
     <ClInclude Include="src\Mayhem\LayerStack.h" />
     <ClInclude Include="src\Mayhem\Log.h" />
+    <ClInclude Include="src\Mayhem\MouseButtonCodes.h" />
     <ClInclude Include="src\Mayhem\Util\UtilMath.h" />
     <ClInclude Include="src\Mayhem\Util\Vector2D.h" />
     <ClInclude Include="src\Mayhem\Util\Vector3D.h" />
