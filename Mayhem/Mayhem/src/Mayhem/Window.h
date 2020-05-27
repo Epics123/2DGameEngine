@@ -35,6 +35,8 @@ namespace Mayhem
 		virtual void setVsync(bool enabled) = 0;
 		virtual bool isVsync() const = 0;
 
+		virtual void* getNativeWindow() const = 0; //Void pointer can hold address of any type and can be typcasted to any type.
+
 		static Window* createWindow(const WindowProps& props = WindowProps());
 	};
 }

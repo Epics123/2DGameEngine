@@ -20,7 +20,8 @@ public:
 };
 
 class Sandbox : public Mayhem::Application
-{
+		
+			{
 public:
 	Sandbox()
 	{

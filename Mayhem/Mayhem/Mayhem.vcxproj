@@ -36,7 +36,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <UseDebugLibraries>true</UseDebugLibraries>
+    <UseDebugLibraries>false</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
@@ -68,7 +68,7 @@
     <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
-    <LinkIncremental>true</LinkIncremental>
+    <LinkIncremental>false</LinkIncremental>
     <OutDir>..\bin\-windows-x86_64\Mayhem\</OutDir>
     <IntDir>..\bin-int\-windows-x86_64\Mayhem\Dist\</IntDir>
     <TargetName>Mayhem</TargetName>
@@ -83,8 +83,7 @@
       <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <AdditionalOptions>/MDd %(AdditionalOptions)</AdditionalOptions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -94,7 +93,7 @@
       <ImportLibrary>..\bin\-windows-x86_64\Mayhem\Mayhem.lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST ..\bin\-windows-x86_64\Mayhem\Mayhem.dll\ (xcopy /Q /E /Y /I ..\bin\-windows-x86_64\Mayhem\Mayhem.dll ..\bin\-windows-x86_64\Sandbox &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\-windows-x86_64\Mayhem\Mayhem.dll ..\bin\-windows-x86_64\Sandbox &gt; nul)</Command>
+      <Command>IF EXIST ..\bin\-windows-x86_64\Mayhem\Mayhem.dll\ (xcopy /Q /E /Y /I ..\bin\-windows-x86_64\Mayhem\Mayhem.dll "..\bin\-windows-x86_64\Sandbox\" &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\-windows-x86_64\Mayhem\Mayhem.dll "..\bin\-windows-x86_64\Sandbox\" &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -109,8 +108,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalOptions>/MD %(AdditionalOptions)</AdditionalOptions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -121,7 +119,7 @@
       <ImportLibrary>..\bin\-windows-x86_64\Mayhem\Mayhem.lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST ..\bin\-windows-x86_64\Mayhem\Mayhem.dll\ (xcopy /Q /E /Y /I ..\bin\-windows-x86_64\Mayhem\Mayhem.dll ..\bin\-windows-x86_64\Sandbox &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\-windows-x86_64\Mayhem\Mayhem.dll ..\bin\-windows-x86_64\Sandbox &gt; nul)</Command>
+      <Command>IF EXIST ..\bin\-windows-x86_64\Mayhem\Mayhem.dll\ (xcopy /Q /E /Y /I ..\bin\-windows-x86_64\Mayhem\Mayhem.dll "..\bin\-windows-x86_64\Sandbox\" &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\-windows-x86_64\Mayhem\Mayhem.dll "..\bin\-windows-x86_64\Sandbox\" &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
@@ -131,20 +129,23 @@
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>MH_PLATFORM_WINDOWS;MH_BUILD_DLL;GLFW_INCLUDE_NONE;MH_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-      <Optimization>Disabled</Optimization>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <AdditionalOptions>/MD %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImportLibrary>..\bin\-windows-x86_64\Mayhem\Mayhem.lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST ..\bin\-windows-x86_64\Mayhem\Mayhem.dll\ (xcopy /Q /E /Y /I ..\bin\-windows-x86_64\Mayhem\Mayhem.dll ..\bin\-windows-x86_64\Sandbox &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\-windows-x86_64\Mayhem\Mayhem.dll ..\bin\-windows-x86_64\Sandbox &gt; nul)</Command>
+      <Command>IF EXIST ..\bin\-windows-x86_64\Mayhem\Mayhem.dll\ (xcopy /Q /E /Y /I ..\bin\-windows-x86_64\Mayhem\Mayhem.dll "..\bin\-windows-x86_64\Sandbox\" &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\-windows-x86_64\Mayhem\Mayhem.dll "..\bin\-windows-x86_64\Sandbox\" &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -157,6 +158,7 @@
     <ClInclude Include="src\Mayhem\Events\KeyEvent.h" />
     <ClInclude Include="src\Mayhem\Events\MouseEvent.h" />
     <ClInclude Include="src\Mayhem\ImGui\ImGuiLayer.h" />
+    <ClInclude Include="src\Mayhem\Input.h" />
     <ClInclude Include="src\Mayhem\Layer.h" />
     <ClInclude Include="src\Mayhem\LayerStack.h" />
     <ClInclude Include="src\Mayhem\Log.h" />
@@ -165,6 +167,7 @@
     <ClInclude Include="src\Mayhem\Util\Vector3D.h" />
     <ClInclude Include="src\Mayhem\Window.h" />
     <ClInclude Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.h" />
+    <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\mpch.h" />
   </ItemGroup>
@@ -178,6 +181,7 @@
     <ClCompile Include="src\Mayhem\Util\Vector2D.cpp" />
     <ClCompile Include="src\Mayhem\Util\Vector3D.cpp" />
     <ClCompile Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.cpp" />
+    <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\mpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>

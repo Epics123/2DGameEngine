@@ -3,6 +3,8 @@
 
 #include <glad/glad.h>
 
+#include "Input.h"
+
 namespace Mayhem
 {
 #define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
@@ -31,6 +33,9 @@ namespace Mayhem
 
 			for (Layer* layer : mLayerStack)
 				layer->onUpdate();
+
+			auto [x, y] = Input::getMousePosition();
+			MH_CORE_TRACE("{0}, {1}", x, y);
 
 			mWindow->onUpdate();
 		}

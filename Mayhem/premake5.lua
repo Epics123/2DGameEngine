@@ -1,5 +1,6 @@
 workspace "Mayhem"
 	architecture "x64"
+	startproject "Sandbox"
 
 	configurations
 	{
@@ -16,14 +17,18 @@ IncludeDir["GLFW"] = "Mayhem/vendor/GLFW/include"
 IncludeDir["Glad"] = "Mayhem/vendor/Glad/include"
 IncludeDir["ImGui"] = "Mayhem/vendor/imgui"
 
-include "Mayhem/vendor/GLFW"
-include "Mayhem/vendor/Glad"
-include "Mayhem/vendor/imgui"
+group "Dependencies"
+	include "Mayhem/vendor/GLFW"
+	include "Mayhem/vendor/Glad"
+	include "Mayhem/vendor/imgui"
+
+group ""
 
 project "Mayhem"
 	location "Mayhem"
 	kind "SharedLib"
 	language "C++"
+	staticruntime "off"
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -56,7 +61,6 @@ project "Mayhem"
 
 	filter "system:windows"
 		cppdialect "C++17"
-		staticruntime "On"
 		systemversion "latest"
 
 		defines
@@ -68,30 +72,30 @@ project "Mayhem"
 
 		postbuildcommands
 		{
-			("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox")
+			("{COPY} %{cfg.buildtarget.relpath} \"../bin/" .. outputdir .. "/Sandbox/\"")
 		}
 
 	filter "configurations:Debug"
 		defines "MH_DEBUG"
+		runtime "Debug"
 		symbols "On"
-		buildoptions "/MDd"
 
 	filter "configurations:Release"
 		defines "MH_RELEASE"
+		runtime "Release"
 		optimize "On"
-		buildoptions "/MD"
 
 	filter "configurations:Dist"
 		defines "MH_DIST"
-		symbols "On"
-		buildoptions "/MD"
+		runtime "Release"
+		optimize "On"
 
 
 project "Sandbox"
 	location "Sandbox"
 	kind "ConsoleApp"
-
 	language "C++"
+	staticruntime "off"
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -115,7 +119,6 @@ project "Sandbox"
 
 	filter "system:windows"
 		cppdialect "C++17"
-		staticruntime "On"
 		systemversion "latest"
 
 		defines
@@ -125,15 +128,15 @@ project "Sandbox"
 
 	filter "configurations:Debug"
 		defines "MH_DEBUG"
+		runtime "Debug"
 		symbols "On"
-		buildoptions "/MDd"
 
 	filter "configurations:Release"
 		defines "MH_RELEASE"
+		runtime "Release"
 		optimize "On"
-		buildoptions "/MD"
 
 	filter "configurations:Dist"
 		defines "MH_DIST"
-		symbols "On"
-		buildoptions "/MD"
+		runtime "Release"
+		optimize "On"
