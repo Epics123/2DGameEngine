@@ -1,5 +1,7 @@
 #include <Mayhem.h>
 
+#include "imgui/imgui.h"
+
 class ExampleLayer : public Mayhem::Layer
 {
 public:
@@ -29,7 +31,6 @@ public:
 	Sandbox()
 	{
 		pushLayer(new ExampleLayer());
-		pushOverlay(new Mayhem::ImGuiLayer());
 	}
 
 	~Sandbox()

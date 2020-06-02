@@ -18,6 +18,9 @@ namespace Mayhem
 
 		mWindow = std::unique_ptr<Window>(Window::createWindow());
 		mWindow->setEventCallback(BIND_EVENT_FN(onEvent));
+
+		mImGuiLayer = new ImGuiLayer();
+		pushOverlay(mImGuiLayer);
 	}
 
 	Application::~Application()
@@ -34,8 +37,10 @@ namespace Mayhem
 			for (Layer* layer : mLayerStack)
 				layer->onUpdate();
 
-			auto [x, y] = Input::getMousePosition();
-			MH_CORE_TRACE("{0}, {1}", x, y);
+			mImGuiLayer->begin();
+			for (Layer* layer : mLayerStack)
+				layer->onImGuiRender();
+			mImGuiLayer->end();
 
 			mWindow->onUpdate();
 		}

@@ -5,6 +5,8 @@
 #include "LayerStack.h"
 #include "Events/ApplicationEvent.h"
 
+#include "Mayhem/ImGui/ImGuiLayer.h"
+
 namespace Mayhem
 {
 	class MAYHEM_API Application
@@ -26,6 +28,7 @@ namespace Mayhem
 
 	private:
 		std::unique_ptr<Window> mWindow;
+		ImGuiLayer* mImGuiLayer;
 		bool mRunning = true;
 		LayerStack mLayerStack;
 

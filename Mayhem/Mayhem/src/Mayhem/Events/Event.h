@@ -22,7 +22,7 @@ namespace Mayhem
 		MOUSE_BUTTON  = 1 << 4
 	};
 
-#define EVENT_CLASS_CATEGORY(category) virtual int getCategoryFlags() const override { return category; }
+#define EVENT_CLASS_CATEGORY(category, ...) virtual int getCategoryFlags() const override { return category; }
 
 	class MAYHEM_API Event
 	{

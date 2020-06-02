@@ -5,7 +5,6 @@ namespace Mayhem
 {
 	LayerStack::LayerStack()
 	{
-		mLayerInsert = mLayers.begin();
 	}
 
 	LayerStack::~LayerStack()
@@ -16,7 +15,8 @@ namespace Mayhem
 
 	void LayerStack::pushLayer(Layer* layer)
 	{
-		mLayerInsert = mLayers.emplace(mLayerInsert, layer);
+		mLayers.emplace(mLayers.begin() + mLayerInsertIndex, layer);
+		mLayerInsertIndex++;
 	}
 
 	void LayerStack::pushOverlay(Layer* overlay)
@@ -30,7 +30,7 @@ namespace Mayhem
 		if (it != mLayers.end())
 		{
 			mLayers.erase(it);
-			mLayerInsert--;
+			mLayerInsertIndex--;
 		}
 	}
 

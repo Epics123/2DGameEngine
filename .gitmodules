@@ -8,3 +8,6 @@
 [submodule "Mayhem/Mayhem/vendor/imgui"]
 	path = Mayhem/Mayhem/vendor/imgui
 	url = https://github.com/TheCherno/imgui
+[submodule "Mayhem/Mayhem/vendor/glm"]
+	path = Mayhem/Mayhem/vendor/glm
+	url = https://github.com/g-truc/glm

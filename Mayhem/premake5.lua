@@ -16,6 +16,7 @@ IncludeDir = {}
 IncludeDir["GLFW"] = "Mayhem/vendor/GLFW/include"
 IncludeDir["Glad"] = "Mayhem/vendor/Glad/include"
 IncludeDir["ImGui"] = "Mayhem/vendor/imgui"
+IncludeDir["glm"] = "Mayhem/vendor/glm"
 
 group "Dependencies"
 	include "Mayhem/vendor/GLFW"
@@ -26,9 +27,10 @@ group ""
 
 project "Mayhem"
 	location "Mayhem"
-	kind "SharedLib"
+	kind "StaticLib"
 	language "C++"
-	staticruntime "off"
+	cppdialect "C++17"
+	staticruntime "on"
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -39,7 +41,14 @@ project "Mayhem"
 	files
 	{
 		"%{prj.name}/src/**.h",
-		"%{prj.name}/src/**.cpp"
+		"%{prj.name}/src/**.cpp",
+		"%{prj.name}/vendor/glm/glm/**.hpp",
+		"%{prj.name}/vendor/glm/glm/**.inl",
+	}
+
+	defines
+	{
+	    "_CRT_SECURE_NO_WARNINGS"
 	}
 
 	includedirs
@@ -48,7 +57,8 @@ project "Mayhem"
 		"%{prj.name}/vendor/spdlog/include",
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.Glad}",
-		"%{IncludeDir.ImGui}"
+		"%{IncludeDir.ImGui}",
+		"%{IncludeDir.glm}"
 	}
 	
 	links
@@ -60,7 +70,6 @@ project "Mayhem"
 	}
 
 	filter "system:windows"
-		cppdialect "C++17"
 		systemversion "latest"
 
 		defines
@@ -70,32 +79,28 @@ project "Mayhem"
 			"GLFW_INCLUDE_NONE"
 		}
 
-		postbuildcommands
-		{
-			("{COPY} %{cfg.buildtarget.relpath} \"../bin/" .. outputdir .. "/Sandbox/\"")
-		}
-
 	filter "configurations:Debug"
 		defines "MH_DEBUG"
 		runtime "Debug"
-		symbols "On"
+		symbols "on"
 
 	filter "configurations:Release"
 		defines "MH_RELEASE"
 		runtime "Release"
-		optimize "On"
+		optimize "on"
 
 	filter "configurations:Dist"
 		defines "MH_DIST"
 		runtime "Release"
-		optimize "On"
+		optimize "on"
 
 
 project "Sandbox"
 	location "Sandbox"
 	kind "ConsoleApp"
 	language "C++"
-	staticruntime "off"
+	cppdialect "C++17"
+	staticruntime "on"
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -109,7 +114,9 @@ project "Sandbox"
 	includedirs
 	{
 		"Mayhem/vendor/spdlog/include",
-		"Mayhem/src"
+		"Mayhem/src",
+		"Mayhem/vendor",
+		"%{IncludeDir.glm}"
 	}
 
 	links
@@ -118,7 +125,6 @@ project "Sandbox"
 	}
 
 	filter "system:windows"
-		cppdialect "C++17"
 		systemversion "latest"
 
 		defines
@@ -129,14 +135,14 @@ project "Sandbox"
 	filter "configurations:Debug"
 		defines "MH_DEBUG"
 		runtime "Debug"
-		symbols "On"
+		symbols "on"
 
 	filter "configurations:Release"
 		defines "MH_RELEASE"
 		runtime "Release"
-		optimize "On"
+		optimize "on"
 
 	filter "configurations:Dist"
 		defines "MH_DIST"
 		runtime "Release"
-		optimize "On"
+		optimize "on"

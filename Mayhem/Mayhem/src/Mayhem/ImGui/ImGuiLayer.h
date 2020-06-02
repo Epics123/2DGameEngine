@@ -14,22 +14,12 @@ namespace Mayhem
 		ImGuiLayer();
 		~ImGuiLayer();
 
-		void onAttatch();
-		void onDetatch();
-		void onUpdate();
-		void onEvent(Event& event);
+		virtual void onAttatch() override;
+		virtual void onDetatch() override;
+		virtual void onImGuiRender() override;
 
-	private:
-		//TODO: add copy and paste
-
-		bool onMouseButtonPressedEvent(MouseButtonPressedEvent& e);
-		bool onMouseButtonReleasedEvent(MouseButtonReleasedEvent& e);
-		bool onMouseMoveEvent(MouseMoveEvent& e);
-		bool onMouseScrolledEvent(MouseScrolledEvent& e);
-		bool onKeyPressedEvent(KeyPressedEvent& e);
-		bool onKeyReleasedEvent(KeyReleasedEvent& e);
-		bool onKeyTypedEvent(KeyTypedEvent& e);
-		bool onWindowResizeEvent(WindowResizeEvent& e);
+		void begin();
+		void end();
 
 	private:
 		float mTime = 0.0f;
