@@ -12,7 +12,7 @@ public:
 
 	void onUpdate() override
 	{
-		MH_INFO("ExampleLayer::Update");
+		//MH_INFO("ExampleLayer::Update");
 
 		if (Mayhem::Input::isKeyPressed(MH_KEY_TAB))
 			MH_TRACE("Tab key pressed!");

@@ -32,6 +32,8 @@ namespace Mayhem
 		bool mRunning = true;
 		LayerStack mLayerStack;
 
+		unsigned int mVertexArray, mVertexBuffer, mIndexBuffer;
+
 		bool onWindowClosed(WindowCloseEvent& event);
 
 	private:

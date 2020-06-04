@@ -155,10 +155,12 @@
     <ClInclude Include="src\Mayhem\LayerStack.h" />
     <ClInclude Include="src\Mayhem\Log.h" />
     <ClInclude Include="src\Mayhem\MouseButtonCodes.h" />
+    <ClInclude Include="src\Mayhem\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\Mayhem\Util\UtilMath.h" />
     <ClInclude Include="src\Mayhem\Util\Vector2D.h" />
     <ClInclude Include="src\Mayhem\Util\Vector3D.h" />
     <ClInclude Include="src\Mayhem\Window.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\mpch.h" />
@@ -581,6 +583,7 @@
     <ClCompile Include="src\Mayhem\Util\Math.cpp" />
     <ClCompile Include="src\Mayhem\Util\Vector2D.cpp" />
     <ClCompile Include="src\Mayhem\Util\Vector3D.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\mpch.cpp">

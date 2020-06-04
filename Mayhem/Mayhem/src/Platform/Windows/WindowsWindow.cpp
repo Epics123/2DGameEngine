@@ -5,7 +5,7 @@
 #include "Mayhem/Events/KeyEvent.h"
 #include "Mayhem/Events/MouseEvent.h"
 
-#include <glad/glad.h>
+#include "Platform/OpenGL/OpenGLContext.h"
 
 namespace Mayhem
 {
@@ -29,7 +29,7 @@ namespace Mayhem
 	void WindowsWindow::onUpdate()
 	{
 		glfwPollEvents();
-		glfwSwapBuffers(mWindow);
+		mContext->swapBuffers();
 	}
 
 	void WindowsWindow::setVsync(bool enabled)
@@ -65,9 +65,10 @@ namespace Mayhem
 		}
 
 		mWindow = glfwCreateWindow((int)props.Width, (int)props.Height, props.Title.c_str(), nullptr, nullptr);
-		glfwMakeContextCurrent(mWindow);
-		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-		MH_CORE_ASSERT(status, "Failed to initialize Glad!");
+		
+		mContext = new OpenGLContext(mWindow);
+		mContext->init();
+
 		glfwSetWindowUserPointer(mWindow, &mData);
 		setVsync(true);
 

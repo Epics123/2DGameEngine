@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Mayhem/Window.h"
+#include "Mayhem/Renderer/GraphicsContext.h"
+
 #include <GLFW/glfw3.h>
 
 namespace Mayhem
@@ -29,6 +31,7 @@ namespace Mayhem
 
 	private:
 		GLFWwindow* mWindow;
+		GraphicsContext* mContext;
 
 		struct WindowData
 		{
