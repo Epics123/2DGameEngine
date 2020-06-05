@@ -7,6 +7,9 @@
 
 #include "Mayhem/ImGui/ImGuiLayer.h"
 
+#include "Mayhem/Renderer/Shader.h"
+#include "Mayhem/Renderer/Buffer.h"
+
 namespace Mayhem
 {
 	class MAYHEM_API Application
@@ -32,7 +35,10 @@ namespace Mayhem
 		bool mRunning = true;
 		LayerStack mLayerStack;
 
-		unsigned int mVertexArray, mVertexBuffer, mIndexBuffer;
+		unsigned int mVertexArray;
+		std::unique_ptr<Shader> mShader;
+		std::unique_ptr<VertexBuffer> mVertexBuffer;
+		std::unique_ptr<IndexBuffer> mIndexBuffer;
 
 		bool onWindowClosed(WindowCloseEvent& event);
 
