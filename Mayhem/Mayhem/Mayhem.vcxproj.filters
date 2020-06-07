@@ -1341,6 +1341,7 @@
     <ClInclude Include="src\Mayhem\Renderer\Buffer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="src\Mayhem\Renderer\Renderer.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Mayhem\Application.cpp">
@@ -1384,5 +1385,6 @@
     <ClCompile Include="src\Mayhem\Renderer\Buffer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="src\Mayhem\Renderer\Renderer.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLShader.cpp" />
   </ItemGroup>
 </Project>

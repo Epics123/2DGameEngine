@@ -69,7 +69,7 @@ namespace Mayhem
 		
 		)";
 
-		mShader.reset(new Shader(vertexSrc, fragmentSrc));
+		mShader.reset(Shader::create(vertexSrc, fragmentSrc));
 	}
 
 	Application::~Application()
