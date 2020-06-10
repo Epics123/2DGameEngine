@@ -11,27 +11,6 @@ namespace Mayhem
 
 	Application* Application::sInstance = nullptr;
 
-	static GLenum shaderDataTypeToOpenGLBaseType(ShaderDataType type)
-	{
-		switch (type)
-		{
-			case ShaderDataType::None:		return GL_FLOAT;
-			case ShaderDataType::Float:		return GL_FLOAT;
-			case ShaderDataType::Float2:	return GL_FLOAT;
-			case ShaderDataType::Float3:	return GL_FLOAT;
-			case ShaderDataType::Float4:	return GL_FLOAT;
-			case ShaderDataType::Mat3:		return GL_FLOAT;
-			case ShaderDataType::Mat4:		return GL_FLOAT;
-			case ShaderDataType::Int:		return GL_INT;
-			case ShaderDataType::Int2:		return GL_INT;
-			case ShaderDataType::Int3:		return GL_INT;
-			case ShaderDataType::Int4:		return GL_INT;
-			case ShaderDataType::Bool:		return GL_BOOL;
-		}
-		MH_CORE_ASSERT(false, "Unknown ShaderDataType");
-		return 0;
-	}
-
 	Application::Application()
 	{
 		MH_CORE_ASSERT(!sInstance, "Application already exists!");
@@ -43,8 +22,7 @@ namespace Mayhem
 		mImGuiLayer = new ImGuiLayer();
 		pushOverlay(mImGuiLayer);
 
-		glGenVertexArrays(1, &mVertexArray);
-		glBindVertexArray(mVertexArray);
+		mVertexArray.reset(VertexArray::create());
 
 		float verticies[3 * 7] = {
 			-0.5f, -0.5f, 0.0f, 0.8f, 0.2f, 0.8f, 1.0f,
@@ -52,33 +30,48 @@ namespace Mayhem
 			 0.0f,  0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 1.0f
 		};
 
-		mVertexBuffer.reset(VertexBuffer::create(verticies, sizeof(verticies)));
+		std::shared_ptr<VertexBuffer> vertexBuffer;
+		vertexBuffer.reset(VertexBuffer::create(verticies, sizeof(verticies)));
 		//mVertexBuffer->bind();
 
-		{
-			BufferLayout layout = {
-				{ ShaderDataType::Float3, "aPosition" },
-				{ ShaderDataType::Float4, "aColor" }
-			};
+		BufferLayout layout = {
+			{ ShaderDataType::Float3, "aPosition" },
+			{ ShaderDataType::Float4, "aColor" }
+		};
 			
-			mVertexBuffer->setLayout(layout);
-		}
+		vertexBuffer->setLayout(layout);
 
-		uint32_t index = 0;
-		const auto& layout = mVertexBuffer->getLayout();
-		for (const auto& element : layout)
-		{
-			glEnableVertexAttribArray(index);
-			glVertexAttribPointer(index, element.getComponentCount(), 
-				shaderDataTypeToOpenGLBaseType(element.Type), 
-				element.Normalized ? GL_TRUE : GL_FALSE, 
-				layout.getStride(), 
-				(const void*)element.Offset);
-			index++;
-		}
+		mVertexArray->addVertexBuffer(vertexBuffer);
 
 		uint32_t indicies[3] = { 0, 1 , 2 };
-		mIndexBuffer.reset(IndexBuffer::create(indicies, sizeof(indicies) / sizeof(uint32_t)));
+		std::shared_ptr<IndexBuffer> indexBuffer;
+		indexBuffer.reset(IndexBuffer::create(indicies, sizeof(indicies) / sizeof(uint32_t)));
+		mVertexArray->setIndexBuffer(indexBuffer);
+
+		mSquareVA.reset(VertexArray::create());
+
+		float squareVerticies[3 * 4] = {
+			-0.75f, -0.75f, 0.0f,
+			 0.75f, -0.75f, 0.0f,
+			 0.75f,  0.75f, 0.0f,
+			-0.75f,  0.75f, 0.0f
+		};
+
+		std::shared_ptr<VertexBuffer> squareVB; 
+		squareVB.reset(VertexBuffer::create(squareVerticies, sizeof(squareVerticies)));
+
+		BufferLayout squareVBLayout = {
+			{ ShaderDataType::Float3, "aPosition" }
+		};
+
+		squareVB->setLayout(squareVBLayout);
+
+		mSquareVA->addVertexBuffer(squareVB);
+
+		uint32_t squareIndicies[6] = { 0, 1, 2, 2, 3, 0 };
+		std::shared_ptr<IndexBuffer> squareIB;
+		squareIB.reset(IndexBuffer::create(squareIndicies, sizeof(squareIndicies) / sizeof(uint32_t)));
+		mSquareVA->setIndexBuffer(squareIB);
 
 		std::string vertexSrc = R"(
 			#version 330 core
@@ -115,6 +108,35 @@ namespace Mayhem
 		)";
 
 		mShader.reset(Shader::create(vertexSrc, fragmentSrc));
+
+		std::string blueShaderVertexSrc = R"(
+			#version 330 core
+
+			layout(location = 0) in vec3 aPosition;
+
+			out vec3 vPosition;
+			
+			void main()
+			{
+				vPosition = aPosition;
+				gl_Position = vec4(aPosition, 1.0);
+			}	
+		)";
+
+		std::string blueShaderFragmentSrc = R"(
+			#version 330 core
+
+			layout(location = 0) out vec4 color;
+
+			in vec3 vPosition;
+			
+			void main()
+			{
+				color = vec4(0.2, 0.3, 0.8, 1.0);
+			}	
+		)";
+
+		mBlueShader.reset(Shader::create(blueShaderVertexSrc, blueShaderFragmentSrc));
 	}
 
 	Application::~Application()
@@ -128,9 +150,13 @@ namespace Mayhem
 			glClearColor(0.1f, 0.1f, 0.1f, 1);
 			glClear(GL_COLOR_BUFFER_BIT);
 
+			mBlueShader->bind();
+			mSquareVA->bind();
+			glDrawElements(GL_TRIANGLES, mSquareVA->getIndexBuffer()->getCount(), GL_UNSIGNED_INT, nullptr);
+
 			mShader->bind();
-			glBindVertexArray(mVertexArray);
-			glDrawElements(GL_TRIANGLES, mIndexBuffer->getCount(), GL_UNSIGNED_INT, nullptr);
+			mVertexArray->bind();
+			glDrawElements(GL_TRIANGLES, mVertexArray->getIndexBuffer()->getCount(), GL_UNSIGNED_INT, nullptr);
 
 			for (Layer* layer : mLayerStack)
 				layer->onUpdate();

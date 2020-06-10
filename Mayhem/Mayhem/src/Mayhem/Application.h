@@ -9,6 +9,7 @@
 
 #include "Mayhem/Renderer/Shader.h"
 #include "Mayhem/Renderer/Buffer.h"
+#include "Mayhem/Renderer/VertexArray.h"
 
 namespace Mayhem
 {
@@ -35,10 +36,11 @@ namespace Mayhem
 		bool mRunning = true;
 		LayerStack mLayerStack;
 
-		unsigned int mVertexArray;
-		std::unique_ptr<Shader> mShader;
-		std::unique_ptr<VertexBuffer> mVertexBuffer;
-		std::unique_ptr<IndexBuffer> mIndexBuffer;
+		std::shared_ptr<Shader> mShader;
+		std::shared_ptr<VertexArray> mVertexArray;
+
+		std::shared_ptr<VertexArray> mSquareVA;
+		std::shared_ptr<Shader> mBlueShader;
 
 		bool onWindowClosed(WindowCloseEvent& event);
 
