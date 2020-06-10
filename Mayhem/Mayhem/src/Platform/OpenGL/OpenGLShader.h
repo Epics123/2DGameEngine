@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Mayhem/Renderer/Shader.h"
+#include <glm/glm.hpp>
 
 namespace Mayhem
 {
@@ -12,6 +13,8 @@ namespace Mayhem
 
 		virtual void bind() const override;
 		virtual void unbind() const override;
+
+		void uploadUniformMat4(const std::string& name, const glm::mat4& matrix) const override;
 
 	private:
 		uint32_t mRendererID;

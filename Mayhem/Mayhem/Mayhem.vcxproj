@@ -156,6 +156,7 @@
     <ClInclude Include="src\Mayhem\Log.h" />
     <ClInclude Include="src\Mayhem\MouseButtonCodes.h" />
     <ClInclude Include="src\Mayhem\Renderer\Buffer.h" />
+    <ClInclude Include="src\Mayhem\Renderer\OrthographicCamera.h" />
     <ClInclude Include="src\Mayhem\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\Mayhem\Renderer\RenderCommand.h" />
     <ClInclude Include="src\Mayhem\Renderer\Renderer.h" />
@@ -591,6 +592,7 @@
     <ClCompile Include="src\Mayhem\LayerStack.cpp" />
     <ClCompile Include="src\Mayhem\Log.cpp" />
     <ClCompile Include="src\Mayhem\Renderer\Buffer.cpp" />
+    <ClCompile Include="src\Mayhem\Renderer\OtrthographicCamera.cpp" />
     <ClCompile Include="src\Mayhem\Renderer\RenderCommand.cpp" />
     <ClCompile Include="src\Mayhem\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Mayhem\Renderer\RendererAPI.cpp" />

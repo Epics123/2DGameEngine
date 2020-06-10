@@ -12,6 +12,7 @@ namespace Mayhem
 	Application* Application::sInstance = nullptr;
 
 	Application::Application()
+		:mCamera(-1.6f, 1.6f, -0.9f, 0.9f)
 	{
 		MH_CORE_ASSERT(!sInstance, "Application already exists!");
 		sInstance = this;
@@ -32,13 +33,12 @@ namespace Mayhem
 
 		std::shared_ptr<VertexBuffer> vertexBuffer;
 		vertexBuffer.reset(VertexBuffer::create(verticies, sizeof(verticies)));
-		//mVertexBuffer->bind();
 
 		BufferLayout layout = {
 			{ ShaderDataType::Float3, "aPosition" },
 			{ ShaderDataType::Float4, "aColor" }
 		};
-			
+
 		vertexBuffer->setLayout(layout);
 
 		mVertexArray->addVertexBuffer(vertexBuffer);
@@ -57,7 +57,7 @@ namespace Mayhem
 			-0.75f,  0.75f, 0.0f
 		};
 
-		std::shared_ptr<VertexBuffer> squareVB; 
+		std::shared_ptr<VertexBuffer> squareVB;
 		squareVB.reset(VertexBuffer::create(squareVerticies, sizeof(squareVerticies)));
 
 		BufferLayout squareVBLayout = {
@@ -79,6 +79,8 @@ namespace Mayhem
 			layout(location = 0) in vec3 aPosition;
 			layout(location = 1) in vec4 aColor;
 
+			uniform mat4 uViewProj;
+
 			out vec3 vPosition;
 			out vec4 vColor;
 			
@@ -86,7 +88,7 @@ namespace Mayhem
 			{
 				vPosition = aPosition;
 				vColor = aColor;
-				gl_Position = vec4(aPosition, 1.0);
+				gl_Position = uViewProj * vec4(aPosition, 1.0);
 			}
 		
 		)";
@@ -114,12 +116,14 @@ namespace Mayhem
 
 			layout(location = 0) in vec3 aPosition;
 
+			uniform mat4 uViewProj;
+
 			out vec3 vPosition;
 			
 			void main()
 			{
 				vPosition = aPosition;
-				gl_Position = vec4(aPosition, 1.0);
+				gl_Position = uViewProj * vec4(aPosition, 1.0);
 			}	
 		)";
 
@@ -150,13 +154,13 @@ namespace Mayhem
 			RenderCommand::setClearColor({ 0.1f, 0.1f, 0.1f, 1 });
 			RenderCommand::clear();
 
-			Renderer::beginScene();
+			mCamera.setPostition({ 0.5f, 0.5f, 0.0f });
+			mCamera.setRotation(45.0f);
 
-			mBlueShader->bind();
-			Renderer::submit(mSquareVA);
+			Renderer::beginScene(mCamera);
 
-			mShader->bind();
-			Renderer::submit(mVertexArray);
+			Renderer::submit(mBlueShader, mSquareVA);
+			Renderer::submit(mShader, mVertexArray);
 
 			Renderer::endScene();
 
