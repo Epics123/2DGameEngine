@@ -1,20 +1,17 @@
 #pragma once
 
+#include "RenderCommand.h"
 
 namespace Mayhem
 {
-	enum class RendererAPI
-	{
-		None = 0,
-		OpenGL = 1
-	};
-
 	class Renderer
 	{
 	public:
-		inline static RendererAPI getAPI() { return sRendererAPI; }
+		static void beginScene();
+		static void endScene();
 
-	private:
-		static RendererAPI sRendererAPI;
+		static void submit(const std::shared_ptr<VertexArray>& vertexArray);
+
+		inline static RendererAPI::API getAPI() { return RendererAPI::getAPI(); }
 	};
 }

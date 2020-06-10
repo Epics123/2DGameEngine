@@ -10,9 +10,9 @@ namespace Mayhem
 	{
 		switch (Renderer::getAPI())
 		{
-		case RendererAPI::None:
+		case RendererAPI::API::None:
 			MH_CORE_ASSERT(false, "RenderAPI::None is currently not supported!"); return nullptr;
-		case RendererAPI::OpenGL:
+		case RendererAPI::API::OpenGL:
 			return new OpenGLVertexArray();
 		}
 

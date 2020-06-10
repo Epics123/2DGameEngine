@@ -157,7 +157,9 @@
     <ClInclude Include="src\Mayhem\MouseButtonCodes.h" />
     <ClInclude Include="src\Mayhem\Renderer\Buffer.h" />
     <ClInclude Include="src\Mayhem\Renderer\GraphicsContext.h" />
+    <ClInclude Include="src\Mayhem\Renderer\RenderCommand.h" />
     <ClInclude Include="src\Mayhem\Renderer\Renderer.h" />
+    <ClInclude Include="src\Mayhem\Renderer\RendererAPI.h" />
     <ClInclude Include="src\Mayhem\Renderer\Shader.h" />
     <ClInclude Include="src\Mayhem\Renderer\VertexArray.h" />
     <ClInclude Include="src\Mayhem\Util\UtilMath.h" />
@@ -166,6 +168,7 @@
     <ClInclude Include="src\Mayhem\Window.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArrray.h" />
     <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
@@ -588,7 +591,9 @@
     <ClCompile Include="src\Mayhem\LayerStack.cpp" />
     <ClCompile Include="src\Mayhem\Log.cpp" />
     <ClCompile Include="src\Mayhem\Renderer\Buffer.cpp" />
+    <ClCompile Include="src\Mayhem\Renderer\RenderCommand.cpp" />
     <ClCompile Include="src\Mayhem\Renderer\Renderer.cpp" />
+    <ClCompile Include="src\Mayhem\Renderer\RendererAPI.cpp" />
     <ClCompile Include="src\Mayhem\Renderer\Shader.cpp" />
     <ClCompile Include="src\Mayhem\Renderer\VertexArray.cpp" />
     <ClCompile Include="src\Mayhem\Util\Math.cpp" />
@@ -596,6 +601,7 @@
     <ClCompile Include="src\Mayhem\Util\Vector3D.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLShader.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />

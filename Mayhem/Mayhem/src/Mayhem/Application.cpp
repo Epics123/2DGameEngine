@@ -1,7 +1,7 @@
 #include "mpch.h"
 #include "Application.h"
 
-#include <glad/glad.h>
+#include "Mayhem/Renderer/Renderer.h"
 
 #include "Input.h"
 
@@ -147,16 +147,18 @@ namespace Mayhem
 	{
 		while (mRunning)
 		{
-			glClearColor(0.1f, 0.1f, 0.1f, 1);
-			glClear(GL_COLOR_BUFFER_BIT);
+			RenderCommand::setClearColor({ 0.1f, 0.1f, 0.1f, 1 });
+			RenderCommand::clear();
+
+			Renderer::beginScene();
 
 			mBlueShader->bind();
-			mSquareVA->bind();
-			glDrawElements(GL_TRIANGLES, mSquareVA->getIndexBuffer()->getCount(), GL_UNSIGNED_INT, nullptr);
+			Renderer::submit(mSquareVA);
 
 			mShader->bind();
-			mVertexArray->bind();
-			glDrawElements(GL_TRIANGLES, mVertexArray->getIndexBuffer()->getCount(), GL_UNSIGNED_INT, nullptr);
+			Renderer::submit(mVertexArray);
+
+			Renderer::endScene();
 
 			for (Layer* layer : mLayerStack)
 				layer->onUpdate();
