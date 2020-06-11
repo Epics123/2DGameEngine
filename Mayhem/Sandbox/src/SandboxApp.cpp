@@ -128,22 +128,22 @@ public:
 		mBlueShader.reset(Mayhem::Shader::create(blueShaderVertexSrc, blueShaderFragmentSrc));
 	}
 
-	void onUpdate() override
+	void onUpdate(Mayhem::Timestep ts) override
 	{
 		if (Mayhem::Input::isKeyPressed(MH_KEY_LEFT))
-			mCameraPos.x -= mCameraMovementSpeed;
+			mCameraPos.x -= mCameraMovementSpeed * ts;
 		else if (Mayhem::Input::isKeyPressed(MH_KEY_RIGHT))
-			mCameraPos.x += mCameraMovementSpeed;
+			mCameraPos.x += mCameraMovementSpeed * ts;
 
 		if (Mayhem::Input::isKeyPressed(MH_KEY_DOWN))
-			mCameraPos.y -= mCameraMovementSpeed;
+			mCameraPos.y -= mCameraMovementSpeed * ts;
 		else if (Mayhem::Input::isKeyPressed(MH_KEY_UP))
-			mCameraPos.y += mCameraMovementSpeed;
+			mCameraPos.y += mCameraMovementSpeed * ts;
 
 		if (Mayhem::Input::isKeyPressed(MH_KEY_A))
-			mCameraRotation += mCameraRotationSpeed;
+			mCameraRotation += mCameraRotationSpeed * ts;
 		else if (Mayhem::Input::isKeyPressed(MH_KEY_D))
-			mCameraRotation -= mCameraRotationSpeed;
+			mCameraRotation -= mCameraRotationSpeed * ts;
 
 		Mayhem::RenderCommand::setClearColor({ 0.1f, 0.1f, 0.1f, 1 });
 		Mayhem::RenderCommand::clear();
@@ -174,8 +174,8 @@ private:
 	glm::vec3 mCameraPos;
 	float mCameraRotation = 0.0f;
 	
-	float mCameraMovementSpeed = 0.1f;
-	float mCameraRotationSpeed = 2.0f;
+	float mCameraMovementSpeed = 3.0f;
+	float mCameraRotationSpeed = 90.0f;
 
 	Mayhem::OrthographicCamera mCamera;
 };

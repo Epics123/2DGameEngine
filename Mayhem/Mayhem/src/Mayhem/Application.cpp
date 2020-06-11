@@ -5,6 +5,8 @@
 
 #include "Input.h"
 
+#include <GLFW/glfw3.h>
+
 namespace Mayhem
 {
 #define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
@@ -31,8 +33,12 @@ namespace Mayhem
 	{
 		while (mRunning)
 		{
+			float time = (float)glfwGetTime();
+			Timestep timestep = time - mLastFrameTime;
+			mLastFrameTime = time;
+
 			for (Layer* layer : mLayerStack)
-				layer->onUpdate();
+				layer->onUpdate(timestep);
 
 			mImGuiLayer->begin();
 			for (Layer* layer : mLayerStack)

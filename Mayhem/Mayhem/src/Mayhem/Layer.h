@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Mayhem/Core.h"
+#include "Mayhem/Core/Timestep.h"
 #include "Events/Event.h"
 
 namespace Mayhem
@@ -13,7 +14,7 @@ namespace Mayhem
 
 		virtual void onAttatch() {}
 		virtual void onDetatch() {}
-		virtual void onUpdate() {}
+		virtual void onUpdate(Timestep timestep) {}
 		virtual void onImGuiRender(){}
 		virtual void onEvent(Event& event) {}
 

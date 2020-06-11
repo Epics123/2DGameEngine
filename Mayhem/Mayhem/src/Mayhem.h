@@ -6,6 +6,8 @@
 #include "Mayhem/Layer.h"
 #include "Mayhem/Log.h"
 
+#include "Mayhem/Core/Timestep.h"
+
 #include "Mayhem/Input.h"
 #include "Mayhem/KeyCodes.h"
 #include "Mayhem/MouseButtonCodes.h"

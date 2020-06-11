@@ -143,6 +143,7 @@
     <ClInclude Include="src\Mayhem.h" />
     <ClInclude Include="src\Mayhem\Application.h" />
     <ClInclude Include="src\Mayhem\Core.h" />
+    <ClInclude Include="src\Mayhem\Core\Timestep.h" />
     <ClInclude Include="src\Mayhem\EntryPoint.h" />
     <ClInclude Include="src\Mayhem\Events\ApplicationEvent.h" />
     <ClInclude Include="src\Mayhem\Events\Event.h" />

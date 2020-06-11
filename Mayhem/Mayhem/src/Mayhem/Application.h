@@ -5,6 +5,8 @@
 #include "LayerStack.h"
 #include "Events/ApplicationEvent.h"
 
+#include "Mayhem/Core/Timestep.h"
+
 #include "Mayhem/ImGui/ImGuiLayer.h"
 
 namespace Mayhem
@@ -31,7 +33,9 @@ namespace Mayhem
 		ImGuiLayer* mImGuiLayer;
 		bool mRunning = true;
 		LayerStack mLayerStack;
+		float mLastFrameTime = 0.0f;
 
+	private:
 		bool onWindowClosed(WindowCloseEvent& event);
 
 	private:
