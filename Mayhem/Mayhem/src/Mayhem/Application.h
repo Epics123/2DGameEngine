@@ -7,15 +7,9 @@
 
 #include "Mayhem/ImGui/ImGuiLayer.h"
 
-#include "Mayhem/Renderer/Shader.h"
-#include "Mayhem/Renderer/Buffer.h"
-#include "Mayhem/Renderer/VertexArray.h"
-
-#include "Mayhem/Renderer/OrthographicCamera.h"
-
 namespace Mayhem
 {
-	class MAYHEM_API Application
+	class Application
 	{
 	public:
 		Application();
@@ -37,14 +31,6 @@ namespace Mayhem
 		ImGuiLayer* mImGuiLayer;
 		bool mRunning = true;
 		LayerStack mLayerStack;
-
-		std::shared_ptr<Shader> mShader;
-		std::shared_ptr<VertexArray> mVertexArray;
-
-		std::shared_ptr<VertexArray> mSquareVA;
-		std::shared_ptr<Shader> mBlueShader;
-
-		OrthographicCamera mCamera;
 
 		bool onWindowClosed(WindowCloseEvent& event);
 
