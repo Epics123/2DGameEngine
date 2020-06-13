@@ -1398,6 +1398,6 @@
     <ClCompile Include="src\Mayhem\Renderer\RendererAPI.cpp" />
     <ClCompile Include="src\Mayhem\Renderer\RenderCommand.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp" />
-    <ClCompile Include="src\Mayhem\Renderer\OtrthographicCamera.cpp" />
+    <ClCompile Include="src\Mayhem\Renderer\OrthographicCamera.cpp" />
   </ItemGroup>
 </Project>

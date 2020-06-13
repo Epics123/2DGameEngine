@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 #ifdef MH_PLATFORM_WINDOWS
 #if MH_DYNAMIC_LINK
 	#ifdef MH_BUILD_DLL
@@ -30,3 +32,12 @@
 #define MH_BIND_EVENT_FN(fn) std::bind(&fn, this, std::placeholders::_1)
 
 //#define BIT(x) = (1 << x)
+
+namespace Mayhem
+{
+	template<typename T>
+	using Scope = std::unique_ptr<T>;
+
+	template<typename T>
+	using Ref = std::shared_ptr<T>;
+}
