@@ -138,43 +138,10 @@ public:
 
 		mFlatColorShader.reset(Mayhem::Shader::create(flatColorShaderVertexSrc, flatColorShaderFragmentSrc));
 
-
-		std::string textureShaderVertexSrc = R"(
-			#version 330 core
-
-			layout(location = 0) in vec3 aPosition;
-			layout(location = 1) in vec2 aTexCoord;
-
-			uniform mat4 uViewProj;
-			uniform mat4 uTransform;
-
-			out vec2 vTexCoord;
-			
-			void main()
-			{
-				vTexCoord = aTexCoord;
-				gl_Position = uViewProj * uTransform * vec4(aPosition, 1.0);
-			}	
-		)";
-
-		std::string textureShaderFragmentSrc = R"(
-			#version 330 core
-
-			layout(location = 0) out vec4 color;
-
-			in vec2 vTexCoord;
-			
-			uniform sampler2D uTexture;
-			
-			void main()
-			{
-				color = texture(uTexture, vTexCoord);
-			}	
-		)";
-
-		mTextureShader.reset(Mayhem::Shader::create(textureShaderVertexSrc, textureShaderFragmentSrc));
+		mTextureShader.reset(Mayhem::Shader::create("assets/shaders/Texture.glsl"));
 
 		mTexture = Mayhem::Texture2D::create("assets/textures/Checkerboard.png");
+		mClassicSonicTexture = Mayhem::Texture2D::create("assets/textures/Tails.png");
 
 		std::dynamic_pointer_cast<Mayhem::OpenGLShader>(mTextureShader)->bind();
 		std::dynamic_pointer_cast<Mayhem::OpenGLShader>(mTextureShader)->uploadUniformInt("uTexture", 0);
@@ -222,6 +189,8 @@ public:
 
 		mTexture->bind();
 		Mayhem::Renderer::submit(mTextureShader, mSquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+		mClassicSonicTexture->bind();
+		Mayhem::Renderer::submit(mTextureShader, mSquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
 
 		//Triangle
 		//Mayhem::Renderer::submit(mShader, mVertexArray);
@@ -248,7 +217,7 @@ private:
 	Mayhem::Ref<Mayhem::VertexArray> mSquareVA;
 	Mayhem::Ref<Mayhem::Shader> mFlatColorShader, mTextureShader;
 
-	Mayhem::Ref<Mayhem::Texture2D> mTexture;
+	Mayhem::Ref<Mayhem::Texture2D> mTexture, mClassicSonicTexture;
 
 	Mayhem::OrthographicCamera mCamera;
 	

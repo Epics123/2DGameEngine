@@ -21,6 +21,8 @@ namespace Mayhem
 		mWindow = std::unique_ptr<Window>(Window::createWindow());
 		mWindow->setEventCallback(BIND_EVENT_FN(onEvent));
 
+		Renderer::init();
+
 		mImGuiLayer = new ImGuiLayer();
 		pushOverlay(mImGuiLayer);
 	}

@@ -6,6 +6,7 @@ namespace Mayhem
 {
 	class OpenGLRendererAPI : public RendererAPI
 	{
+		virtual void init() override;
 		virtual void setClearColor(const glm::vec4& color) override;
 		virtual void clear() override;
 
