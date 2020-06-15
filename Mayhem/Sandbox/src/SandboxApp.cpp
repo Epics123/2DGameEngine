@@ -41,18 +41,19 @@ public:
 
 		mSquareVA.reset(Mayhem::VertexArray::create());
 
-		float squareVerticies[3 * 4] = {
-			-0.5f, -0.5f, 0.0f,
-			 0.5f, -0.5f, 0.0f,
-			 0.5f,  0.5f, 0.0f,
-			-0.5f,  0.5f, 0.0f
+		float squareVerticies[5 * 4] = {
+			-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
+			 0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+			 0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
+			-0.5f,  0.5f, 0.0f, 0.0f, 1.0f
 		};
 
 		Mayhem::Ref<Mayhem::VertexBuffer> squareVB;
 		squareVB.reset(Mayhem::VertexBuffer::create(squareVerticies, sizeof(squareVerticies)));
 
 		Mayhem::BufferLayout squareVBLayout = {
-			{ Mayhem::ShaderDataType::Float3, "aPosition" }
+			{ Mayhem::ShaderDataType::Float3, "aPosition" },
+			{ Mayhem::ShaderDataType::Float2, "aTexCoord" }
 		};
 
 		squareVB->setLayout(squareVBLayout);
@@ -136,6 +137,47 @@ public:
 		)";
 
 		mFlatColorShader.reset(Mayhem::Shader::create(flatColorShaderVertexSrc, flatColorShaderFragmentSrc));
+
+
+		std::string textureShaderVertexSrc = R"(
+			#version 330 core
+
+			layout(location = 0) in vec3 aPosition;
+			layout(location = 1) in vec2 aTexCoord;
+
+			uniform mat4 uViewProj;
+			uniform mat4 uTransform;
+
+			out vec2 vTexCoord;
+			
+			void main()
+			{
+				vTexCoord = aTexCoord;
+				gl_Position = uViewProj * uTransform * vec4(aPosition, 1.0);
+			}	
+		)";
+
+		std::string textureShaderFragmentSrc = R"(
+			#version 330 core
+
+			layout(location = 0) out vec4 color;
+
+			in vec2 vTexCoord;
+			
+			uniform sampler2D uTexture;
+			
+			void main()
+			{
+				color = texture(uTexture, vTexCoord);
+			}	
+		)";
+
+		mTextureShader.reset(Mayhem::Shader::create(textureShaderVertexSrc, textureShaderFragmentSrc));
+
+		mTexture = Mayhem::Texture2D::create("assets/textures/Checkerboard.png");
+
+		std::dynamic_pointer_cast<Mayhem::OpenGLShader>(mTextureShader)->bind();
+		std::dynamic_pointer_cast<Mayhem::OpenGLShader>(mTextureShader)->uploadUniformInt("uTexture", 0);
 	}
 
 	void onUpdate(Mayhem::Timestep ts) override
@@ -177,7 +219,12 @@ public:
 				Mayhem::Renderer::submit(mFlatColorShader, mSquareVA, transform);
 			}
 		}
-		Mayhem::Renderer::submit(mShader, mVertexArray);
+
+		mTexture->bind();
+		Mayhem::Renderer::submit(mTextureShader, mSquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+
+		//Triangle
+		//Mayhem::Renderer::submit(mShader, mVertexArray);
 
 		Mayhem::Renderer::endScene();
 	}
@@ -199,7 +246,9 @@ private:
 	Mayhem::Ref<Mayhem::VertexArray> mVertexArray;
 
 	Mayhem::Ref<Mayhem::VertexArray> mSquareVA;
-	Mayhem::Ref<Mayhem::Shader> mFlatColorShader;
+	Mayhem::Ref<Mayhem::Shader> mFlatColorShader, mTextureShader;
+
+	Mayhem::Ref<Mayhem::Texture2D> mTexture;
 
 	Mayhem::OrthographicCamera mCamera;
 	
@@ -207,7 +256,7 @@ private:
 	float mCameraRotation = 0.0f;
 	
 	float mCameraMovementSpeed = 2.0f;
-	float mCameraRotationSpeed = 90.0f;
+	float mCameraRotationSpeed = 45.0f;
 
 	glm::vec3 mSquarePos;
 	float mSquareMoveSpeed = 1.0f;

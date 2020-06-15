@@ -17,6 +17,7 @@ IncludeDir["GLFW"] = "Mayhem/vendor/GLFW/include"
 IncludeDir["Glad"] = "Mayhem/vendor/Glad/include"
 IncludeDir["ImGui"] = "Mayhem/vendor/imgui"
 IncludeDir["glm"] = "Mayhem/vendor/glm"
+IncludeDir["stb_image"] = "Mayhem/vendor/stb_image"
 
 group "Dependencies"
 	include "Mayhem/vendor/GLFW"
@@ -42,6 +43,8 @@ project "Mayhem"
 	{
 		"%{prj.name}/src/**.h",
 		"%{prj.name}/src/**.cpp",
+		"%{prj.name}/vendor/stb_image/**.h",
+		"%{prj.name}/vendor/stb_image/**.cpp",
 		"%{prj.name}/vendor/glm/glm/**.hpp",
 		"%{prj.name}/vendor/glm/glm/**.inl",
 	}
@@ -58,7 +61,8 @@ project "Mayhem"
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.Glad}",
 		"%{IncludeDir.ImGui}",
-		"%{IncludeDir.glm}"
+		"%{IncludeDir.glm}",
+		"%{IncludeDir.stb_image}"
 	}
 	
 	links
