@@ -39,8 +39,11 @@ namespace Mayhem
 			Timestep timestep = time - mLastFrameTime;
 			mLastFrameTime = time;
 
-			for (Layer* layer : mLayerStack)
-				layer->onUpdate(timestep);
+			if (!mMinimized)
+			{
+				for (Layer* layer : mLayerStack)
+					layer->onUpdate(timestep);
+			}	
 
 			mImGuiLayer->begin();
 			for (Layer* layer : mLayerStack)
@@ -51,15 +54,16 @@ namespace Mayhem
 		}
 	}
 
-	void Application::onEvent(Event& event)
+	void Application::onEvent(Event& e)
 	{
-		EventDispatcher dispatcher(event);
+		EventDispatcher dispatcher(e);
 		dispatcher.dispatchEvent<WindowCloseEvent>(BIND_EVENT_FN(onWindowClosed));
+		dispatcher.dispatchEvent<WindowResizeEvent>(BIND_EVENT_FN(onWindowResize));
 
 		for (auto it = mLayerStack.end(); it != mLayerStack.begin();)
 		{
-			(*--it)->onEvent(event);
-			if (event.mHandled)
+			(*--it)->onEvent(e);
+			if (e.mHandled)
 				break;
 		}
 	}
@@ -76,9 +80,23 @@ namespace Mayhem
 		overlay->onAttatch();
 	}
 
-	bool Application::onWindowClosed(WindowCloseEvent& event)
+	bool Application::onWindowClosed(WindowCloseEvent& e)
 	{
 		mRunning = false;
 		return true;
+	}
+
+	bool Application::onWindowResize(WindowResizeEvent& e)
+	{
+		if (e.getWidth() == 0 || e.getHeight() == 0)
+		{
+			mMinimized = true;
+			return false;
+		}
+
+		mMinimized = false;
+		Renderer::onWindowResize(e.getWidth(), e.getHeight());
+
+		return false;
 	}
 }

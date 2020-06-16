@@ -19,7 +19,7 @@ namespace Mayhem
 
 		void run();
 
-		void onEvent(Event& event);
+		void onEvent(Event& e);
 
 		void pushLayer(Layer* layer);
 		void pushOverlay(Layer* overlay);
@@ -32,11 +32,13 @@ namespace Mayhem
 		std::unique_ptr<Window> mWindow;
 		ImGuiLayer* mImGuiLayer;
 		bool mRunning = true;
+		bool mMinimized = false;
 		LayerStack mLayerStack;
 		float mLastFrameTime = 0.0f;
 
 	private:
-		bool onWindowClosed(WindowCloseEvent& event);
+		bool onWindowClosed(WindowCloseEvent& e);
+		bool onWindowResize(WindowResizeEvent& e);
 
 	private:
 		static Application* sInstance;

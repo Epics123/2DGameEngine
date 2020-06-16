@@ -58,7 +58,7 @@ namespace Mayhem
 
 	bool OrthographicCameraController::onWindowResized(WindowResizeEvent& e)
 	{
-		mAspectRatio -= (float)e.getWidth() / (float)e.getHeight();
+		mAspectRatio = (float)e.getWidth() / (float)e.getHeight();
 		mCamera.setProjection(-mAspectRatio * mZoomLevel, mAspectRatio * mZoomLevel, -mZoomLevel, mZoomLevel);
 
 		return false;
