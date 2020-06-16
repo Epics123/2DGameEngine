@@ -12,11 +12,13 @@ namespace Mayhem
 	{
 	public:
 		OpenGLShader(const std::string& filepath);
-		OpenGLShader(const std::string& vertexSrc, const std::string& fragmentSrc);
+		OpenGLShader(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc);
 		virtual ~OpenGLShader();
 
 		virtual void bind() const override;
 		virtual void unbind() const override;
+
+		virtual const std::string& getName() const override { return mName; }
 
 		void uploadUniformInt(const std::string& name, int value);
 
@@ -35,5 +37,6 @@ namespace Mayhem
 
 	private:
 		uint32_t mRendererID;
+		std::string mName;
 	};
 }

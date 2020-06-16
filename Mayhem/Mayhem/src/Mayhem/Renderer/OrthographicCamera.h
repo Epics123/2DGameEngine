@@ -9,7 +9,10 @@ namespace Mayhem
 	public:
 		OrthographicCamera(float left, float right, float bottom, float top);
 
+		void setProjection(float left, float right, float bottom, float top);
+		
 		float getRotation() const { return mRotation; }
+
 		const glm::vec3& getPostition() const { return mPosition; }
 		const glm::mat4& getProjMatrix() const { return mProjMatrix; }
 		const glm::mat4& getViewMatrix() const { return mViewMatrix; }
@@ -17,6 +20,7 @@ namespace Mayhem
 
 		void setPostition(const glm::vec3& position) { mPosition = position; recalculateViewMatrix(); }
 		void setRotation(float rotation) { mRotation = rotation; recalculateViewMatrix(); }
+
 
 	private:
 		void recalculateViewMatrix();

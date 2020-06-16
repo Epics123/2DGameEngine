@@ -12,7 +12,7 @@ class ExampleLayer : public Mayhem::Layer
 {
 public:
 	ExampleLayer()
-		: Layer("Example"), mCamera(-1.6f, 1.6f, -0.9f, 0.9f), mCameraPos(0.0f), mSquarePos(0.0f)
+		: Layer("Example"), mCameraController(1280.0f / 720.0f)
 	{
 		mVertexArray.reset(Mayhem::VertexArray::create());
 
@@ -102,7 +102,7 @@ public:
 		
 		)";
 
-		mShader.reset(Mayhem::Shader::create(vertexSrc, fragmentSrc));
+		mShader = Mayhem::Shader::create("VertexPosColor", vertexSrc, fragmentSrc);
 
 		std::string flatColorShaderVertexSrc = R"(
 			#version 330 core
@@ -136,41 +136,27 @@ public:
 			}	
 		)";
 
-		mFlatColorShader.reset(Mayhem::Shader::create(flatColorShaderVertexSrc, flatColorShaderFragmentSrc));
+		mFlatColorShader = Mayhem::Shader::create("FlatColor", flatColorShaderVertexSrc, flatColorShaderFragmentSrc);
 
-		mTextureShader.reset(Mayhem::Shader::create("assets/shaders/Texture.glsl"));
+		auto textureShader = mShaderLibrary.load("assets/shaders/Texture.glsl");
 
 		mTexture = Mayhem::Texture2D::create("assets/textures/Checkerboard.png");
 		mClassicSonicTexture = Mayhem::Texture2D::create("assets/textures/Tails.png");
 
-		std::dynamic_pointer_cast<Mayhem::OpenGLShader>(mTextureShader)->bind();
-		std::dynamic_pointer_cast<Mayhem::OpenGLShader>(mTextureShader)->uploadUniformInt("uTexture", 0);
+		std::dynamic_pointer_cast<Mayhem::OpenGLShader>(textureShader)->bind();
+		std::dynamic_pointer_cast<Mayhem::OpenGLShader>(textureShader)->uploadUniformInt("uTexture", 0);
 	}
 
 	void onUpdate(Mayhem::Timestep ts) override
 	{
-		if (Mayhem::Input::isKeyPressed(MH_KEY_LEFT))
-			mCameraPos.x -= mCameraMovementSpeed * ts;
-		else if (Mayhem::Input::isKeyPressed(MH_KEY_RIGHT))
-			mCameraPos.x += mCameraMovementSpeed * ts;
+		//Update
+		mCameraController.onUpdate(ts);
 
-		if (Mayhem::Input::isKeyPressed(MH_KEY_DOWN))
-			mCameraPos.y -= mCameraMovementSpeed * ts;
-		else if (Mayhem::Input::isKeyPressed(MH_KEY_UP))
-			mCameraPos.y += mCameraMovementSpeed * ts;
-
-		if (Mayhem::Input::isKeyPressed(MH_KEY_A))
-			mCameraRotation += mCameraRotationSpeed * ts;
-		else if (Mayhem::Input::isKeyPressed(MH_KEY_D))
-			mCameraRotation -= mCameraRotationSpeed * ts;
-
+		//Render
 		Mayhem::RenderCommand::setClearColor({ 0.1f, 0.1f, 0.1f, 1 });
 		Mayhem::RenderCommand::clear();
 
-		mCamera.setPostition(mCameraPos);
-		mCamera.setRotation(mCameraRotation);
-
-		Mayhem::Renderer::beginScene(mCamera);
+		Mayhem::Renderer::beginScene(mCameraController.getCamera());
 
 		glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
 
@@ -187,10 +173,12 @@ public:
 			}
 		}
 
+		auto textureShader = mShaderLibrary.get("Texture");
+
 		mTexture->bind();
-		Mayhem::Renderer::submit(mTextureShader, mSquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+		Mayhem::Renderer::submit(textureShader, mSquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
 		mClassicSonicTexture->bind();
-		Mayhem::Renderer::submit(mTextureShader, mSquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+		Mayhem::Renderer::submit(textureShader, mSquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
 
 		//Triangle
 		//Mayhem::Renderer::submit(mShader, mVertexArray);
@@ -205,31 +193,22 @@ public:
 		ImGui::End();
 	}
 
-	void onEvent(Mayhem::Event& event) override
+	void onEvent(Mayhem::Event& e) override
 	{
-
+		mCameraController.onEvent(e);
 	}
 
 private:
+	Mayhem::ShaderLibrary mShaderLibrary;
 	Mayhem::Ref<Mayhem::Shader> mShader;
 	Mayhem::Ref<Mayhem::VertexArray> mVertexArray;
 
 	Mayhem::Ref<Mayhem::VertexArray> mSquareVA;
-	Mayhem::Ref<Mayhem::Shader> mFlatColorShader, mTextureShader;
+	Mayhem::Ref<Mayhem::Shader> mFlatColorShader;
 
 	Mayhem::Ref<Mayhem::Texture2D> mTexture, mClassicSonicTexture;
 
-	Mayhem::OrthographicCamera mCamera;
-	
-	glm::vec3 mCameraPos;
-	float mCameraRotation = 0.0f;
-	
-	float mCameraMovementSpeed = 2.0f;
-	float mCameraRotationSpeed = 45.0f;
-
-	glm::vec3 mSquarePos;
-	float mSquareMoveSpeed = 1.0f;
-
+	Mayhem::OrthographicCameraController mCameraController;
 	glm::vec3 mSquareColor = { 0.2f, 0.3f, 0.8f };
 };
 
