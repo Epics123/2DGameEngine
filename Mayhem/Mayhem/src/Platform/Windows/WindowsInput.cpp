@@ -1,7 +1,7 @@
 #include "mpch.h"
 #include "WindowsInput.h"
 
-#include "Mayhem/Application.h"
+#include "Mayhem/Core/Application.h"
 #include <GLFW/glfw3.h>
 
 namespace Mayhem

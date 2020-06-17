@@ -14,7 +14,7 @@
 #include <unordered_map>
 #include <unordered_set>
 
-#include "Mayhem/Log.h"
+#include "Mayhem/Core/Log.h"
 
 #ifdef MH_PLATFORM_WINDOWS
 	#include <Windows.h>

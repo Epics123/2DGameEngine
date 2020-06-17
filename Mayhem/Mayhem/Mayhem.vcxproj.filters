@@ -60,17 +60,38 @@
     <ClInclude Include="src\Mayhem.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\Mayhem\Application.h">
-      <Filter>src\Mayhem</Filter>
+    <ClInclude Include="src\Mayhem\Core\Application.h">
+      <Filter>src\Mayhem\Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Mayhem\Core.h">
-      <Filter>src\Mayhem</Filter>
+    <ClInclude Include="src\Mayhem\Core\Core.h">
+      <Filter>src\Mayhem\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mayhem\Core\EntryPoint.h">
+      <Filter>src\Mayhem\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mayhem\Core\Input.h">
+      <Filter>src\Mayhem\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mayhem\Core\KeyCodes.h">
+      <Filter>src\Mayhem\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mayhem\Core\Layer.h">
+      <Filter>src\Mayhem\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mayhem\Core\LayerStack.h">
+      <Filter>src\Mayhem\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mayhem\Core\Log.h">
+      <Filter>src\Mayhem\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mayhem\Core\MouseButtonCodes.h">
+      <Filter>src\Mayhem\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Mayhem\Core\Timestep.h">
       <Filter>src\Mayhem\Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Mayhem\EntryPoint.h">
-      <Filter>src\Mayhem</Filter>
+    <ClInclude Include="src\Mayhem\Core\Window.h">
+      <Filter>src\Mayhem\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Mayhem\Events\ApplicationEvent.h">
       <Filter>src\Mayhem\Events</Filter>
@@ -87,24 +108,6 @@
     <ClInclude Include="src\Mayhem\ImGui\ImGuiLayer.h">
       <Filter>src\Mayhem\ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="src\Mayhem\Input.h">
-      <Filter>src\Mayhem</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Mayhem\KeyCodes.h">
-      <Filter>src\Mayhem</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Mayhem\Layer.h">
-      <Filter>src\Mayhem</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Mayhem\LayerStack.h">
-      <Filter>src\Mayhem</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Mayhem\Log.h">
-      <Filter>src\Mayhem</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Mayhem\MouseButtonCodes.h">
-      <Filter>src\Mayhem</Filter>
-    </ClInclude>
     <ClInclude Include="src\Mayhem\Renderer\Buffer.h">
       <Filter>src\Mayhem\Renderer</Filter>
     </ClInclude>
@@ -112,6 +115,9 @@
       <Filter>src\Mayhem\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Mayhem\Renderer\OrthographicCamera.h">
+      <Filter>src\Mayhem\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mayhem\Renderer\OrthographicCameraController.h">
       <Filter>src\Mayhem\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Mayhem\Renderer\RenderCommand.h">
@@ -140,9 +146,6 @@
     </ClInclude>
     <ClInclude Include="src\Mayhem\Util\Vector3D.h">
       <Filter>src\Mayhem\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Mayhem\Window.h">
-      <Filter>src\Mayhem</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h">
       <Filter>src\Platform\OpenGL</Filter>
@@ -1398,11 +1401,19 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\Mayhem\OrthographicCameraController.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Mayhem\Application.cpp">
-      <Filter>src\Mayhem</Filter>
+    <ClCompile Include="src\Mayhem\Core\Application.cpp">
+      <Filter>src\Mayhem\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mayhem\Core\Layer.cpp">
+      <Filter>src\Mayhem\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mayhem\Core\LayerStack.cpp">
+      <Filter>src\Mayhem\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mayhem\Core\Log.cpp">
+      <Filter>src\Mayhem\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\Mayhem\ImGui\ImGuiBuild.cpp">
       <Filter>src\Mayhem\ImGui</Filter>
@@ -1410,19 +1421,13 @@
     <ClCompile Include="src\Mayhem\ImGui\ImGuiLayer.cpp">
       <Filter>src\Mayhem\ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="src\Mayhem\Layer.cpp">
-      <Filter>src\Mayhem</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Mayhem\LayerStack.cpp">
-      <Filter>src\Mayhem</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Mayhem\Log.cpp">
-      <Filter>src\Mayhem</Filter>
-    </ClCompile>
     <ClCompile Include="src\Mayhem\Renderer\Buffer.cpp">
       <Filter>src\Mayhem\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Mayhem\Renderer\OrthographicCamera.cpp">
+      <Filter>src\Mayhem\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mayhem\Renderer\OrthographicCameraController.cpp">
       <Filter>src\Mayhem\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Mayhem\Renderer\RenderCommand.cpp">
@@ -1482,6 +1487,5 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\Mayhem\OrthographicCameraController.cpp" />
   </ItemGroup>
 </Project>

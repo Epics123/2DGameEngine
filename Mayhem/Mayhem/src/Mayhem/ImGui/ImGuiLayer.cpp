@@ -5,7 +5,7 @@
 #include "examples/imgui_impl_glfw.h"
 #include "examples/imgui_impl_opengl3.h"
 
-#include "Mayhem/Application.h"
+#include "Mayhem/Core/Application.h"
 
 //Temp
 #include <GLFW/glfw3.h> 

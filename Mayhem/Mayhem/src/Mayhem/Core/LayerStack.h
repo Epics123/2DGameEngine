@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Mayhem/Core.h"
+#include "Mayhem/Core/Core.h"
 #include "Layer.h"
 
 namespace Mayhem
