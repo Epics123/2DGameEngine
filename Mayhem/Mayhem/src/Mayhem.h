@@ -17,6 +17,7 @@
 
 //---Renderer-----------------------------------
 #include "Mayhem/Renderer/Renderer.h"
+#include "Mayhem/Renderer/Renderer2D.h"
 #include "Mayhem/Renderer/RenderCommand.h"
 
 #include "Mayhem/Renderer/Buffer.h"
@@ -26,7 +27,3 @@
 
 #include "Mayhem/Renderer/OrthographicCamera.h"
 //----------------------------------------------
-
-//---Entry Point----------------
-#include "Mayhem/Core/EntryPoint.h"
-//------------------------------

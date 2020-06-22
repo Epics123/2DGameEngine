@@ -163,6 +163,7 @@
     <ClInclude Include="src\Mayhem\Renderer\OrthographicCameraController.h" />
     <ClInclude Include="src\Mayhem\Renderer\RenderCommand.h" />
     <ClInclude Include="src\Mayhem\Renderer\Renderer.h" />
+    <ClInclude Include="src\Mayhem\Renderer\Renderer2D.h" />
     <ClInclude Include="src\Mayhem\Renderer\RendererAPI.h" />
     <ClInclude Include="src\Mayhem\Renderer\Shader.h" />
     <ClInclude Include="src\Mayhem\Renderer\Texture.h" />
@@ -601,6 +602,7 @@
     <ClCompile Include="src\Mayhem\Renderer\OrthographicCameraController.cpp" />
     <ClCompile Include="src\Mayhem\Renderer\RenderCommand.cpp" />
     <ClCompile Include="src\Mayhem\Renderer\Renderer.cpp" />
+    <ClCompile Include="src\Mayhem\Renderer\Renderer2D.cpp" />
     <ClCompile Include="src\Mayhem\Renderer\RendererAPI.cpp" />
     <ClCompile Include="src\Mayhem\Renderer\Shader.cpp" />
     <ClCompile Include="src\Mayhem\Renderer\Texture.cpp" />

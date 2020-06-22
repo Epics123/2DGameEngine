@@ -1,4 +1,5 @@
 #include <Mayhem.h>
+#include <Mayhem/Core/EntryPoint.h>
 
 #include "imgui/imgui.h"
 
@@ -7,6 +8,8 @@
 
 #include "Platform/OpenGL/OpenGLShader.h"
 
+#include "Sandbox2D.h"
+
 
 class ExampleLayer : public Mayhem::Layer
 {
@@ -14,7 +17,7 @@ public:
 	ExampleLayer()
 		: Layer("Example"), mCameraController(1280.0f / 720.0f)
 	{
-		mVertexArray.reset(Mayhem::VertexArray::create());
+		mVertexArray = Mayhem::VertexArray::create();
 
 		float verticies[3 * 7] = {
 			-0.5f, -0.5f, 0.0f, 0.8f, 0.2f, 0.8f, 1.0f,
@@ -39,7 +42,7 @@ public:
 		indexBuffer.reset(Mayhem::IndexBuffer::create(indicies, sizeof(indicies) / sizeof(uint32_t)));
 		mVertexArray->setIndexBuffer(indexBuffer);
 
-		mSquareVA.reset(Mayhem::VertexArray::create());
+		mSquareVA = Mayhem::VertexArray::create();
 
 		float squareVerticies[5 * 4] = {
 			-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
@@ -218,7 +221,8 @@ class Sandbox : public Mayhem::Application
 public:
 	Sandbox()
 	{
-		pushLayer(new ExampleLayer());
+		//pushLayer(new ExampleLayer());
+		pushLayer(new Sandbox2D());
 	}
 
 	~Sandbox()

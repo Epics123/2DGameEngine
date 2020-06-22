@@ -1,10 +1,9 @@
-//Basic Texture Shader
+//Flat Color Shader
 
 #type vertex
 #version 330 core
 
 layout(location = 0) in vec3 aPosition;
-layout(location = 1) in vec2 aTexCoord;
 
 uniform mat4 uViewProj;
 uniform mat4 uTransform;
@@ -13,7 +12,6 @@ out vec2 vTexCoord;
 			
 void main()
 {
-	vTexCoord = aTexCoord;
 	gl_Position = uViewProj * uTransform * vec4(aPosition, 1.0);
 }
 
@@ -22,12 +20,10 @@ void main()
 #version 330 core
 
 layout(location = 0) out vec4 color;
-
-in vec2 vTexCoord;
 			
-uniform sampler2D uTexture;
+uniform vec4 uColor;
 			
 void main()
 {
-	color = texture(uTexture, vTexCoord * 10.0);
+	color = uColor;
 }
