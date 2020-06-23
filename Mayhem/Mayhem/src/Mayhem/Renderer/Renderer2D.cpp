@@ -13,8 +13,8 @@ namespace Mayhem
 	struct Renderer2DStorage
 	{
 		Ref<VertexArray> vertexArray;
-		Ref<Shader> flatColorShader;
 		Ref<Shader> textureShader;
+		Ref<Texture2D> whiteTexture;
 	};
 
 	static Renderer2DStorage* sData;
@@ -48,8 +48,11 @@ namespace Mayhem
 		Ref<IndexBuffer> squareIB;
 		squareIB.reset(IndexBuffer::create(squareIndicies, sizeof(squareIndicies) / sizeof(uint32_t)));
 		sData->vertexArray->setIndexBuffer(squareIB);
+		uint32_t whiteTextureData = 0xffffffff;
+		sData->whiteTexture = Texture2D::create(1, 1);
 
-		sData->flatColorShader = Shader::create("assets/shaders/FlatColor.glsl");
+		sData->whiteTexture->setData(&whiteTextureData, sizeof(uint32_t));
+
 		sData->textureShader = Shader::create("assets/shaders/Texture.glsl");
 		sData->textureShader->bind();
 		sData->textureShader->setInt("uTexture", 0);
@@ -62,9 +65,6 @@ namespace Mayhem
 
 	void Renderer2D::beginScene(const OrthographicCamera& camera)
 	{
-		sData->flatColorShader->bind();
-		sData->flatColorShader->setMat4("uViewProj", camera.getViewProjMatrix());
-
 		sData->textureShader->bind();
 		sData->textureShader->setMat4("uViewProj", camera.getViewProjMatrix());
 	}
@@ -81,11 +81,11 @@ namespace Mayhem
 
 	void Renderer2D::drawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color)
 	{
-		sData->flatColorShader->bind();
-		sData->flatColorShader->setFloat4("uColor", color);
+		sData->textureShader->setFloat4("uColor", color);
+		sData->whiteTexture->bind();
 
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
-		sData->flatColorShader->setMat4("uTransform", transform);
+		sData->textureShader->setMat4("uTransform", transform);
 
 		sData->vertexArray->bind();
 		RenderCommand::drawIndexed(sData->vertexArray);
@@ -98,12 +98,13 @@ namespace Mayhem
 
 	void Renderer2D::drawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture)
 	{
+		sData->textureShader->setFloat4("uColor", glm::vec4(1.0f));
 		sData->textureShader->bind();
 
+		texture->bind();
+		
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
 		sData->textureShader->setMat4("uTransform", transform);
-
-		texture->bind();
 
 		sData->vertexArray->bind();
 		RenderCommand::drawIndexed(sData->vertexArray);
