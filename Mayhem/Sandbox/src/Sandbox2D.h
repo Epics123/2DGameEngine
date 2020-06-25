@@ -23,6 +23,14 @@ private:
 	Mayhem::Ref<Mayhem::VertexArray> mSquareVA;
 
 	Mayhem::Ref<Mayhem::Texture2D> mTailsTexture;
+
+	struct ProfileResult
+	{
+		const char* name;
+		float time;
+	};
+
+	std::vector<ProfileResult> mProfileResults;
 	
 	glm::vec4 mSquareColor = { 0.2f, 0.3f, 0.8f, 1.0f };
 };
