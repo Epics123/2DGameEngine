@@ -9,7 +9,7 @@
 
 namespace Mayhem
 {
-	static bool sGLFWInitialized = false;
+	static uint8_t sGLFWWindowCount = 0;
 
 	static void GLFWErrorCallback(int error, const char* description)
 	{
@@ -18,22 +18,29 @@ namespace Mayhem
 
 	Mayhem::WindowsWindow::WindowsWindow(const WindowProps& props)
 	{
+		MH_PROFILE_FUNCTION();
 		init(props);
 	}
 
 	Mayhem::WindowsWindow::~WindowsWindow()
 	{
+		MH_PROFILE_FUNCTION();
+
 		shutdown();
 	}
 
 	void WindowsWindow::onUpdate()
 	{
+		MH_PROFILE_FUNCTION();
+
 		glfwPollEvents();
 		mContext->swapBuffers();
 	}
 
 	void WindowsWindow::setVsync(bool enabled)
 	{
+		MH_PROFILE_FUNCTION();
+
 		if (enabled)
 			glfwSwapInterval(1);
 		else
@@ -49,22 +56,26 @@ namespace Mayhem
 
 	void Mayhem::WindowsWindow::init(const WindowProps& props)
 	{
+		MH_PROFILE_FUNCTION();
 		mData.Title = props.Title;
 		mData.Width = props.Width;
 		mData.Height = props.Height;
 
 		MH_CORE_INFO("CreatingWindow {0} ({1}, {2})", props.Title, props.Width, props.Height);
 
-		if (!sGLFWInitialized)
+		if (sGLFWWindowCount == 0)
 		{
-			//TODO: glfw terminate on system shutdown
+			MH_PROFILE_SCOPE("glfwInit");
 			int success = glfwInit();
 			MH_CORE_ASSERT(success, "Could not initialize GLFW!");
 			glfwSetErrorCallback(GLFWErrorCallback);
-			sGLFWInitialized = true;
 		}
 
-		mWindow = glfwCreateWindow((int)props.Width, (int)props.Height, props.Title.c_str(), nullptr, nullptr);
+		{
+			MH_PROFILE_SCOPE("glfwCreateWindow");
+			mWindow = glfwCreateWindow((int)props.Width, (int)props.Height, props.Title.c_str(), nullptr, nullptr);
+			++sGLFWWindowCount;
+		}
 		
 		mContext = new OpenGLContext(mWindow);
 		mContext->init();
@@ -165,7 +176,15 @@ namespace Mayhem
 
 	void Mayhem::WindowsWindow::shutdown()
 	{
+		MH_PROFILE_FUNCTION();
+
 		glfwDestroyWindow(mWindow);
+		--sGLFWWindowCount;
+
+		if (sGLFWWindowCount == 0)
+		{
+			glfwTerminate();
+		}
 	}
 
 	Window* Window::createWindow(const WindowProps& props)

@@ -16,6 +16,8 @@
 
 #include "Mayhem/Core/Log.h"
 
+#include "Mayhem/Debug/Instramentor.h"
+
 #ifdef MH_PLATFORM_WINDOWS
 	#include <Windows.h>
 #endif // MH_PLATFORM_WINDOWS
