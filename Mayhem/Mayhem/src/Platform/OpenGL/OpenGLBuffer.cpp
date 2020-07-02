@@ -10,6 +10,15 @@ namespace Mayhem
 	// Vertex Buffer ///////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////////////////////////
 
+	OpenGLVertexBuffer::OpenGLVertexBuffer(uint32_t size)
+	{
+		MH_PROFILE_FUNCTION();
+
+		glCreateBuffers(1, &mRendererID);
+		glBindBuffer(GL_ARRAY_BUFFER, mRendererID);
+		glBufferData(GL_ARRAY_BUFFER, size, nullptr, GL_DYNAMIC_DRAW);
+	}
+
 	OpenGLVertexBuffer::OpenGLVertexBuffer(float* verticies, uint32_t size)
 	{
 		MH_PROFILE_FUNCTION();
@@ -38,6 +47,12 @@ namespace Mayhem
 		MH_PROFILE_FUNCTION();
 
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
+	}
+
+	void OpenGLVertexBuffer::setData(const void* data, uint32_t size)
+	{
+		glBindBuffer(GL_ARRAY_BUFFER, mRendererID);
+		glBufferSubData(GL_ARRAY_BUFFER, 0, size, data);
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////

@@ -7,6 +7,7 @@ namespace Mayhem
 	class OpenGLVertexBuffer : public VertexBuffer
 	{
 	public:
+		OpenGLVertexBuffer(uint32_t size);
 		OpenGLVertexBuffer(float* verticies, uint32_t size);
 		virtual ~OpenGLVertexBuffer();
 
@@ -15,6 +16,8 @@ namespace Mayhem
 
 		virtual const BufferLayout& getLayout() const override { return mLayout; }
 		virtual void setLayout(const BufferLayout& layout) override { mLayout = layout; }
+
+		virtual void setData(const void* data, uint32_t size) override;
 
 	private:
 		uint32_t mRendererID;

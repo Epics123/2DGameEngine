@@ -28,9 +28,9 @@ namespace Mayhem
 			sRendererAPI->clear();
 		}
 
-		inline static void drawIndexed(const std::shared_ptr<VertexArray>& vertexArray)
+		inline static void drawIndexed(const std::shared_ptr<VertexArray>& vertexArray, uint32_t indexCount = 0)
 		{
-			sRendererAPI->drawIndexed(vertexArray);
+			sRendererAPI->drawIndexed(vertexArray, indexCount);
 		}
 
 	private:
