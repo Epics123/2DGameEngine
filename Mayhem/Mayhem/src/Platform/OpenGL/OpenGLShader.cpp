@@ -201,6 +201,13 @@ namespace Mayhem
 		uploadUniformInt(name, value);
 	}
 
+	void OpenGLShader::setIntArray(const std::string& name, int* values, uint32_t count)
+	{
+		MH_PROFILE_FUNCTION();
+
+		uploadUniformIntArray(name, values, count);
+	}
+
 	void OpenGLShader::setFloat(const std::string& name, float value)
 	{
 		MH_PROFILE_FUNCTION();
@@ -233,6 +240,12 @@ namespace Mayhem
 	{
 		GLint location = glGetUniformLocation(mRendererID, name.c_str());
 		glUniform1i(location, value);
+	}
+
+	void OpenGLShader::uploadUniformIntArray(const std::string& name, int* values, uint32_t count)
+	{
+		GLint location = glGetUniformLocation(mRendererID, name.c_str());
+		glUniform1iv(location, count, values);
 	}
 
 	void OpenGLShader::uploadUniformFloat(const std::string& name, float value)

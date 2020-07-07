@@ -15,7 +15,8 @@ namespace Mayhem
 		glm::vec3 Position;
 		glm::vec4 Color;
 		glm::vec2 TexCoord;
-		//TODO:   texid
+		float TexIndex;
+		float TilingFactor;
 	};
 
 	struct Renderer2DData
@@ -23,6 +24,7 @@ namespace Mayhem
 		const uint32_t MAX_QUADS = 10000;
 		const uint32_t MAX_VERTICIES = MAX_QUADS * 4;
 		const uint32_t MAX_INDICIES = MAX_QUADS * 6;
+		static const uint32_t MAX_TEXTURE_SLOTS = 32; //TODO: RenderCaps
 
 
 		Ref<VertexArray> quadVertexArray;
@@ -33,6 +35,9 @@ namespace Mayhem
 		uint32_t quadIndexCount = 0;
 		QuadVertex* quadVertexBufferBase = nullptr;
 		QuadVertex* quadVertexBufferPtr = nullptr;
+
+		std::array<Ref<Texture2D>, MAX_TEXTURE_SLOTS> textureSlots;
+		uint32_t textureSlotIndex = 1; //0 = white texture
 	};
 
 	static Renderer2DData sData;
@@ -48,6 +53,8 @@ namespace Mayhem
 			{ ShaderDataType::Float3, "aPosition" },
 			{ ShaderDataType::Float4, "aColor" },
 			{ ShaderDataType::Float2, "aTexCoord" },
+			{ ShaderDataType::Float, "aTexIndex" },
+			{ ShaderDataType::Float, "aTilingFactor" },
 		});
 		sData.quadVertexArray->addVertexBuffer(sData.quadVertexBuffer);
 
@@ -78,9 +85,15 @@ namespace Mayhem
 
 		sData.whiteTexture->setData(&whiteTextureData, sizeof(uint32_t));
 
+		int32_t samplers[sData.MAX_TEXTURE_SLOTS];
+		for (uint32_t i = 0; i < sData.MAX_TEXTURE_SLOTS; i++)
+			samplers[i] = i;
+
 		sData.textureShader = Shader::create("assets/shaders/Texture.glsl");
 		sData.textureShader->bind();
-		sData.textureShader->setInt("uTexture", 0);
+		sData.textureShader->setIntArray("uTextures", samplers, sData.MAX_TEXTURE_SLOTS);
+
+		sData.textureSlots[0] = sData.whiteTexture;
 	}
 
 	void Renderer2D::shutdown()
@@ -97,6 +110,8 @@ namespace Mayhem
 
 		sData.quadIndexCount = 0;
 		sData.quadVertexBufferPtr = sData.quadVertexBufferBase;
+
+		sData.textureSlotIndex = 1;
 	}
 
 	void Renderer2D::endScene()
@@ -111,6 +126,12 @@ namespace Mayhem
 
 	void Renderer2D::flush()
 	{
+		//Bind textures
+		for (uint32_t i = 0; i < sData.textureSlotIndex; i++)
+		{
+			sData.textureSlots[i]->bind(i);
+		}
+
 		RenderCommand::drawIndexed(sData.quadVertexArray, sData.quadIndexCount);
 	}
 
@@ -123,24 +144,35 @@ namespace Mayhem
 	{
 		MH_PROFILE_FUNCTION();
 
+		const float texIndex = 0.0f; //White Texture
+		const float tilingFactor = 1.0f;
+
 		sData.quadVertexBufferPtr->Position = position;
 		sData.quadVertexBufferPtr->Color = color;
 		sData.quadVertexBufferPtr->TexCoord = { 0.0f, 0.0f };
+		sData.quadVertexBufferPtr->TexIndex = texIndex;
+		sData.quadVertexBufferPtr->TilingFactor = tilingFactor;
 		sData.quadVertexBufferPtr++;
 
 		sData.quadVertexBufferPtr->Position = { position.x + size.x, position.y, 0.0f };
 		sData.quadVertexBufferPtr->Color = color;
 		sData.quadVertexBufferPtr->TexCoord = { 1.0f, 0.0f };
+		sData.quadVertexBufferPtr->TexIndex = texIndex;
+		sData.quadVertexBufferPtr->TilingFactor = tilingFactor;
 		sData.quadVertexBufferPtr++;
 
 		sData.quadVertexBufferPtr->Position = { position.x + size.x, position.y + size.y, 0.0f };
 		sData.quadVertexBufferPtr->Color = color;
 		sData.quadVertexBufferPtr->TexCoord = { 1.0f, 1.0f };
+		sData.quadVertexBufferPtr->TexIndex = texIndex;
+		sData.quadVertexBufferPtr->TilingFactor = tilingFactor;
 		sData.quadVertexBufferPtr++;
 
 		sData.quadVertexBufferPtr->Position = { position.x, position.y + size.y, 0.0f };
 		sData.quadVertexBufferPtr->Color = color;
 		sData.quadVertexBufferPtr->TexCoord = { 0.0f, 1.0f };
+		sData.quadVertexBufferPtr->TexIndex = texIndex;
+		sData.quadVertexBufferPtr->TilingFactor = tilingFactor;
 		sData.quadVertexBufferPtr++;
 
 		sData.quadIndexCount += 6;
@@ -164,7 +196,56 @@ namespace Mayhem
 	{
 		MH_PROFILE_FUNCTION();
 
-		sData.textureShader->setFloat4("uColor", tintColor);
+		constexpr glm::vec4 color = { 1.0f, 1.0f, 1.0f, 1.0f };
+
+		float textureIndex = 0.0f;
+		for (uint32_t i = 1; i < sData.textureSlotIndex; i++)
+		{
+			if (*sData.textureSlots[i].get() == *texture.get())
+			{
+				textureIndex = float(i);
+				break;
+			}
+		}
+
+		if (textureIndex == 0.0f)
+		{
+			textureIndex = (float)sData.textureSlotIndex;
+			sData.textureSlots[sData.textureSlotIndex] = texture;
+			sData.textureSlotIndex++;
+		}
+
+		sData.quadVertexBufferPtr->Position = position;
+		sData.quadVertexBufferPtr->Color = color;
+		sData.quadVertexBufferPtr->TexCoord = { 0.0f, 0.0f };
+		sData.quadVertexBufferPtr->TexIndex = textureIndex;
+		sData.quadVertexBufferPtr->TilingFactor = tilingFactor;
+		sData.quadVertexBufferPtr++;
+
+		sData.quadVertexBufferPtr->Position = { position.x + size.x, position.y, 0.0f };
+		sData.quadVertexBufferPtr->Color = color;
+		sData.quadVertexBufferPtr->TexCoord = { 1.0f, 0.0f };
+		sData.quadVertexBufferPtr->TexIndex = textureIndex;
+		sData.quadVertexBufferPtr->TilingFactor = tilingFactor;
+		sData.quadVertexBufferPtr++;
+
+		sData.quadVertexBufferPtr->Position = { position.x + size.x, position.y + size.y, 0.0f };
+		sData.quadVertexBufferPtr->Color = color;
+		sData.quadVertexBufferPtr->TexCoord = { 1.0f, 1.0f };
+		sData.quadVertexBufferPtr->TexIndex = textureIndex;
+		sData.quadVertexBufferPtr->TilingFactor = tilingFactor;
+		sData.quadVertexBufferPtr++;
+
+		sData.quadVertexBufferPtr->Position = { position.x, position.y + size.y, 0.0f };
+		sData.quadVertexBufferPtr->Color = color;
+		sData.quadVertexBufferPtr->TexCoord = { 0.0f, 1.0f };
+		sData.quadVertexBufferPtr->TexIndex = textureIndex;
+		sData.quadVertexBufferPtr->TilingFactor = tilingFactor;
+		sData.quadVertexBufferPtr++;
+
+		sData.quadIndexCount += 6;
+
+		/*sData.textureShader->setFloat4("uColor", tintColor);
 		sData.textureShader->setFloat("uTilingFactor", tilingFactor);
 		sData.textureShader->bind();
 
@@ -174,7 +255,7 @@ namespace Mayhem
 		sData.textureShader->setMat4("uTransform", transform);
 
 		sData.quadVertexArray->bind();
-		RenderCommand::drawIndexed(sData.quadVertexArray);
+		RenderCommand::drawIndexed(sData.quadVertexArray);*/
 	}
 
 	void Renderer2D::drawRotatedQuad(const glm::vec2& position, const glm::vec2& size, float rotation, const glm::vec4& color)
