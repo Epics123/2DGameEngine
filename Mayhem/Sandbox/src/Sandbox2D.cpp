@@ -18,6 +18,9 @@ void Sandbox2D::onAttatch()
 	MH_PROFILE_FUNCTION();
 
 	mTailsTexture = Mayhem::Texture2D::create("assets/textures/Tails.png");
+	mSpriteSheet = Mayhem::Texture2D::create("assets/game/textures/RPGpack_sheet_2X.png");
+
+	mTextureStairs = Mayhem::SubTexture2D::createFromCoords(mSpriteSheet, { 7, 6 }, { 128, 128 });
 }
 
 void Sandbox2D::onDetatch()
@@ -65,6 +68,10 @@ void Sandbox2D::onUpdate(Mayhem::Timestep ts)
 				Mayhem::Renderer2D::drawQuad({ x, y }, { 0.45f, 0.45f }, color);
 			}
 		}
+		Mayhem::Renderer2D::endScene();
+
+		Mayhem::Renderer2D::beginScene(mCameraController.getCamera());
+		Mayhem::Renderer2D::drawQuad({ 0.0f, 0.0f, 0.5f }, { 1.0f, 1.0f }, mTextureStairs);
 		Mayhem::Renderer2D::endScene();
 	}
 }

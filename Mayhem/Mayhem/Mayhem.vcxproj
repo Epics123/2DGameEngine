@@ -167,6 +167,7 @@
     <ClInclude Include="src\Mayhem\Renderer\Renderer2D.h" />
     <ClInclude Include="src\Mayhem\Renderer\RendererAPI.h" />
     <ClInclude Include="src\Mayhem\Renderer\Shader.h" />
+    <ClInclude Include="src\Mayhem\Renderer\SubTexture2D.h" />
     <ClInclude Include="src\Mayhem\Renderer\Texture.h" />
     <ClInclude Include="src\Mayhem\Renderer\VertexArray.h" />
     <ClInclude Include="src\Mayhem\Util\UtilMath.h" />
@@ -606,6 +607,7 @@
     <ClCompile Include="src\Mayhem\Renderer\Renderer2D.cpp" />
     <ClCompile Include="src\Mayhem\Renderer\RendererAPI.cpp" />
     <ClCompile Include="src\Mayhem\Renderer\Shader.cpp" />
+    <ClCompile Include="src\Mayhem\Renderer\SubTexture2D.cpp" />
     <ClCompile Include="src\Mayhem\Renderer\Texture.cpp" />
     <ClCompile Include="src\Mayhem\Renderer\VertexArray.cpp" />
     <ClCompile Include="src\Mayhem\Util\Math.cpp" />
@@ -638,4 +640,4 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
-</Project> 
+</Project>

@@ -23,6 +23,7 @@
 #include "Mayhem/Renderer/Buffer.h"
 #include "Mayhem/Renderer/Shader.h"
 #include "Mayhem/Renderer/Texture.h"
+#include "Mayhem/Renderer/SubTexture2D.h"
 #include "Mayhem/Renderer/VertexArray.h"
 
 #include "Mayhem/Renderer/OrthographicCamera.h"
