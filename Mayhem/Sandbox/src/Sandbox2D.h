@@ -25,6 +25,7 @@ private:
 	Mayhem::Ref<Mayhem::Texture2D> mTailsTexture;
 	Mayhem::Ref<Mayhem::Texture2D> mSpriteSheet;
 	Mayhem::Ref<Mayhem::SubTexture2D> mTextureStairs;
+	Mayhem::Ref<Mayhem::SubTexture2D> mTextureTree;
 	
 	glm::vec4 mSquareColor = { 0.2f, 0.3f, 0.8f, 1.0f };
 };

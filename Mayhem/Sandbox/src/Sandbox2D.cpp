@@ -21,6 +21,7 @@ void Sandbox2D::onAttatch()
 	mSpriteSheet = Mayhem::Texture2D::create("assets/game/textures/RPGpack_sheet_2X.png");
 
 	mTextureStairs = Mayhem::SubTexture2D::createFromCoords(mSpriteSheet, { 7, 6 }, { 128, 128 });
+	mTextureTree = Mayhem::SubTexture2D::createFromCoords(mSpriteSheet, { 2, 1 }, { 128, 128 }, { 1, 2 });
 }
 
 void Sandbox2D::onDetatch()
@@ -60,18 +61,8 @@ void Sandbox2D::onUpdate(Mayhem::Timestep ts)
 		Mayhem::Renderer2D::endScene();
 
 		Mayhem::Renderer2D::beginScene(mCameraController.getCamera());
-		for (float y = -5.0f; y < 5.0f; y += 0.5f)
-		{
-			for (float x = -5.0f; x < 5.0f; x += 0.5f)
-			{
-				glm::vec4 color = { (x + 0.5f) / 10.0f, 0.4f, (y + 0.5f) / 10.0f, 0.7f };
-				Mayhem::Renderer2D::drawQuad({ x, y }, { 0.45f, 0.45f }, color);
-			}
-		}
-		Mayhem::Renderer2D::endScene();
-
-		Mayhem::Renderer2D::beginScene(mCameraController.getCamera());
-		Mayhem::Renderer2D::drawQuad({ 0.0f, 0.0f, 0.5f }, { 1.0f, 1.0f }, mTextureStairs);
+		Mayhem::Renderer2D::drawQuad({ -2.5f, 0.0f, 0.5f }, { 1.0f, 1.0f }, mTextureStairs);
+		Mayhem::Renderer2D::drawQuad({ -2.5f, -2.0f, 0.5f }, { 1.0f, 2.0f }, mTextureTree);
 		Mayhem::Renderer2D::endScene();
 	}
 }

@@ -164,42 +164,27 @@ namespace Mayhem
 	{
 		MH_PROFILE_FUNCTION();
 
-		if (sData.QuadIndexCount >= Renderer2DData::MAX_INDICIES)
-			flushAndReset();
+		constexpr size_t quadVertexCount = 4;
+		constexpr glm::vec2 textureCoords[] = { {0.0f, 0.0f}, {1.0f, 0.0f}, {1.0f , 1.0f}, {0.0f, 1.0f} };
 
 		const float textureIndex = 0.0f; //White Texture
 		const float tilingFactor = 1.0f;
 
+		if (sData.QuadIndexCount >= Renderer2DData::MAX_INDICIES)
+			flushAndReset();
+
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
 			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
 
-		sData.QuadVertexBufferPtr->Position = transform * sData.QuadVertexPositions[0];
-		sData.QuadVertexBufferPtr->Color = color;
-		sData.QuadVertexBufferPtr->TexCoord = { 0.0f, 0.0f };
-		sData.QuadVertexBufferPtr->TexIndex = textureIndex;
-		sData.QuadVertexBufferPtr->TilingFactor = tilingFactor;
-		sData.QuadVertexBufferPtr++;
-
-		sData.QuadVertexBufferPtr->Position = transform * sData.QuadVertexPositions[1];
-		sData.QuadVertexBufferPtr->Color = color;
-		sData.QuadVertexBufferPtr->TexCoord = { 1.0f, 0.0f };
-		sData.QuadVertexBufferPtr->TexIndex = textureIndex;
-		sData.QuadVertexBufferPtr->TilingFactor = tilingFactor;
-		sData.QuadVertexBufferPtr++;
-
-		sData.QuadVertexBufferPtr->Position = transform * sData.QuadVertexPositions[2];
-		sData.QuadVertexBufferPtr->Color = color;
-		sData.QuadVertexBufferPtr->TexCoord = { 1.0f, 1.0f };
-		sData.QuadVertexBufferPtr->TexIndex = textureIndex;
-		sData.QuadVertexBufferPtr->TilingFactor = tilingFactor;
-		sData.QuadVertexBufferPtr++;
-
-		sData.QuadVertexBufferPtr->Position = transform * sData.QuadVertexPositions[3];
-		sData.QuadVertexBufferPtr->Color = color;
-		sData.QuadVertexBufferPtr->TexCoord = { 0.0f, 1.0f };
-		sData.QuadVertexBufferPtr->TexIndex = textureIndex;
-		sData.QuadVertexBufferPtr->TilingFactor = tilingFactor;
-		sData.QuadVertexBufferPtr++;
+		for (size_t i = 0; i < quadVertexCount; i++)
+		{
+			sData.QuadVertexBufferPtr->Position = transform * sData.QuadVertexPositions[i];
+			sData.QuadVertexBufferPtr->Color = color;
+			sData.QuadVertexBufferPtr->TexCoord = textureCoords[i];
+			sData.QuadVertexBufferPtr->TexIndex = textureIndex;
+			sData.QuadVertexBufferPtr->TilingFactor = tilingFactor;
+			sData.QuadVertexBufferPtr++;
+		}
 
 		sData.QuadIndexCount += 6;
 
@@ -215,10 +200,12 @@ namespace Mayhem
 	{
 		MH_PROFILE_FUNCTION();
 
+		constexpr size_t quadVertexCount = 4;
+		constexpr glm::vec4 color = { 1.0f, 1.0f, 1.0f, 1.0f };
+		constexpr glm::vec2 textureCoords[] = { {0.0f, 0.0f}, {1.0f, 0.0f}, {1.0f , 1.0f}, {0.0f, 1.0f} };
+
 		if (sData.QuadIndexCount >= Renderer2DData::MAX_INDICIES)
 			flushAndReset();
-
-		constexpr glm::vec4 color = { 1.0f, 1.0f, 1.0f, 1.0f };
 
 		float textureIndex = 0.0f;
 		for (uint32_t i = 1; i < sData.TextureSlotIndex; i++)
@@ -240,33 +227,15 @@ namespace Mayhem
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
 			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
 
-		sData.QuadVertexBufferPtr->Position = transform * sData.QuadVertexPositions[0];
-		sData.QuadVertexBufferPtr->Color = color;
-		sData.QuadVertexBufferPtr->TexCoord = { 0.0f, 0.0f };
-		sData.QuadVertexBufferPtr->TexIndex = textureIndex;
-		sData.QuadVertexBufferPtr->TilingFactor = tilingFactor;
-		sData.QuadVertexBufferPtr++;
-
-		sData.QuadVertexBufferPtr->Position = transform * sData.QuadVertexPositions[1];
-		sData.QuadVertexBufferPtr->Color = color;
-		sData.QuadVertexBufferPtr->TexCoord = { 1.0f, 0.0f };
-		sData.QuadVertexBufferPtr->TexIndex = textureIndex;
-		sData.QuadVertexBufferPtr->TilingFactor = tilingFactor;
-		sData.QuadVertexBufferPtr++;
-
-		sData.QuadVertexBufferPtr->Position = transform * sData.QuadVertexPositions[2];
-		sData.QuadVertexBufferPtr->Color = color;
-		sData.QuadVertexBufferPtr->TexCoord = { 1.0f, 1.0f };
-		sData.QuadVertexBufferPtr->TexIndex = textureIndex;
-		sData.QuadVertexBufferPtr->TilingFactor = tilingFactor;
-		sData.QuadVertexBufferPtr++;
-
-		sData.QuadVertexBufferPtr->Position = transform * sData.QuadVertexPositions[3];
-		sData.QuadVertexBufferPtr->Color = color;
-		sData.QuadVertexBufferPtr->TexCoord = { 0.0f, 1.0f };
-		sData.QuadVertexBufferPtr->TexIndex = textureIndex;
-		sData.QuadVertexBufferPtr->TilingFactor = tilingFactor;
-		sData.QuadVertexBufferPtr++;
+		for (size_t i = 0; i < quadVertexCount; i++)
+		{
+			sData.QuadVertexBufferPtr->Position = transform * sData.QuadVertexPositions[i];
+			sData.QuadVertexBufferPtr->Color = color;
+			sData.QuadVertexBufferPtr->TexCoord = textureCoords[i];
+			sData.QuadVertexBufferPtr->TexIndex = textureIndex;
+			sData.QuadVertexBufferPtr->TilingFactor = tilingFactor;
+			sData.QuadVertexBufferPtr++;
+		}
 
 		sData.QuadIndexCount += 6;
 
@@ -311,33 +280,15 @@ namespace Mayhem
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
 			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
 
-		sData.QuadVertexBufferPtr->Position = transform * sData.QuadVertexPositions[0];
-		sData.QuadVertexBufferPtr->Color = color;
-		sData.QuadVertexBufferPtr->TexCoord = { 0.0f, 0.0f };
-		sData.QuadVertexBufferPtr->TexIndex = textureIndex;
-		sData.QuadVertexBufferPtr->TilingFactor = tilingFactor;
-		sData.QuadVertexBufferPtr++;
-
-		sData.QuadVertexBufferPtr->Position = transform * sData.QuadVertexPositions[1];
-		sData.QuadVertexBufferPtr->Color = color;
-		sData.QuadVertexBufferPtr->TexCoord = { 1.0f, 0.0f };
-		sData.QuadVertexBufferPtr->TexIndex = textureIndex;
-		sData.QuadVertexBufferPtr->TilingFactor = tilingFactor;
-		sData.QuadVertexBufferPtr++;
-
-		sData.QuadVertexBufferPtr->Position = transform * sData.QuadVertexPositions[2];
-		sData.QuadVertexBufferPtr->Color = color;
-		sData.QuadVertexBufferPtr->TexCoord = { 1.0f, 1.0f };
-		sData.QuadVertexBufferPtr->TexIndex = textureIndex;
-		sData.QuadVertexBufferPtr->TilingFactor = tilingFactor;
-		sData.QuadVertexBufferPtr++;
-
-		sData.QuadVertexBufferPtr->Position = transform * sData.QuadVertexPositions[3];
-		sData.QuadVertexBufferPtr->Color = color;
-		sData.QuadVertexBufferPtr->TexCoord = { 0.0f, 1.0f };
-		sData.QuadVertexBufferPtr->TexIndex = textureIndex;
-		sData.QuadVertexBufferPtr->TilingFactor = tilingFactor;
-		sData.QuadVertexBufferPtr++;
+		for (size_t i = 0; i < quadVertexCount; i++)
+		{
+			sData.QuadVertexBufferPtr->Position = transform * sData.QuadVertexPositions[i];
+			sData.QuadVertexBufferPtr->Color = color;
+			sData.QuadVertexBufferPtr->TexCoord = textureCoords[i];
+			sData.QuadVertexBufferPtr->TexIndex = textureIndex;
+			sData.QuadVertexBufferPtr->TilingFactor = tilingFactor;
+			sData.QuadVertexBufferPtr++;
+		}
 
 		sData.QuadIndexCount += 6;
 
@@ -353,44 +304,28 @@ namespace Mayhem
 	{
 		MH_PROFILE_FUNCTION();
 
-		if (sData.QuadIndexCount >= Renderer2DData::MAX_INDICIES)
-			flushAndReset();
+		constexpr size_t quadVertexCount = 4;
+		constexpr glm::vec2 textureCoords[] = { {0.0f, 0.0f}, {1.0f, 0.0f}, {1.0f , 1.0f}, {0.0f, 1.0f} };
 
 		const float texIndex = 0.0f; //White Texture
 		const float tilingFactor = 1.0f;
+
+		if (sData.QuadIndexCount >= Renderer2DData::MAX_INDICIES)
+			flushAndReset();
 
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
 			* glm::rotate(glm::mat4(1.0f), glm::radians(rotation), { 0.0f, 0.0f, 1.0f, })
 			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
 
-
-		sData.QuadVertexBufferPtr->Position = transform * sData.QuadVertexPositions[0];
-		sData.QuadVertexBufferPtr->Color = color;
-		sData.QuadVertexBufferPtr->TexCoord = { 0.0f, 0.0f };
-		sData.QuadVertexBufferPtr->TexIndex = texIndex;
-		sData.QuadVertexBufferPtr->TilingFactor = tilingFactor;
-		sData.QuadVertexBufferPtr++;
-
-		sData.QuadVertexBufferPtr->Position = transform * sData.QuadVertexPositions[1];
-		sData.QuadVertexBufferPtr->Color = color;
-		sData.QuadVertexBufferPtr->TexCoord = { 1.0f, 0.0f };
-		sData.QuadVertexBufferPtr->TexIndex = texIndex;
-		sData.QuadVertexBufferPtr->TilingFactor = tilingFactor;
-		sData.QuadVertexBufferPtr++;
-
-		sData.QuadVertexBufferPtr->Position = transform * sData.QuadVertexPositions[2];
-		sData.QuadVertexBufferPtr->Color = color;
-		sData.QuadVertexBufferPtr->TexCoord = { 1.0f, 1.0f };
-		sData.QuadVertexBufferPtr->TexIndex = texIndex;
-		sData.QuadVertexBufferPtr->TilingFactor = tilingFactor;
-		sData.QuadVertexBufferPtr++;
-
-		sData.QuadVertexBufferPtr->Position = transform * sData.QuadVertexPositions[3];
-		sData.QuadVertexBufferPtr->Color = color;
-		sData.QuadVertexBufferPtr->TexCoord = { 0.0f, 1.0f };
-		sData.QuadVertexBufferPtr->TexIndex = texIndex;
-		sData.QuadVertexBufferPtr->TilingFactor = tilingFactor;
-		sData.QuadVertexBufferPtr++;
+		for (size_t i = 0; i < quadVertexCount; i++)
+		{
+			sData.QuadVertexBufferPtr->Position = transform * sData.QuadVertexPositions[i];
+			sData.QuadVertexBufferPtr->Color = color;
+			sData.QuadVertexBufferPtr->TexCoord = textureCoords[i];
+			sData.QuadVertexBufferPtr->TexIndex = texIndex;
+			sData.QuadVertexBufferPtr->TilingFactor = tilingFactor;
+			sData.QuadVertexBufferPtr++;
+		}
 
 		sData.QuadIndexCount += 6;
 		sData.Stats.QuadCount++;
@@ -405,10 +340,12 @@ namespace Mayhem
 	{
 		MH_PROFILE_FUNCTION();
 
+		constexpr size_t quadVertexCount = 4;
+		constexpr glm::vec4 color = { 1.0f, 1.0f, 1.0f, 1.0f };
+		constexpr glm::vec2 textureCoords[] = { {0.0f, 0.0f}, {1.0f, 0.0f}, {1.0f , 1.0f}, {0.0f, 1.0f} };
+
 		if (sData.QuadIndexCount >= Renderer2DData::MAX_INDICIES)
 			flushAndReset();
-
-		constexpr glm::vec4 color = { 1.0f, 1.0f, 1.0f, 1.0f };
 
 		float textureIndex = 0.0f;
 		for (uint32_t i = 1; i < sData.TextureSlotIndex; i++)
@@ -432,33 +369,15 @@ namespace Mayhem
 			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
 
 
-		sData.QuadVertexBufferPtr->Position = transform * sData.QuadVertexPositions[0];
-		sData.QuadVertexBufferPtr->Color = color;
-		sData.QuadVertexBufferPtr->TexCoord = { 0.0f, 0.0f };
-		sData.QuadVertexBufferPtr->TexIndex = textureIndex;
-		sData.QuadVertexBufferPtr->TilingFactor = tilingFactor;
-		sData.QuadVertexBufferPtr++;
-
-		sData.QuadVertexBufferPtr->Position = transform * sData.QuadVertexPositions[1];
-		sData.QuadVertexBufferPtr->Color = color;
-		sData.QuadVertexBufferPtr->TexCoord = { 1.0f, 0.0f };
-		sData.QuadVertexBufferPtr->TexIndex = textureIndex;
-		sData.QuadVertexBufferPtr->TilingFactor = tilingFactor;
-		sData.QuadVertexBufferPtr++;
-
-		sData.QuadVertexBufferPtr->Position = transform * sData.QuadVertexPositions[2];
-		sData.QuadVertexBufferPtr->Color = color;
-		sData.QuadVertexBufferPtr->TexCoord = { 1.0f, 1.0f };
-		sData.QuadVertexBufferPtr->TexIndex = textureIndex;
-		sData.QuadVertexBufferPtr->TilingFactor = tilingFactor;
-		sData.QuadVertexBufferPtr++;
-
-		sData.QuadVertexBufferPtr->Position = transform * sData.QuadVertexPositions[3];
-		sData.QuadVertexBufferPtr->Color = color;
-		sData.QuadVertexBufferPtr->TexCoord = { 0.0f, 1.0f };
-		sData.QuadVertexBufferPtr->TexIndex = textureIndex;
-		sData.QuadVertexBufferPtr->TilingFactor = tilingFactor;
-		sData.QuadVertexBufferPtr++;
+		for (size_t i = 0; i < quadVertexCount; i++)
+		{
+			sData.QuadVertexBufferPtr->Position = transform * sData.QuadVertexPositions[i];
+			sData.QuadVertexBufferPtr->Color = color;
+			sData.QuadVertexBufferPtr->TexCoord = textureCoords[i];
+			sData.QuadVertexBufferPtr->TexIndex = textureIndex;
+			sData.QuadVertexBufferPtr->TilingFactor = tilingFactor;
+			sData.QuadVertexBufferPtr++;
+		}
 
 		sData.QuadIndexCount += 6;
 
@@ -474,6 +393,7 @@ namespace Mayhem
 	{
 		MH_PROFILE_FUNCTION();
 
+		constexpr size_t quadVertexCount = 4;
 		constexpr glm::vec4 color = { 1.0f, 1.0f, 1.0f, 1.0f };
 		const glm::vec2* textureCoords = subtexture->getTexCoords();
 		const Ref<Texture2D> texture = subtexture->getTexture();
@@ -502,34 +422,15 @@ namespace Mayhem
 			* glm::rotate(glm::mat4(1.0f), glm::radians(rotation), { 0.0f, 0.0f, 1.0f, })
 			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
 
-
-		sData.QuadVertexBufferPtr->Position = transform * sData.QuadVertexPositions[0];
-		sData.QuadVertexBufferPtr->Color = color;
-		sData.QuadVertexBufferPtr->TexCoord = { 0.0f, 0.0f };
-		sData.QuadVertexBufferPtr->TexIndex = textureIndex;
-		sData.QuadVertexBufferPtr->TilingFactor = tilingFactor;
-		sData.QuadVertexBufferPtr++;
-
-		sData.QuadVertexBufferPtr->Position = transform * sData.QuadVertexPositions[1];
-		sData.QuadVertexBufferPtr->Color = color;
-		sData.QuadVertexBufferPtr->TexCoord = { 1.0f, 0.0f };
-		sData.QuadVertexBufferPtr->TexIndex = textureIndex;
-		sData.QuadVertexBufferPtr->TilingFactor = tilingFactor;
-		sData.QuadVertexBufferPtr++;
-
-		sData.QuadVertexBufferPtr->Position = transform * sData.QuadVertexPositions[2];
-		sData.QuadVertexBufferPtr->Color = color;
-		sData.QuadVertexBufferPtr->TexCoord = { 1.0f, 1.0f };
-		sData.QuadVertexBufferPtr->TexIndex = textureIndex;
-		sData.QuadVertexBufferPtr->TilingFactor = tilingFactor;
-		sData.QuadVertexBufferPtr++;
-
-		sData.QuadVertexBufferPtr->Position = transform * sData.QuadVertexPositions[3];
-		sData.QuadVertexBufferPtr->Color = color;
-		sData.QuadVertexBufferPtr->TexCoord = { 0.0f, 1.0f };
-		sData.QuadVertexBufferPtr->TexIndex = textureIndex;
-		sData.QuadVertexBufferPtr->TilingFactor = tilingFactor;
-		sData.QuadVertexBufferPtr++;
+		for (size_t i = 0; i < quadVertexCount; i++)
+		{
+			sData.QuadVertexBufferPtr->Position = transform * sData.QuadVertexPositions[i];
+			sData.QuadVertexBufferPtr->Color = color;
+			sData.QuadVertexBufferPtr->TexCoord = textureCoords[i];
+			sData.QuadVertexBufferPtr->TexIndex = textureIndex;
+			sData.QuadVertexBufferPtr->TilingFactor = tilingFactor;
+			sData.QuadVertexBufferPtr++;
+		}
 
 		sData.QuadIndexCount += 6;
 
