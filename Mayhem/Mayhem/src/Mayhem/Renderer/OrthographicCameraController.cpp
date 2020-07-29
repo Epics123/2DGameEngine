@@ -51,13 +51,18 @@ namespace Mayhem
 		dispatcher.dispatchEvent<WindowResizeEvent>(MH_BIND_EVENT_FN(OrthographicCameraController::onWindowResized));
 	}
 
+	void OrthographicCameraController::calculateView()
+	{
+		mCamera.setProjection(-mAspectRatio * mZoomLevel, mAspectRatio * mZoomLevel, -mZoomLevel, mZoomLevel);
+	}
+
 	bool OrthographicCameraController::onMouseScrolled(MouseScrolledEvent& e)
 	{
 		MH_PROFILE_FUNCTION();
 
 		mZoomLevel -= e.getYOffset() * 0.5f;
 		mZoomLevel = std::max(mZoomLevel, 0.25f);
-		mCamera.setProjection(-mAspectRatio * mZoomLevel, mAspectRatio * mZoomLevel, -mZoomLevel, mZoomLevel);
+		calculateView();
 
 		return false;
 	}
@@ -67,7 +72,7 @@ namespace Mayhem
 		MH_PROFILE_FUNCTION();
 
 		mAspectRatio = (float)e.getWidth() / (float)e.getHeight();
-		mCamera.setProjection(-mAspectRatio * mZoomLevel, mAspectRatio * mZoomLevel, -mZoomLevel, mZoomLevel);
+		calculateView();
 
 		return false;
 	}

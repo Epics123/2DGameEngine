@@ -101,6 +101,11 @@ namespace Mayhem
 		overlay->onAttatch();
 	}
 
+	void Application::close()
+	{
+		mRunning = false;
+	}
+
 	bool Application::onWindowClosed(WindowCloseEvent& e)
 	{
 		mRunning = false;

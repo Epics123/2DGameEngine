@@ -24,9 +24,11 @@ namespace Mayhem
 		void pushLayer(Layer* layer);
 		void pushOverlay(Layer* overlay);
 
-		inline Window& getWindow() { return *mWindow; }
+		Window& getWindow() { return *mWindow; }
 
-		inline static Application& getInstance() { return *sInstance; }
+		void close();
+
+		static Application& getInstance() { return *sInstance; }
 
 	private:
 		std::unique_ptr<Window> mWindow;
