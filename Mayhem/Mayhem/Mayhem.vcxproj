@@ -159,6 +159,7 @@
     <ClInclude Include="src\Mayhem\Events\MouseEvent.h" />
     <ClInclude Include="src\Mayhem\ImGui\ImGuiLayer.h" />
     <ClInclude Include="src\Mayhem\Renderer\Buffer.h" />
+    <ClInclude Include="src\Mayhem\Renderer\FrameBuffer.h" />
     <ClInclude Include="src\Mayhem\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\Mayhem\Renderer\OrthographicCamera.h" />
     <ClInclude Include="src\Mayhem\Renderer\OrthographicCameraController.h" />
@@ -175,6 +176,7 @@
     <ClInclude Include="src\Mayhem\Util\Vector3D.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLFrameBuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLTexture.h" />
@@ -600,6 +602,7 @@
     <ClCompile Include="src\Mayhem\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\Mayhem\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\Mayhem\Renderer\Buffer.cpp" />
+    <ClCompile Include="src\Mayhem\Renderer\FrameBuffer.cpp" />
     <ClCompile Include="src\Mayhem\Renderer\OrthographicCamera.cpp" />
     <ClCompile Include="src\Mayhem\Renderer\OrthographicCameraController.cpp" />
     <ClCompile Include="src\Mayhem\Renderer\RenderCommand.cpp" />
@@ -615,6 +618,7 @@
     <ClCompile Include="src\Mayhem\Util\Vector3D.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLFrameBuffer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLShader.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLTexture.cpp" />

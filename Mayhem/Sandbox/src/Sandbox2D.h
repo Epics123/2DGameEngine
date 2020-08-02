@@ -21,6 +21,7 @@ private:
 	//Temp
 	Mayhem::Ref<Mayhem::Shader> mFlatColorShader;
 	Mayhem::Ref<Mayhem::VertexArray> mSquareVA;
+	Mayhem::Ref<Mayhem::FrameBuffer> mFrameBuffer;
 
 	Mayhem::Ref<Mayhem::Texture2D> mTailsTexture;
 	Mayhem::Ref<Mayhem::Texture2D> mSpriteSheet;
