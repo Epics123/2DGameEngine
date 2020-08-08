@@ -14,7 +14,7 @@ namespace Mayhem
 	class Application
 	{
 	public:
-		Application();
+		Application(const std::string& name = "Mayhem App");
 		virtual ~Application();
 
 		void run();

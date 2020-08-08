@@ -51,6 +51,12 @@ namespace Mayhem
 		dispatcher.dispatchEvent<WindowResizeEvent>(MH_BIND_EVENT_FN(OrthographicCameraController::onWindowResized));
 	}
 
+	void OrthographicCameraController::onResize(float width, float height)
+	{
+		mAspectRatio = width / height;
+		calculateView();
+	}
+
 	void OrthographicCameraController::calculateView()
 	{
 		mCamera.setProjection(-mAspectRatio * mZoomLevel, mAspectRatio * mZoomLevel, -mZoomLevel, mZoomLevel);
@@ -71,7 +77,7 @@ namespace Mayhem
 	{
 		MH_PROFILE_FUNCTION();
 
-		mAspectRatio = (float)e.getWidth() / (float)e.getHeight();
+		onResize((float)e.getWidth(), (float)e.getHeight());
 		calculateView();
 
 		return false;

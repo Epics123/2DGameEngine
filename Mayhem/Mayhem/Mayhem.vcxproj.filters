@@ -117,6 +117,9 @@
     <ClInclude Include="src\Mayhem\Renderer\Buffer.h">
       <Filter>src\Mayhem\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Mayhem\Renderer\FrameBuffer.h">
+      <Filter>src\Mayhem\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\Mayhem\Renderer\GraphicsContext.h">
       <Filter>src\Mayhem\Renderer</Filter>
     </ClInclude>
@@ -141,6 +144,9 @@
     <ClInclude Include="src\Mayhem\Renderer\Shader.h">
       <Filter>src\Mayhem\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Mayhem\Renderer\SubTexture2D.h">
+      <Filter>src\Mayhem\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\Mayhem\Renderer\Texture.h">
       <Filter>src\Mayhem\Renderer</Filter>
     </ClInclude>
@@ -160,6 +166,9 @@
       <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLFrameBuffer.h">
       <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h">
@@ -1410,9 +1419,6 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\Mayhem\Renderer\SubTexture2D.h" />
-    <ClInclude Include="src\Mayhem\Renderer\FrameBuffer.h" />
-    <ClInclude Include="src\Platform\OpenGL\OpenGLFrameBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Mayhem\Core\Application.cpp">
@@ -1427,6 +1433,9 @@
     <ClCompile Include="src\Mayhem\Core\Log.cpp">
       <Filter>src\Mayhem\Core</Filter>
     </ClCompile>
+    <ClCompile Include="src\Mayhem\Core\Window.cpp">
+      <Filter>src\Mayhem\Core</Filter>
+    </ClCompile>
     <ClCompile Include="src\Mayhem\ImGui\ImGuiBuild.cpp">
       <Filter>src\Mayhem\ImGui</Filter>
     </ClCompile>
@@ -1434,6 +1443,12 @@
       <Filter>src\Mayhem\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="src\Mayhem\Renderer\Buffer.cpp">
+      <Filter>src\Mayhem\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mayhem\Renderer\FrameBuffer.cpp">
+      <Filter>src\Mayhem\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mayhem\Renderer\GraphicsContext.cpp">
       <Filter>src\Mayhem\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Mayhem\Renderer\OrthographicCamera.cpp">
@@ -1457,6 +1472,9 @@
     <ClCompile Include="src\Mayhem\Renderer\Shader.cpp">
       <Filter>src\Mayhem\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Mayhem\Renderer\SubTexture2D.cpp">
+      <Filter>src\Mayhem\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="src\Mayhem\Renderer\Texture.cpp">
       <Filter>src\Mayhem\Renderer</Filter>
     </ClCompile>
@@ -1476,6 +1494,9 @@
       <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLFrameBuffer.cpp">
       <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp">
@@ -1502,8 +1523,5 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\Mayhem\Renderer\SubTexture2D.cpp" />
-    <ClCompile Include="src\Mayhem\Renderer\FrameBuffer.cpp" />
-    <ClCompile Include="src\Platform\OpenGL\OpenGLFrameBuffer.cpp" />
   </ItemGroup>
 </Project>

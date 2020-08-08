@@ -13,14 +13,14 @@ namespace Mayhem
 
 	Application* Application::sInstance = nullptr;
 
-	Application::Application()
+	Application::Application(const std::string& name)
 	{
 		MH_PROFILE_FUNCTION();
 
 		MH_CORE_ASSERT(!sInstance, "Application already exists!");
 		sInstance = this;
 
-		mWindow = std::unique_ptr<Window>(Window::createWindow());
+		mWindow = Window::createWindow(WindowProps(name));
 		mWindow->setEventCallback(BIND_EVENT_FN(onEvent));
 
 		Renderer::init();

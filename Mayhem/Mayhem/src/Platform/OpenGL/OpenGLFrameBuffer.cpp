@@ -15,10 +15,19 @@ namespace Mayhem
 	OpenGLFrameBuffer::~OpenGLFrameBuffer()
 	{
 		glDeleteFramebuffers(1, &mRendererID);
+		glDeleteTextures(1, &mColorAttachment);
+		glDeleteTextures(1, &mDepthAttachment);
 	}
 
 	void OpenGLFrameBuffer::invalidate()
 	{
+		if (mRendererID)
+		{
+			glDeleteFramebuffers(1, &mRendererID);
+			glDeleteTextures(1, &mColorAttachment);
+			glDeleteTextures(1, &mDepthAttachment);
+		}
+
 		glCreateFramebuffers(1, &mRendererID);
 		glBindFramebuffer(GL_FRAMEBUFFER, mRendererID);
 
@@ -43,10 +52,20 @@ namespace Mayhem
 	void OpenGLFrameBuffer::bind()
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, mRendererID);
+		glViewport(0, 0, mSpecification.Width, mSpecification.Height);
 	}
 
 	void OpenGLFrameBuffer::unbind()
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	}
+
+	void OpenGLFrameBuffer::resize(uint32_t width, uint32_t height)
+	{
+		mSpecification.Width = width;
+		mSpecification.Height = height;
+
+		invalidate();
+	}
+
 }

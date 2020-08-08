@@ -77,7 +77,7 @@ namespace Mayhem
 			++sGLFWWindowCount;
 		}
 		
-		mContext = new OpenGLContext(mWindow);
+		mContext = GraphicsContext::create(mWindow);
 		mContext->init();
 
 		glfwSetWindowUserPointer(mWindow, &mData);
@@ -185,10 +185,5 @@ namespace Mayhem
 		{
 			glfwTerminate();
 		}
-	}
-
-	Window* Window::createWindow(const WindowProps& props)
-	{
-		return new WindowsWindow(props);
 	}
 }

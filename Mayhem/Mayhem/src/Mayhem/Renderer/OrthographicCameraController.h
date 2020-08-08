@@ -16,6 +16,8 @@ namespace Mayhem
 		void onUpdate(Timestep ts);
 		void onEvent(Event& e);
 
+		void onResize(float width, float height);
+
 		OrthographicCamera& getCamera() { return mCamera; }
 		const OrthographicCamera& getCamera() const { return mCamera; }
 

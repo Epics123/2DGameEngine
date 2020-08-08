@@ -599,10 +599,12 @@
     <ClCompile Include="src\Mayhem\Core\Layer.cpp" />
     <ClCompile Include="src\Mayhem\Core\LayerStack.cpp" />
     <ClCompile Include="src\Mayhem\Core\Log.cpp" />
+    <ClCompile Include="src\Mayhem\Core\Window.cpp" />
     <ClCompile Include="src\Mayhem\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\Mayhem\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\Mayhem\Renderer\Buffer.cpp" />
     <ClCompile Include="src\Mayhem\Renderer\FrameBuffer.cpp" />
+    <ClCompile Include="src\Mayhem\Renderer\GraphicsContext.cpp" />
     <ClCompile Include="src\Mayhem\Renderer\OrthographicCamera.cpp" />
     <ClCompile Include="src\Mayhem\Renderer\OrthographicCameraController.cpp" />
     <ClCompile Include="src\Mayhem\Renderer\RenderCommand.cpp" />
@@ -644,4 +646,4 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
-</Project>
+</Project> 
