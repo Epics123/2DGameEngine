@@ -1,29 +1,27 @@
 #include "mpch.h"
-#include "WindowsInput.h"
+#include "Mayhem/Core/Input.h"
 
 #include "Mayhem/Core/Application.h"
 #include <GLFW/glfw3.h>
 
 namespace Mayhem
 {
-	Input* Input::sInstance = new WindowsInput();
-
-	bool WindowsInput::isKeyPressedImpl(int keycode)
+	bool Input::isKeyPressed(KeyCode key)
 	{
 		auto window = static_cast<GLFWwindow*>(Application::getInstance().getWindow().getNativeWindow());
-		auto state = glfwGetKey(window, keycode);
+		auto state = glfwGetKey(window, static_cast<uint32_t>(key));
 
 		return state == GLFW_PRESS || state == GLFW_REPEAT;
 	}
 
-	bool WindowsInput::isMouseButtonPressedImpl(int button)
+	bool Input::isMouseButtonPressed(MouseCode button)
 	{
 		auto window = static_cast<GLFWwindow*>(Application::getInstance().getWindow().getNativeWindow());
-		auto state = glfwGetMouseButton(window, button);
+		auto state = glfwGetMouseButton(window, static_cast<uint32_t>(button));
 		return state == GLFW_PRESS;
 	}
 
-	std::pair<float, float> WindowsInput::getMousePositionImpl()
+	std::pair<float, float> Input::getMousePosition()
 	{
 		auto window = static_cast<GLFWwindow*>(Application::getInstance().getWindow().getNativeWindow());
 		double xPos, yPos;
@@ -32,16 +30,16 @@ namespace Mayhem
 		return { (float)xPos, (float)yPos };
 	}
 
-	float WindowsInput::getMouseXImpl()
+	float Input::getMouseX()
 	{
-		auto[x, y] = getMousePositionImpl();
+		auto[x, y] = getMousePosition();
 
 		return x;
 	}
 
-	float WindowsInput::getMouseYImpl()
+	float Input::getMouseY()
 	{
-		auto [x, y] = getMousePositionImpl();
+		auto [x, y] = getMousePosition();
 
 		return y;
 	}
