@@ -1,30 +1,31 @@
 #pragma once
 
 #include "Event.h"
+#include "Mayhem/Core/Input.h"
 
 namespace Mayhem
 {
 	class MAYHEM_API KeyEvent : public Event
 	{
 	public:
-		inline int getKeyCode() const { return mKeyCode; }
+		KeyCode getKeyCode() const { return mKeyCode; }
 
-		EVENT_CLASS_CATEGORY(KEYBOARD | INPUT)
+		EVENT_CLASS_CATEGORY(EventCategoryKeyboard | EventCategoryInput)
 
 	protected:
-		int mKeyCode;
-
-		KeyEvent(int keyCode)
-			:mKeyCode(keyCode){}
+		KeyEvent(KeyCode keycode)
+			:mKeyCode(keycode){}
+		
+		KeyCode mKeyCode;
 	};
 
 	class MAYHEM_API KeyPressedEvent : public KeyEvent
 	{
 	public:
-		KeyPressedEvent(int keyCode, int repeatCount)
-			: KeyEvent(keyCode), mRepeatCount(repeatCount) { }
+		KeyPressedEvent(KeyCode keycode, int repeatCount)
+			: KeyEvent(keycode), mRepeatCount(repeatCount) { }
 
-		inline int getRepeatCount() const { return mRepeatCount; }
+		int getRepeatCount() const { return mRepeatCount; }
 
 		std::string toString() const override
 		{
@@ -33,7 +34,8 @@ namespace Mayhem
 			return ss.str();
 		}
 
-		static EventType getStaticType() { return EventType::KEY_PRESSED; }
+		EVENT_CLASS_TYPE(KeyPressed)
+
 		virtual EventType getEventType() const override { return getStaticType(); }
 		virtual const char* getName() const override { return "KeyPressed"; }
 		
@@ -44,8 +46,8 @@ namespace Mayhem
 	class MAYHEM_API KeyReleasedEvent : public KeyEvent
 	{
 	public:
-		KeyReleasedEvent(int keyCode)
-			:KeyEvent(keyCode){}
+		KeyReleasedEvent(KeyCode keycode)
+			:KeyEvent(keycode){}
 
 		std::string toString() const override
 		{
@@ -54,7 +56,8 @@ namespace Mayhem
 			return ss.str();
 		}
 
-		static EventType getStaticType() { return EventType::KEY_RELEASED; }
+		EVENT_CLASS_TYPE(KeyReleased)
+
 		virtual EventType getEventType() const override { return getStaticType(); }
 		virtual const char* getName() const override { return "KeyReleased"; }
 	};
@@ -62,8 +65,8 @@ namespace Mayhem
 	class MAYHEM_API KeyTypedEvent : public KeyEvent
 	{
 	public:
-		KeyTypedEvent(int keyCode)
-			: KeyEvent(keyCode)
+		KeyTypedEvent(KeyCode keycode)
+			: KeyEvent(keycode)
 		{
 		}
 
@@ -74,7 +77,8 @@ namespace Mayhem
 			return ss.str();
 		}
 
-		static EventType getStaticType() { return EventType::KEY_TYPED; }
+		EVENT_CLASS_TYPE(KeyTyped)
+
 		virtual EventType getEventType() const override { return getStaticType(); }
 		virtual const char* getName() const override { return "KeyTyped"; }
 	};

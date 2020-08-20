@@ -71,8 +71,8 @@ namespace Mayhem
 		if (mBlockEvents)
 		{
 			ImGuiIO& io = ImGui::GetIO();
-			e.mHandled |= e.isInCategory(MOUSE) & io.WantCaptureMouse;
-			e.mHandled |= e.isInCategory(KEYBOARD) & io.WantCaptureKeyboard;
+			e.mHandled |= e.isInCategory(EventCategoryMouse) & io.WantCaptureMouse;
+			e.mHandled |= e.isInCategory(EventCategoryKeyboard) & io.WantCaptureKeyboard;
 		}
 	}
 

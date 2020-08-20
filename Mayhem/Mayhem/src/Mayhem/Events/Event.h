@@ -6,23 +6,26 @@ namespace Mayhem
 {
 	enum class EventType
 	{
-		NONE = 0,
-		WINDOW_CLOSE, WINDOW_RESIZE, WINDOW_FOCUS, WINDOW_LOST_FOCUS, WINDOW_MOVED,
-		KEY_PRESSED, KEY_RELEASED, KEY_TYPED,
-		MOUSE_BUTTON_PRESSED, MOUSE_BUTTON_RELEASED, MOUSE_MOVE, MOUSE_SCROLL
+		None = 0,
+		WindowClose, WindowResize, WindowFocus, WindowLostFocus, WindowMoved,
+		AppTick, AppUpdate, AppRender,
+		KeyPressed, KeyReleased, KeyTyped,
+		MouseButtonPressed, MouseButtonReleased, MouseMoved, MouseScrolled
 	};
 
 	enum EventCategory
 	{
 		None = 0,
-		APPLICATION   = BIT(0),
-		INPUT         = BIT(1),
-		KEYBOARD      = BIT(2),
-		MOUSE	      = BIT(3),
-		MOUSE_BUTTON  = BIT(4)
+		EventCategoryApplication   = BIT(0),
+		EventCategoryInput         = BIT(1),
+		EventCategoryKeyboard      = BIT(2),
+		EventCategoryMouse 	       = BIT(3),
+		EventCategoryMouseButton   = BIT(4)
 	};
 
-#define EVENT_CLASS_CATEGORY(category, ...) virtual int getCategoryFlags() const override { return category; }
+#define EVENT_CLASS_TYPE(type) static EventType getStaticType() { return EventType::type; }
+
+#define EVENT_CLASS_CATEGORY(category) virtual int getCategoryFlags() const override { return category; }
 
 	class MAYHEM_API Event
 	{

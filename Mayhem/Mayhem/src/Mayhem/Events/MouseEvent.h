@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Event.h"
+#include "Mayhem/Core/Input.h"
 
 namespace Mayhem
 {
@@ -20,9 +21,9 @@ namespace Mayhem
 			return ss.str();
 		}
 
-		EVENT_CLASS_CATEGORY(MOUSE, INPUT)
+		EVENT_CLASS_TYPE(MouseMoved)
+		EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput)
 
-		static EventType getStaticType() { return EventType::MOUSE_MOVE; }
 		virtual EventType getEventType() const override { return getStaticType(); }
 		virtual const char* getName() const override { return "MouseMove"; }
 
@@ -47,9 +48,9 @@ namespace Mayhem
 			return ss.str();
 		}
 
-		EVENT_CLASS_CATEGORY(MOUSE, INPUT)
+		EVENT_CLASS_TYPE(MouseScrolled)
+		EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput)
 
-		static EventType getStaticType() { return EventType::MOUSE_SCROLL; }
 		virtual EventType getEventType() const override { return getStaticType(); }
 		virtual const char* getName() const override { return "MouseScroll"; }
 
@@ -61,21 +62,21 @@ namespace Mayhem
 	class MAYHEM_API MouseButtonEvent : public Event
 	{
 	public:
-		inline int getMouseButton() const { return mButton; }
+		inline MouseCode getMouseButton() const { return mButton; }
 
-		EVENT_CLASS_CATEGORY(MOUSE | INPUT)
+		EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput)
 
 	protected:
-		MouseButtonEvent(int button)
+		MouseButtonEvent(MouseCode button)
 			:mButton(button){ }
 
-		int mButton;
+		MouseCode mButton;
 	};
 
 	class MAYHEM_API MouseButtonPressedEvent : public MouseButtonEvent
 	{
 	public:
-		MouseButtonPressedEvent(int button)
+		MouseButtonPressedEvent(MouseCode button)
 			:MouseButtonEvent(button){}
 
 		std::string toString() const override
@@ -85,7 +86,8 @@ namespace Mayhem
 			return ss.str();
 		}
 
-		static EventType getStaticType() { return EventType::MOUSE_BUTTON_PRESSED; }
+		EVENT_CLASS_TYPE(MouseButtonPressed)
+
 		virtual EventType getEventType() const override { return getStaticType(); }
 		virtual const char* getName() const override { return "MouseButtonPressed"; }
 	};
@@ -93,7 +95,7 @@ namespace Mayhem
 	class MAYHEM_API MouseButtonReleasedEvent : public MouseButtonEvent
 	{
 	public:
-		MouseButtonReleasedEvent(int button)
+		MouseButtonReleasedEvent(MouseCode button)
 			:MouseButtonEvent(button){}
 
 		std::string toString() const override
@@ -103,7 +105,8 @@ namespace Mayhem
 			return ss.str();
 		}
 
-		static EventType getStaticType() { return EventType::MOUSE_BUTTON_RELEASED; }
+		EVENT_CLASS_TYPE(MouseButtonReleased)
+
 		virtual EventType getEventType() const override { return getStaticType(); }
 		virtual const char* getName() const override { return "MouseButtonReleased"; }
 	};

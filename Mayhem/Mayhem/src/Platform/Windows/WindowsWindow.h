@@ -15,15 +15,15 @@ namespace Mayhem
 
 		void onUpdate() override;
 
-		inline unsigned int getWidth() const override { return mData.Width; }
-		inline unsigned int getHeight() const override { return mData.Height; }
+		unsigned int getWidth() const override { return mData.Width; }
+		unsigned int getHeight() const override { return mData.Height; }
 
 		//Window Attributes
-		inline void setEventCallback(const EventCallbackFn& callback) override { mData.EventCallback = callback; }
+		void setEventCallback(const EventCallbackFn& callback) override { mData.EventCallback = callback; }
 		void setVsync(bool enabled) override;
 		bool isVsync() const override;
 
-		inline virtual void* getNativeWindow() const { return mWindow; }
+		virtual void* getNativeWindow() const { return mWindow; }
 
 	private:
 		virtual void init(const WindowProps& props);
