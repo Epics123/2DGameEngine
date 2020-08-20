@@ -29,6 +29,7 @@ namespace Mayhem
 		Ref<SubTexture2D> mTextureStairs;
 		Ref<SubTexture2D> mTextureTree;
 
+		bool mViewportFocused = false, mViewportHovered = false;
 		glm::vec2 mViewportSize = { 0, 0 };
 
 		glm::vec4 mSquareColor = { 0.2f, 0.3f, 0.8f, 1.0f };

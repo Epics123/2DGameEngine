@@ -16,11 +16,15 @@ namespace Mayhem
 
 		virtual void onAttatch() override;
 		virtual void onDetatch() override;
+		virtual void onEvent(Event& e) override;
 
 		void begin();
 		void end();
 
+		void blockEvents(bool block) { mBlockEvents = block; }
+
 	private:
+		bool mBlockEvents = true;
 		float mTime = 0.0f;
 	};
 }

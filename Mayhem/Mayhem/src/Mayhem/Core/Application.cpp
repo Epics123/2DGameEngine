@@ -21,7 +21,7 @@ namespace Mayhem
 		sInstance = this;
 
 		mWindow = Window::createWindow(WindowProps(name));
-		mWindow->setEventCallback(BIND_EVENT_FN(onEvent));
+		mWindow->setEventCallback(BIND_EVENT_FN(Application::onEvent));
 
 		Renderer::init();
 
@@ -63,7 +63,7 @@ namespace Mayhem
 						layer->onImGuiRender();
 				}
 				mImGuiLayer->end();
-			}		
+			}
 
 			mWindow->onUpdate();
 		}
@@ -74,14 +74,14 @@ namespace Mayhem
 		MH_PROFILE_FUNCTION();
 
 		EventDispatcher dispatcher(e);
-		dispatcher.dispatchEvent<WindowCloseEvent>(BIND_EVENT_FN(onWindowClosed));
-		dispatcher.dispatchEvent<WindowResizeEvent>(BIND_EVENT_FN(onWindowResize));
+		dispatcher.dispatchEvent<WindowCloseEvent>(BIND_EVENT_FN(Application::onWindowClosed));
+		dispatcher.dispatchEvent<WindowResizeEvent>(BIND_EVENT_FN(Application::onWindowResize));
 
-		for (auto it = mLayerStack.end(); it != mLayerStack.begin();)
+		for (auto it = mLayerStack.rbegin(); it != mLayerStack.rend(); ++it)
 		{
-			(*--it)->onEvent(e);
 			if (e.mHandled)
 				break;
+			(*it)->onEvent(e);
 		}
 	}
 

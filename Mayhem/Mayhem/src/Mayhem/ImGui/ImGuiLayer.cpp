@@ -66,7 +66,15 @@ namespace Mayhem
 		ImGui::DestroyContext();
 	}
 
-	
+	void ImGuiLayer::onEvent(Event& e)
+	{
+		if (mBlockEvents)
+		{
+			ImGuiIO& io = ImGui::GetIO();
+			e.mHandled |= e.isInCategory(MOUSE) & io.WantCaptureMouse;
+			e.mHandled |= e.isInCategory(KEYBOARD) & io.WantCaptureKeyboard;
+		}
+	}
 
 	void ImGuiLayer::begin()
 	{

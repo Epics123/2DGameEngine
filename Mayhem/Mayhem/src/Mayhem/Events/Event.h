@@ -15,49 +15,47 @@ namespace Mayhem
 	enum EventCategory
 	{
 		None = 0,
-		APPLICATION   = 1 << 0,
-		INPUT         = 1 << 1,
-		KEYBOARD      = 1 << 2,
-		MOUSE	      = 1 << 3,
-		MOUSE_BUTTON  = 1 << 4
+		APPLICATION   = BIT(0),
+		INPUT         = BIT(1),
+		KEYBOARD      = BIT(2),
+		MOUSE	      = BIT(3),
+		MOUSE_BUTTON  = BIT(4)
 	};
 
 #define EVENT_CLASS_CATEGORY(category, ...) virtual int getCategoryFlags() const override { return category; }
 
 	class MAYHEM_API Event
 	{
-		friend class EventDispatcher;
 	public:
+		virtual ~Event() = default;
+
+		bool mHandled = false;
+		
 		virtual EventType getEventType() const = 0;
 		virtual const char* getName() const = 0;
 		virtual int getCategoryFlags() const = 0;
 		virtual std::string toString() const { return getName(); }
 
-		inline bool isInCategory(EventCategory category)
+		bool isInCategory(EventCategory category)
 		{
 			return getCategoryFlags() & category;
-		}
-		
-		bool mHandled = false;
+		}	
 
 	protected:
 	};
 
 	class MAYHEM_API EventDispatcher
 	{
-		template <typename T>
-		using EventFn = std::function<bool(T&)>;
-
 	public:
 		EventDispatcher(Event& event)
 			:mEvent(event){}
 
-		template <typename T>
-		bool dispatchEvent(EventFn<T> func)
+		template <typename T, typename F>
+		bool dispatchEvent(const F& func)
 		{
 			if (mEvent.getEventType() == T::getStaticType())
 			{
-				mEvent.mHandled = func(*(T*)& mEvent);
+				mEvent.mHandled = func(static_cast<T&>(mEvent));
 				return true;
 			}
 			return false;

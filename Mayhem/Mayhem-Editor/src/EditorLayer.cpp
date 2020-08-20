@@ -41,7 +41,8 @@ namespace Mayhem
 		MH_PROFILE_FUNCTION();
 
 		//Update
-		mCameraController.onUpdate(ts);
+		if(mViewportFocused)
+			mCameraController.onUpdate(ts);
 
 		//Render
 		Renderer2D::resetStats();
@@ -159,8 +160,13 @@ namespace Mayhem
 
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
 		ImGui::Begin("Viewport");
+		
+		mViewportFocused = ImGui::IsWindowFocused();
+		mViewportHovered = ImGui::IsWindowHovered();
+		Application::getInstance().getImGuiLayer()->blockEvents(!mViewportFocused || !mViewportHovered);
+
 		ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
-		if (mViewportSize != *((glm::vec2*) & viewportPanelSize))
+		if (mViewportSize != *((glm::vec2*) & viewportPanelSize) && viewportPanelSize.x > 0 && viewportPanelSize.y > 0)
 		{
 			mFrameBuffer->resize((uint32_t)viewportPanelSize.x, (uint32_t)viewportPanelSize.y);
 			mViewportSize = { viewportPanelSize.x, viewportPanelSize.y };
@@ -168,7 +174,7 @@ namespace Mayhem
 			mCameraController.onResize(viewportPanelSize.x, viewportPanelSize.y);
 		}
 
-		MH_WARN("Viewport Size: {0}, {1}", viewportPanelSize.x, viewportPanelSize.y);
+		//MH_WARN("Viewport Size: {0}, {1}", viewportPanelSize.x, viewportPanelSize.y);
 
 		uint32_t textureID = mFrameBuffer->getColorAttachmentRendererID();
 		ImGui::Image((void*)textureID, ImVec2{ mViewportSize.x, mViewportSize.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });

@@ -28,6 +28,8 @@ namespace Mayhem
 
 		void close();
 
+		ImGuiLayer* getImGuiLayer() { return mImGuiLayer; }
+
 		static Application& getInstance() { return *sInstance; }
 
 	private:

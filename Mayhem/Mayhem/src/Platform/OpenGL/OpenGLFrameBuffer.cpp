@@ -5,6 +5,7 @@
 
 namespace Mayhem
 {
+	static const uint32_t sMaxFrameBufferSize = 8192;
 
 	OpenGLFrameBuffer::OpenGLFrameBuffer(const FrameBufferSpec& spec)
 		:mSpecification(spec)
@@ -62,6 +63,12 @@ namespace Mayhem
 
 	void OpenGLFrameBuffer::resize(uint32_t width, uint32_t height)
 	{
+		if (width == 0 || height == 0 || width > sMaxFrameBufferSize || height > sMaxFrameBufferSize)
+		{
+			MH_CORE_WARN("Attempted to resize the window to {0}, {1}", width, height);
+			return;
+		}
+
 		mSpecification.Width = width;
 		mSpecification.Height = height;
 
