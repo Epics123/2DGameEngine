@@ -3,14 +3,13 @@
 
 namespace Mayhem
 {
-	LayerStack::LayerStack()
-	{
-	}
-
 	LayerStack::~LayerStack()
 	{
 		for (Layer* layer : mLayers)
+		{
+			layer->onDetatch();
 			delete layer;
+		}		
 	}
 
 	void LayerStack::pushLayer(Layer* layer)
@@ -26,9 +25,10 @@ namespace Mayhem
 
 	void LayerStack::popLayer(Layer* layer)
 	{
-		auto it = std::find(mLayers.begin(), mLayers.end(), layer);
-		if (it != mLayers.end())
+		auto it = std::find(mLayers.begin(), mLayers.begin() + mLayerInsertIndex, layer);
+		if (it != mLayers.begin() + mLayerInsertIndex)
 		{
+			layer->onDetatch();
 			mLayers.erase(it);
 			mLayerInsertIndex--;
 		}
@@ -36,8 +36,11 @@ namespace Mayhem
 
 	void LayerStack::popOverlay(Layer* overlay)
 	{
-		auto it = std::find(mLayers.begin(), mLayers.end(), overlay);
+		auto it = std::find(mLayers.begin() + mLayerInsertIndex, mLayers.end(), overlay);
 		if (it != mLayers.end())
+		{
+			overlay->onDetatch();
 			mLayers.erase(it);
+		}
 	}
 }

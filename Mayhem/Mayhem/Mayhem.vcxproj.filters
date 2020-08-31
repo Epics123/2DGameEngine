@@ -22,6 +22,9 @@
     <Filter Include="src\Mayhem\Renderer">
       <UniqueIdentifier>{4331C776-AF92-A484-3800-EB36A460DB43}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Mayhem\Scene">
+      <UniqueIdentifier>{DAF7E058-C6F0-FFAA-EF22-E52FDB7ADFB6}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Mayhem\Util">
       <UniqueIdentifier>{6ABE3612-D649-A4D6-DF5A-27CB4B6500D7}</UniqueIdentifier>
     </Filter>
@@ -152,6 +155,12 @@
     </ClInclude>
     <ClInclude Include="src\Mayhem\Renderer\VertexArray.h">
       <Filter>src\Mayhem\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mayhem\Scene\Components.h">
+      <Filter>src\Mayhem\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mayhem\Scene\Scene.h">
+      <Filter>src\Mayhem\Scene</Filter>
     </ClInclude>
     <ClInclude Include="src\Mayhem\Util\UtilMath.h">
       <Filter>src\Mayhem\Util</Filter>
@@ -1477,6 +1486,9 @@
     </ClCompile>
     <ClCompile Include="src\Mayhem\Renderer\VertexArray.cpp">
       <Filter>src\Mayhem\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mayhem\Scene\Scene.cpp">
+      <Filter>src\Mayhem\Scene</Filter>
     </ClCompile>
     <ClCompile Include="src\Mayhem\Util\Math.cpp">
       <Filter>src\Mayhem\Util</Filter>

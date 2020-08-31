@@ -69,7 +69,7 @@ void Sandbox2D::onUpdate(Mayhem::Timestep ts)
 
 void Sandbox2D::onEvent(Mayhem::Event& e)
 {
-	mCameraController.onEvent(e);
+	//mCameraController.onEvent(e);
 }
 
 void Sandbox2D::onImGuiRender()

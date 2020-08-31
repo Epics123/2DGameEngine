@@ -43,7 +43,7 @@ public:
 
 	void onEvent(Mayhem::Event& e) override
 	{
-		mCameraController.onEvent(e);
+		//mCameraController.onEvent(e);
 	}
 
 private:
@@ -67,7 +67,7 @@ public:
 	Sandbox()
 	{
 		//pushLayer(new ExampleLayer());
-		pushLayer(new Sandbox2D());
+		//pushLayer(new Sandbox2D());
 	}
 
 	~Sandbox()

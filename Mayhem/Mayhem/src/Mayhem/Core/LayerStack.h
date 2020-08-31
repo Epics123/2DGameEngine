@@ -8,7 +8,7 @@ namespace Mayhem
 	class MAYHEM_API LayerStack
 	{
 	public:
-		LayerStack();
+		LayerStack() = default;
 		~LayerStack();
 
 		void pushLayer(Layer* layer);

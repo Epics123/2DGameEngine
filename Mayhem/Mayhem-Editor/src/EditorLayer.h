@@ -24,6 +24,9 @@ namespace Mayhem
 		Ref<VertexArray> mSquareVA;
 		Ref<FrameBuffer> mFrameBuffer;
 
+		Ref<Scene> mActiveScene;
+		entt::entity mSquareEntity;
+
 		Ref<Texture2D> mTailsTexture;
 		Ref<Texture2D> mSpriteSheet;
 		Ref<SubTexture2D> mTextureStairs;

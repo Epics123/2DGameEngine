@@ -27,7 +27,7 @@ namespace Mayhem
 
 #define EVENT_CLASS_CATEGORY(category) virtual int getCategoryFlags() const override { return category; }
 
-	class MAYHEM_API Event
+	class Event
 	{
 	public:
 		virtual ~Event() = default;
@@ -47,7 +47,7 @@ namespace Mayhem
 	protected:
 	};
 
-	class MAYHEM_API EventDispatcher
+	class EventDispatcher
 	{
 	public:
 		EventDispatcher(Event& event)

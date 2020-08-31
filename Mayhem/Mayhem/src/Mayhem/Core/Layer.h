@@ -10,7 +10,7 @@ namespace Mayhem
 	{
 	public:
 		Layer(const std::string& name = "Layer");
-		virtual ~Layer();
+		virtual ~Layer() = default;
 
 		virtual void onAttatch() {}
 		virtual void onDetatch() {}
@@ -18,7 +18,7 @@ namespace Mayhem
 		virtual void onImGuiRender(){}
 		virtual void onEvent(Event& event) {}
 
-		inline const std::string& getName() const { return mDebugName; }
+		const std::string& getName() const { return mDebugName; }
 
 	protected:
 		std::string mDebugName;

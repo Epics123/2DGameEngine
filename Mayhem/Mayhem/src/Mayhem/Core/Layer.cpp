@@ -7,8 +7,4 @@ namespace Mayhem
 		:mDebugName(name)
 	{
 	}
-
-	Layer::~Layer()
-	{
-	}
 }

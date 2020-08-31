@@ -18,6 +18,7 @@ IncludeDir["Glad"] = "Mayhem/vendor/Glad/include"
 IncludeDir["ImGui"] = "Mayhem/vendor/imgui"
 IncludeDir["glm"] = "Mayhem/vendor/glm"
 IncludeDir["stb_image"] = "Mayhem/vendor/stb_image"
+IncludeDir["entt"] = "Mayhem/vendor/entt/include"
 
 group "Dependencies"
 	include "Mayhem/vendor/GLFW"
@@ -46,12 +47,13 @@ project "Mayhem"
 		"%{prj.name}/vendor/stb_image/**.h",
 		"%{prj.name}/vendor/stb_image/**.cpp",
 		"%{prj.name}/vendor/glm/glm/**.hpp",
-		"%{prj.name}/vendor/glm/glm/**.inl",
+		"%{prj.name}/vendor/glm/glm/**.inl"
 	}
 
 	defines
 	{
-	    "_CRT_SECURE_NO_WARNINGS"
+	    "_CRT_SECURE_NO_WARNINGS",
+		"GLFW_INCLUDE_NONE"
 	}
 
 	includedirs
@@ -62,7 +64,8 @@ project "Mayhem"
 		"%{IncludeDir.Glad}",
 		"%{IncludeDir.ImGui}",
 		"%{IncludeDir.glm}",
-		"%{IncludeDir.stb_image}"
+		"%{IncludeDir.stb_image}",
+		"%{IncludeDir.entt}"
 	}
 	
 	links
@@ -120,7 +123,8 @@ project "Sandbox"
 		"Mayhem/vendor/spdlog/include",
 		"Mayhem/src",
 		"Mayhem/vendor",
-		"%{IncludeDir.glm}"
+		"%{IncludeDir.glm}",
+		"%{IncludeDir.entt}"
 	}
 
 	links
@@ -174,7 +178,8 @@ project "Mayhem-Editor"
 		"Mayhem/vendor/spdlog/include",
 		"Mayhem/src",
 		"Mayhem/vendor",
-		"%{IncludeDir.glm}"
+		"%{IncludeDir.glm}",
+		"%{IncludeDir.entt}"
 	}
 
 	links

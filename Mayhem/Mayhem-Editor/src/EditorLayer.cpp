@@ -10,7 +10,7 @@
 namespace Mayhem
 {
 	EditorLayer::EditorLayer()
-		:Layer("Sandox2D"), mCameraController(1280.0f / 720.0f)
+		:Layer("EditorLayer"), mCameraController(1280.0f / 720.0f)
 	{
 
 	}
@@ -29,6 +29,14 @@ namespace Mayhem
 		fbSpec.Width = 1280;
 		fbSpec.Height = 720;
 		mFrameBuffer = FrameBuffer::create(fbSpec);
+
+		mActiveScene = CreateRef<Scene>();
+
+		auto square = mActiveScene->createEntity();
+		mActiveScene->Reg().emplace<TransformComponent>(square);
+		mActiveScene->Reg().emplace<SpriteRendererComponent>(square, glm::vec4{0.0f, 1.0f, 0.0f, 1.0f});
+
+		mSquareEntity = square;
 	}
 
 	void EditorLayer::onDetatch()
@@ -46,35 +54,19 @@ namespace Mayhem
 
 		//Render
 		Renderer2D::resetStats();
-		{
-			MH_PROFILE_SCOPE("Render Prep");
-			mFrameBuffer->bind();
-			RenderCommand::setClearColor({ 0.1f, 0.1f, 0.1f, 1 });
-			RenderCommand::clear();
-		}
+		mFrameBuffer->bind();
+		RenderCommand::setClearColor({ 0.1f, 0.1f, 0.1f, 1 });
+		RenderCommand::clear();
+		
 
-		{
-			MH_PROFILE_SCOPE("Render Draw");
+		Renderer2D::beginScene(mCameraController.getCamera());
 
-			static float rotation = 0.0f;
-			static float texRotation = 0.0f;
-			rotation += ts * 20.0f;
-			texRotation += ts * -50.0f;
+		//Update Scene
+		mActiveScene->onUpdate(ts);
 
-			Renderer2D::beginScene(mCameraController.getCamera());
-			Renderer2D::drawRotatedQuad({ 1.2f, 0.0f }, { 0.8f, 0.8f }, rotation, { 0.8f, 0.2f, 0.3f, 1.0f });
-			Renderer2D::drawQuad({ -1.0f, 0.0f }, { 0.8f, 0.8f }, { 0.8f, 0.2f, 0.3f, 1.0f });
-			Renderer2D::drawQuad({ 0.5f, -1.0f }, { 0.5f, 0.75f }, { 0.2f, 0.3f, 0.8f, 1.0f });
-			Renderer2D::drawQuad({ 0.0f, 0.0f, -0.1f }, { 1.0f, 1.0f }, mTailsTexture);
-			Renderer2D::drawRotatedQuad({ 2.5f, 0.0f, 0.0f }, { 1.0f, 1.0f }, texRotation, mTailsTexture);
-			Renderer2D::endScene();
+		Renderer2D::endScene();
 
-			Renderer2D::beginScene(mCameraController.getCamera());
-			Renderer2D::drawQuad({ -2.5f, 0.0f, 0.5f }, { 1.0f, 1.0f }, mTextureStairs);
-			Renderer2D::drawQuad({ -2.5f, -2.0f, 0.5f }, { 1.0f, 2.0f }, mTextureTree);
-			Renderer2D::endScene();
-			mFrameBuffer->unbind();
-		}
+		mFrameBuffer->unbind();
 	}
 
 	void EditorLayer::onEvent(Mayhem::Event& e)
@@ -154,7 +146,8 @@ namespace Mayhem
 		ImGui::Text("Vertices: %d", stats.getTotalVertexCount());
 		ImGui::Text("Indices: %d", stats.getTotalIndexCount());
 
-		ImGui::ColorEdit4("Square Color", glm::value_ptr(mSquareColor));
+		auto& squareColor = mActiveScene->Reg().get<SpriteRendererComponent>(mSquareEntity).Color;
+		ImGui::ColorEdit4("Square Color", glm::value_ptr(squareColor));
 
 		ImGui::End();
 

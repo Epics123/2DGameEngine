@@ -15,6 +15,9 @@
 
 #include "Mayhem/ImGui/ImGuiLayer.h"
 
+#include "Mayhem/Scene/Scene.h"
+#include "Mayhem/Scene/Components.h"
+
 //---Renderer-----------------------------------
 #include "Mayhem/Renderer/Renderer.h"
 #include "Mayhem/Renderer/Renderer2D.h"
