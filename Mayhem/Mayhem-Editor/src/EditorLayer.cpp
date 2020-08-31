@@ -32,9 +32,9 @@ namespace Mayhem
 
 		mActiveScene = CreateRef<Scene>();
 
-		auto square = mActiveScene->createEntity();
-		mActiveScene->Reg().emplace<TransformComponent>(square);
-		mActiveScene->Reg().emplace<SpriteRendererComponent>(square, glm::vec4{0.0f, 1.0f, 0.0f, 1.0f});
+		//Entity
+		auto square = mActiveScene->createEntity("Square");
+		square.addComponent<SpriteRendererComponent>(glm::vec4{0.0f, 1.0f, 0.0f, 1.0f});
 
 		mSquareEntity = square;
 	}
@@ -146,9 +146,16 @@ namespace Mayhem
 		ImGui::Text("Vertices: %d", stats.getTotalVertexCount());
 		ImGui::Text("Indices: %d", stats.getTotalIndexCount());
 
-		auto& squareColor = mActiveScene->Reg().get<SpriteRendererComponent>(mSquareEntity).Color;
-		ImGui::ColorEdit4("Square Color", glm::value_ptr(squareColor));
+		if (mSquareEntity)
+		{
+			ImGui::Separator();
+			auto& tag = mSquareEntity.getComponent<TagComponent>().Tag;
+			ImGui::Text("%s", tag.c_str());
 
+			auto& squareColor = mSquareEntity.getComponent<SpriteRendererComponent>().Color;
+			ImGui::ColorEdit4("Square Color", glm::value_ptr(squareColor));
+		}
+		
 		ImGui::End();
 
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });

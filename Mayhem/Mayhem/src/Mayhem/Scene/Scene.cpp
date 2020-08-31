@@ -6,12 +6,14 @@
 
 #include <glm/glm.hpp>
 
+#include "Entity.h"
+
 namespace Mayhem
 {
 
 	Scene::Scene()
 	{
- 
+
 	}
 
 	Scene::~Scene()
@@ -19,9 +21,14 @@ namespace Mayhem
 
 	}
 
-	entt::entity Scene::createEntity()
+	Entity Scene::createEntity(const std::string& name)
 	{
-		return mRegistry.create();
+		Entity entity = { mRegistry.create(), this };
+		entity.addComponent<TransformComponent>();
+		auto& tag = entity.addComponent<TagComponent>();
+		tag.Tag = name.empty() ? "Entity" : name;
+
+		return entity;
 	}
 
 	void Scene::onUpdate(Timestep ts)

@@ -172,6 +172,7 @@
     <ClInclude Include="src\Mayhem\Renderer\Texture.h" />
     <ClInclude Include="src\Mayhem\Renderer\VertexArray.h" />
     <ClInclude Include="src\Mayhem\Scene\Components.h" />
+    <ClInclude Include="src\Mayhem\Scene\Entity.h" />
     <ClInclude Include="src\Mayhem\Scene\Scene.h" />
     <ClInclude Include="src\Mayhem\Util\UtilMath.h" />
     <ClInclude Include="src\Mayhem\Util\Vector2D.h" />
@@ -616,6 +617,7 @@
     <ClCompile Include="src\Mayhem\Renderer\SubTexture2D.cpp" />
     <ClCompile Include="src\Mayhem\Renderer\Texture.cpp" />
     <ClCompile Include="src\Mayhem\Renderer\VertexArray.cpp" />
+    <ClCompile Include="src\Mayhem\Scene\Entity.cpp" />
     <ClCompile Include="src\Mayhem\Scene\Scene.cpp" />
     <ClCompile Include="src\Mayhem\Util\Math.cpp" />
     <ClCompile Include="src\Mayhem\Util\Vector2D.cpp" />

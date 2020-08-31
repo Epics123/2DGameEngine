@@ -6,20 +6,21 @@
 
 namespace Mayhem
 {
+	class Entity;
+
 	class Scene
 	{
 	public:
 		Scene();
 		~Scene();
 
-		entt::entity createEntity();
-
-		//TEMP
-		entt::registry& Reg() { return mRegistry; }
+		Entity createEntity(const std::string& name = std::string());
 
 		void onUpdate(Timestep ts);
 
 	private:
 		entt::registry mRegistry;
+
+		friend class Entity;
 	};
 }

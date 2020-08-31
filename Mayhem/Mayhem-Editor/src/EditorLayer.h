@@ -25,7 +25,7 @@ namespace Mayhem
 		Ref<FrameBuffer> mFrameBuffer;
 
 		Ref<Scene> mActiveScene;
-		entt::entity mSquareEntity;
+		Entity mSquareEntity;
 
 		Ref<Texture2D> mTailsTexture;
 		Ref<Texture2D> mSpriteSheet;
