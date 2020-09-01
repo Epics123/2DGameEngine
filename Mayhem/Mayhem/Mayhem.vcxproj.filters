@@ -1426,6 +1426,7 @@
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
     <ClInclude Include="src\Mayhem\Scene\Entity.h" />
+    <ClInclude Include="src\Mayhem\Renderer\Camera.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Mayhem\Core\Application.cpp">

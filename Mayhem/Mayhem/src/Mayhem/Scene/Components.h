@@ -2,7 +2,7 @@
 
 #include <glm/glm.hpp>
 
-#include "Mayhem/Renderer/OrthographicCamera.h"
+#include "Mayhem/Renderer/Camera.h"
 
 namespace Mayhem
 {
@@ -41,6 +41,12 @@ namespace Mayhem
 
 	struct CameraComponent
 	{
-		OrthographicCamera Camera;
+		Mayhem::Camera Camera;
+		bool Primary = true;
+
+		CameraComponent() = default;
+		CameraComponent(const CameraComponent&) = default;
+		CameraComponent(const glm::mat4& projection)
+			:Camera(projection) {}
 	};
 }

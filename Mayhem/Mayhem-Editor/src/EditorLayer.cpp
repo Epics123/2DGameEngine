@@ -37,6 +37,13 @@ namespace Mayhem
 		square.addComponent<SpriteRendererComponent>(glm::vec4{0.0f, 1.0f, 0.0f, 1.0f});
 
 		mSquareEntity = square;
+
+		mCameraEntity = mActiveScene->createEntity("Camera Entity");
+		mCameraEntity.addComponent<CameraComponent>(glm::ortho(-16.0f, 16.0f, -9.0f, 9.0f, -1.0f, 1.0f));
+
+		mSecondCamera = mActiveScene->createEntity("Clip Space Camera Entity");
+		auto& cc = mSecondCamera.addComponent<CameraComponent>(glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f));
+		cc.Primary = false;
 	}
 
 	void EditorLayer::onDetatch()
@@ -58,13 +65,8 @@ namespace Mayhem
 		RenderCommand::setClearColor({ 0.1f, 0.1f, 0.1f, 1 });
 		RenderCommand::clear();
 		
-
-		Renderer2D::beginScene(mCameraController.getCamera());
-
 		//Update Scene
 		mActiveScene->onUpdate(ts);
-
-		Renderer2D::endScene();
 
 		mFrameBuffer->unbind();
 	}
@@ -154,6 +156,14 @@ namespace Mayhem
 
 			auto& squareColor = mSquareEntity.getComponent<SpriteRendererComponent>().Color;
 			ImGui::ColorEdit4("Square Color", glm::value_ptr(squareColor));
+		}
+
+		ImGui::DragFloat3("Camera Transform", glm::value_ptr(mCameraEntity.getComponent<TransformComponent>().Transform[3]));
+
+		if (ImGui::Checkbox("Camera A", &mPrimaryCamera))
+		{
+			mCameraEntity.getComponent<CameraComponent>().Primary = mPrimaryCamera;
+			mSecondCamera.getComponent<CameraComponent>().Primary = !mPrimaryCamera;
 		}
 		
 		ImGui::End();

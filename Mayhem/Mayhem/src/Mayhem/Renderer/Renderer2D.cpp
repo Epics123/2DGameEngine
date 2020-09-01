@@ -123,6 +123,21 @@ namespace Mayhem
 		sData.TextureSlotIndex = 1;
 	}
 
+	void Renderer2D::beginScene(const Camera& camera, const glm::mat4& transform)
+	{
+		MH_PROFILE_FUNCTION();
+
+		glm::mat4 viewProj = camera.getProjection() * glm::inverse(transform);
+
+		sData.TextureShader->bind();
+		sData.TextureShader->setMat4("uViewProj", viewProj);
+
+		sData.QuadIndexCount = 0;
+		sData.QuadVertexBufferPtr = sData.QuadVertexBufferBase;
+
+		sData.TextureSlotIndex = 1;
+	}
+
 	void Renderer2D::endScene()
 	{
 		MH_PROFILE_FUNCTION();

@@ -33,13 +33,38 @@ namespace Mayhem
 
 	void Scene::onUpdate(Timestep ts)
 	{
-		auto group = mRegistry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
-
-		for (auto entity : group)
+		//Render 2D
+		Camera* mainCamera = nullptr;
+		glm::mat4* cameraTransform = nullptr;
 		{
-			auto& [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
+			auto view = mRegistry.view<TransformComponent, CameraComponent>();
+			for (auto entity : view)
+			{
+				auto& [transform, camera] = view.get<TransformComponent, CameraComponent>(entity);
 
-			Renderer2D::drawQuad(transform.Transform, sprite.Color);
+				if (camera.Primary)
+				{
+					mainCamera = &camera.Camera;
+					cameraTransform = &transform.Transform;
+					break;
+				}
+			}
+		}
+
+		if (mainCamera)
+		{
+			Renderer2D::beginScene(mainCamera->getProjection(), *cameraTransform);
+
+			auto group = mRegistry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
+
+			for (auto entity : group)
+			{
+				auto& [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
+
+				Renderer2D::drawQuad(transform.Transform, sprite.Color);
+			}
+
+			Renderer2D::endScene();
 		}
 	}
 }

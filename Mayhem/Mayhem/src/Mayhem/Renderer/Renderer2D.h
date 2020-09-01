@@ -5,6 +5,8 @@
 #include "Mayhem/Renderer/Texture.h"
 #include "Mayhem/Renderer/SubTexture2D.h"
 
+#include "Mayhem/Renderer/Camera.h"
+
 namespace Mayhem
 {
 	class Renderer2D
@@ -13,6 +15,7 @@ namespace Mayhem
 		static void init();
 		static void shutdown();
 
+		static void beginScene(const Camera& camera, const glm::mat4& transform);
 		static void beginScene(const OrthographicCamera& camera);
 		static void endScene();
 		static void flush();
