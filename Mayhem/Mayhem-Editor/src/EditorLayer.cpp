@@ -39,10 +39,10 @@ namespace Mayhem
 		mSquareEntity = square;
 
 		mCameraEntity = mActiveScene->createEntity("Camera Entity");
-		mCameraEntity.addComponent<CameraComponent>(glm::ortho(-16.0f, 16.0f, -9.0f, 9.0f, -1.0f, 1.0f));
+		mCameraEntity.addComponent<CameraComponent>();
 
 		mSecondCamera = mActiveScene->createEntity("Clip Space Camera Entity");
-		auto& cc = mSecondCamera.addComponent<CameraComponent>(glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f));
+		auto& cc = mSecondCamera.addComponent<CameraComponent>();
 		cc.Primary = false;
 	}
 
@@ -54,6 +54,12 @@ namespace Mayhem
 	void EditorLayer::onUpdate(Timestep ts)
 	{
 		MH_PROFILE_FUNCTION();
+
+		//Resize
+		mFrameBuffer->resize((uint32_t)mViewportSize.x, (uint32_t)mViewportSize.y);
+		mCameraController.onResize(mViewportSize.x, mViewportSize.y);
+
+		mActiveScene->onViewportResize((uint32_t)mViewportSize.x, (uint32_t)mViewportSize.y);
 
 		//Update
 		if(mViewportFocused)
@@ -164,6 +170,15 @@ namespace Mayhem
 		{
 			mCameraEntity.getComponent<CameraComponent>().Primary = mPrimaryCamera;
 			mSecondCamera.getComponent<CameraComponent>().Primary = !mPrimaryCamera;
+		}
+
+		{
+			auto& camera = mSecondCamera.getComponent<CameraComponent>().Camera;
+			float orthoSize = camera.getOrthographicSize();
+			if (ImGui::DragFloat("SecondCamera Ortho Size", &orthoSize))
+			{
+				camera.setOrthographicSize(orthoSize);
+			}
 		}
 		
 		ImGui::End();

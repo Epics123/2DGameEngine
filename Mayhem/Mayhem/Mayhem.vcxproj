@@ -175,6 +175,7 @@
     <ClInclude Include="src\Mayhem\Scene\Components.h" />
     <ClInclude Include="src\Mayhem\Scene\Entity.h" />
     <ClInclude Include="src\Mayhem\Scene\Scene.h" />
+    <ClInclude Include="src\Mayhem\Scene\SceneCamera.h" />
     <ClInclude Include="src\Mayhem\Util\UtilMath.h" />
     <ClInclude Include="src\Mayhem\Util\Vector2D.h" />
     <ClInclude Include="src\Mayhem\Util\Vector3D.h" />
@@ -620,6 +621,7 @@
     <ClCompile Include="src\Mayhem\Renderer\VertexArray.cpp" />
     <ClCompile Include="src\Mayhem\Scene\Entity.cpp" />
     <ClCompile Include="src\Mayhem\Scene\Scene.cpp" />
+    <ClCompile Include="src\Mayhem\Scene\SceneCamera.cpp" />
     <ClCompile Include="src\Mayhem\Util\Math.cpp" />
     <ClCompile Include="src\Mayhem\Util\Vector2D.cpp" />
     <ClCompile Include="src\Mayhem\Util\Vector3D.cpp" />

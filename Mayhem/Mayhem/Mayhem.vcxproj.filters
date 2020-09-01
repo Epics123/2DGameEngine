@@ -1427,6 +1427,7 @@
     </ClInclude>
     <ClInclude Include="src\Mayhem\Scene\Entity.h" />
     <ClInclude Include="src\Mayhem\Renderer\Camera.h" />
+    <ClInclude Include="src\Mayhem\Scene\SceneCamera.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Mayhem\Core\Application.cpp">
@@ -1535,5 +1536,6 @@
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
     <ClCompile Include="src\Mayhem\Scene\Entity.cpp" />
+    <ClCompile Include="src\Mayhem\Scene\SceneCamera.cpp" />
   </ItemGroup>
 </Project>

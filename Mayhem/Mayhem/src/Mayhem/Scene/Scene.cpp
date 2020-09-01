@@ -56,7 +56,6 @@ namespace Mayhem
 			Renderer2D::beginScene(mainCamera->getProjection(), *cameraTransform);
 
 			auto group = mRegistry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
-
 			for (auto entity : group)
 			{
 				auto& [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
@@ -65,6 +64,24 @@ namespace Mayhem
 			}
 
 			Renderer2D::endScene();
+		}
+	}
+
+	void Scene::onViewportResize(uint32_t width, uint32_t height)
+	{
+		mViewportWidth = width;
+		mViewportHeight = height;
+
+		//Resize non-FixedAspectRatio cameras
+
+		auto view = mRegistry.view<CameraComponent>();
+		for (auto entity : view)
+		{
+			auto& cameraComponent = view.get<CameraComponent>(entity);
+			if (!cameraComponent.FixedAspectRatio)
+			{
+				cameraComponent.Camera.setViewportSize(width, height);
+			}
 		}
 	}
 }

@@ -2,7 +2,7 @@
 
 #include <glm/glm.hpp>
 
-#include "Mayhem/Renderer/Camera.h"
+#include "SceneCamera.h"
 
 namespace Mayhem
 {
@@ -41,12 +41,11 @@ namespace Mayhem
 
 	struct CameraComponent
 	{
-		Mayhem::Camera Camera;
+		SceneCamera Camera;
 		bool Primary = true;
+		bool FixedAspectRatio = false;
 
 		CameraComponent() = default;
 		CameraComponent(const CameraComponent&) = default;
-		CameraComponent(const glm::mat4& projection)
-			:Camera(projection) {}
 	};
 }
