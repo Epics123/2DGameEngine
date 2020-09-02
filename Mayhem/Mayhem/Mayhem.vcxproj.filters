@@ -1428,6 +1428,7 @@
     <ClInclude Include="src\Mayhem\Scene\Entity.h" />
     <ClInclude Include="src\Mayhem\Renderer\Camera.h" />
     <ClInclude Include="src\Mayhem\Scene\SceneCamera.h" />
+    <ClInclude Include="src\Mayhem\Scene\ScriptableEntity.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Mayhem\Core\Application.cpp">

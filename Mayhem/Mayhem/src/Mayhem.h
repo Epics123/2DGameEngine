@@ -17,6 +17,7 @@
 
 #include "Mayhem/Scene/Scene.h"
 #include "Mayhem/Scene/Entity.h"
+#include "Mayhem/Scene/ScriptableEntity.h"
 #include "Mayhem/Scene/Components.h"
 
 //---Renderer-----------------------------------

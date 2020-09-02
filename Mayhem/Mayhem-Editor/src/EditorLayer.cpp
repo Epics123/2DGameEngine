@@ -44,6 +44,36 @@ namespace Mayhem
 		mSecondCamera = mActiveScene->createEntity("Clip Space Camera Entity");
 		auto& cc = mSecondCamera.addComponent<CameraComponent>();
 		cc.Primary = false;
+
+		class CameraController : public ScriptableEntity
+		{
+		public:
+			void onCreate()
+			{		
+			}
+
+			void onDestroy()
+			{
+
+			}
+
+			void onUpdate(Timestep ts)
+			{
+				auto& transform = getComponent<TransformComponent>().Transform;
+				float speed = 5.0f;
+
+				if (Input::isKeyPressed(KeyCode::A))
+					transform[3][0] -= speed * ts;
+				if (Input::isKeyPressed(KeyCode::D))
+					transform[3][0] += speed * ts;
+				if (Input::isKeyPressed(KeyCode::W))
+					transform[3][1] += speed * ts;
+				if (Input::isKeyPressed(KeyCode::S))
+					transform[3][1] -= speed * ts;
+			}
+		};
+
+		mCameraEntity.addComponent<NativeScriptComponent>().bind<CameraController>();
 	}
 
 	void EditorLayer::onDetatch()

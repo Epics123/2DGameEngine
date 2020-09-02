@@ -3,6 +3,7 @@
 #include <glm/glm.hpp>
 
 #include "SceneCamera.h"
+#include "ScriptableEntity.h"
 
 namespace Mayhem
 {
@@ -47,5 +48,28 @@ namespace Mayhem
 
 		CameraComponent() = default;
 		CameraComponent(const CameraComponent&) = default;
+	};
+
+	struct NativeScriptComponent
+	{
+		ScriptableEntity* Instance = nullptr;
+
+		std::function<void()> InstantiateFunction;
+		std::function<void()> DestroyInstanceFunction;
+
+		std::function<void(ScriptableEntity*)> OnCreateFunction;
+		std::function<void(ScriptableEntity*)> OnDestroyFunction;
+		std::function<void(ScriptableEntity*, Timestep)> OnUpdateFunction;
+
+		template<typename T>
+		void bind()
+		{
+			InstantiateFunction = [&]() { Instance = new T(); };
+			DestroyInstanceFunction = [&]() { delete (T*)Instance; Instance = nullptr; };
+
+			OnCreateFunction = [](ScriptableEntity* instance) { ((T*)instance)->onCreate(); };
+			OnDestroyFunction = [](ScriptableEntity* instance) { ((T*)instance)->onDestroy(); };
+			OnUpdateFunction = [](ScriptableEntity* instance, Timestep ts) { ((T*)instance)->onUpdate(ts); };
+		}
 	};
 }

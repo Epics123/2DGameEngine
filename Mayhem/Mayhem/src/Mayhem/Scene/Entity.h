@@ -46,4 +46,5 @@ namespace Mayhem
 		entt::entity mEntityHandle{ entt::null };
 		Scene* mScene = nullptr;
 	};
+
 }

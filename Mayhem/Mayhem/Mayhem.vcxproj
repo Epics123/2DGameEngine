@@ -176,6 +176,7 @@
     <ClInclude Include="src\Mayhem\Scene\Entity.h" />
     <ClInclude Include="src\Mayhem\Scene\Scene.h" />
     <ClInclude Include="src\Mayhem\Scene\SceneCamera.h" />
+    <ClInclude Include="src\Mayhem\Scene\ScriptableEntity.h" />
     <ClInclude Include="src\Mayhem\Util\UtilMath.h" />
     <ClInclude Include="src\Mayhem\Util\Vector2D.h" />
     <ClInclude Include="src\Mayhem\Util\Vector3D.h" />
