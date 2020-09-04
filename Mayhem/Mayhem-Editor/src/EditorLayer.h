@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Mayhem.h"
+#include "Panels/SceneHierarchyPanel.h"
 
 namespace Mayhem
 {
@@ -40,5 +41,8 @@ namespace Mayhem
 		glm::vec2 mViewportSize = { 0, 0 };
 
 		glm::vec4 mSquareColor = { 0.2f, 0.3f, 0.8f, 1.0f };
+
+		//Panels
+		SceneHierarchyPanel mSceneHierarchyPanel;
 	};
 }

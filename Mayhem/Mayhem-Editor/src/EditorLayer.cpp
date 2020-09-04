@@ -50,6 +50,8 @@ namespace Mayhem
 		public:
 			void onCreate()
 			{		
+				auto& transform = getComponent<TransformComponent>().Transform;
+				transform[3][0] = rand() % 10 - 5.0f;
 			}
 
 			void onDestroy()
@@ -74,6 +76,9 @@ namespace Mayhem
 		};
 
 		mCameraEntity.addComponent<NativeScriptComponent>().bind<CameraController>();
+		mSecondCamera.addComponent<NativeScriptComponent>().bind<CameraController>();
+
+		mSceneHierarchyPanel.setContext(mActiveScene);
 	}
 
 	void EditorLayer::onDetatch()
@@ -174,6 +179,8 @@ namespace Mayhem
 			}
 			ImGui::EndMenuBar();
 		}
+
+		mSceneHierarchyPanel.onImGuiRender();
 
 		ImGui::Begin("Settings");
 

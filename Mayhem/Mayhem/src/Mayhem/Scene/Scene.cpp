@@ -37,14 +37,15 @@ namespace Mayhem
 		{
 			mRegistry.view<NativeScriptComponent>().each([=](auto entity, auto& nsc)
 			{
+				//TODO: Move to Scene::onScenePlay
 				if (!nsc.Instance)
 				{
-					nsc.InstantiateFunction();
+					nsc.Instance = nsc.InstantiateScript();
 					nsc.Instance->mEntity = Entity{ entity, this };
-					nsc.OnCreateFunction(nsc.Instance);
+					nsc.Instance->onCreate();
 				}
 
-				nsc.OnUpdateFunction(nsc.Instance, ts);
+				nsc.Instance->onUpdate(ts);
 			});
 		}
 
@@ -55,7 +56,7 @@ namespace Mayhem
 			auto view = mRegistry.view<TransformComponent, CameraComponent>();
 			for (auto entity : view)
 			{
-				auto& [transform, camera] = view.get<TransformComponent, CameraComponent>(entity);
+				auto [transform, camera] = view.get<TransformComponent, CameraComponent>(entity);
 
 				if (camera.Primary)
 				{
@@ -73,7 +74,7 @@ namespace Mayhem
 			auto group = mRegistry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
 			for (auto entity : group)
 			{
-				auto& [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
+				auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
 
 				Renderer2D::drawQuad(transform.Transform, sprite.Color);
 			}
