@@ -19,6 +19,7 @@ namespace Mayhem
 
 	private:
 		void drawEntityNode(Entity entity);
+		void drawComponents(Entity entity);
 
 	private:
 		Ref<Scene> mContext;

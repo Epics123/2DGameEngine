@@ -29,7 +29,7 @@ group ""
 
 project "Mayhem"
 	location "Mayhem"
-	kind "StaticLib"
+	kind "WindowedApp"
 	language "C++"
 	cppdialect "C++17"
 	staticruntime "on"

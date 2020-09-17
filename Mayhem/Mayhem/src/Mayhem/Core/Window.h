@@ -18,7 +18,7 @@ namespace Mayhem
 	};
 
 	//Interface representing a desktop system based Window
-	class MAYHEM_API Window
+	class Window
 	{
 	public:
 		using EventCallbackFn = std::function<void(Event&)>;
