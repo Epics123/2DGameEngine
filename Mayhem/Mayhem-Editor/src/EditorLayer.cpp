@@ -33,8 +33,11 @@ namespace Mayhem
 		mActiveScene = CreateRef<Scene>();
 
 		//Entity
-		auto square = mActiveScene->createEntity("Square");
+		auto square = mActiveScene->createEntity("Green Square");
 		square.addComponent<SpriteRendererComponent>(glm::vec4{0.0f, 1.0f, 0.0f, 1.0f});
+
+		auto redSquare = mActiveScene->createEntity("Red Square");
+		redSquare.addComponent<SpriteRendererComponent>(glm::vec4{ 1.0f, 0.0f, 0.0f, 1.0f });
 
 		mSquareEntity = square;
 

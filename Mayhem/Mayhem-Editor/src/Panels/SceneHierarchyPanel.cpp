@@ -23,10 +23,10 @@ namespace Mayhem
 		ImGui::Begin("Scene Hierarchy");
 
 		mContext->mRegistry.each([&](auto entityID)
-		{
-			Entity entity{ entityID, mContext.get() };
-			drawEntityNode(entity);
-		});
+			{
+				Entity entity{ entityID, mContext.get() };
+				drawEntityNode(entity);
+			});
 
 		if (ImGui::IsMouseDown(0) && ImGui::IsWindowHovered())
 			mSelectionContext = {};
@@ -43,7 +43,7 @@ namespace Mayhem
 	void SceneHierarchyPanel::drawEntityNode(Entity entity)
 	{
 		auto& tag = entity.getComponent<TagComponent>().Tag;
-		
+
 		ImGuiTreeNodeFlags flags = ((mSelectionContext == entity) ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_OpenOnArrow;
 		bool opened = ImGui::TreeNodeEx((void*)(uint64_t)(uint32_t)entity, flags, tag.c_str());
 		if (ImGui::IsItemClicked())
@@ -80,6 +80,72 @@ namespace Mayhem
 			{
 				auto& transform = entity.getComponent<TransformComponent>().Transform;
 				ImGui::DragFloat3("Position", glm::value_ptr(transform[3]), 0.1f);
+
+				ImGui::TreePop();
+			}
+		}
+
+		if (entity.hasComponent<CameraComponent>())
+		{
+			if (ImGui::TreeNodeEx((void*)typeid(CameraComponent).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Camera"))
+			{
+				auto& cameraComponent = entity.getComponent<CameraComponent>();
+				auto& camera = cameraComponent.Camera;
+
+				ImGui::Checkbox("Primary", &cameraComponent.Primary);
+
+				const char* projectionTypeStrings[] = { "Perspective", "Orthographic" };
+				const char* currentProjectionTypeString = projectionTypeStrings[(int)camera.getProjectionType()];
+
+				if (ImGui::BeginCombo("Projection", currentProjectionTypeString))
+				{
+					for (int i = 0; i < 2; i++)
+					{
+						bool isSelected = currentProjectionTypeString == projectionTypeStrings[i];
+						if (ImGui::Selectable(projectionTypeStrings[i], isSelected))
+						{
+							currentProjectionTypeString = projectionTypeStrings[i];
+							camera.setProjectionType((SceneCamera::ProjectionType)i);
+						}
+
+						if (isSelected)
+							ImGui::SetItemDefaultFocus();
+					}
+
+					ImGui::EndCombo();
+				}
+
+				if (camera.getProjectionType() == SceneCamera::ProjectionType::Perspective)
+				{
+					float verticalFOV = glm::degrees(camera.getPerspectiveVerticalFOV());
+					if (ImGui::DragFloat("Vertical FOV", &verticalFOV))
+						camera.setPerspectiveVerticalFOV(glm::radians(verticalFOV));
+
+					float perspectiveNear = camera.getPerspectiveNearClip();
+					if (ImGui::DragFloat("Near", &perspectiveNear))
+						camera.setPerspectiveNearClip(perspectiveNear);
+
+					float perspectiveFar = camera.getPerspectiveFarClip();
+					if (ImGui::DragFloat("Far", &perspectiveFar))
+						camera.setPerspectiveFarClip(perspectiveFar);
+				}
+
+				if (camera.getProjectionType() == SceneCamera::ProjectionType::Orthographic)
+				{
+					float orthoSize = camera.getOrthographicSize();
+					if (ImGui::DragFloat("Size", &orthoSize))
+						camera.setOrthographicSize(orthoSize);
+
+					float orthoNear = camera.getOrthographicNearClip();
+					if (ImGui::DragFloat("Near", &orthoNear))
+						camera.setOrthographicNearClip(orthoNear);
+
+					float orthoFar = camera.getOrthographicFarClip();
+					if (ImGui::DragFloat("Far", &orthoFar))
+						camera.setOrthographicFarClip(orthoFar);
+
+					ImGui::Checkbox("Fixed Aspect Ratio", &cameraComponent.FixedAspectRatio);
+				}
 
 				ImGui::TreePop();
 			}
