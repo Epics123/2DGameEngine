@@ -41,10 +41,10 @@ namespace Mayhem
 
 		mSquareEntity = square;
 
-		mCameraEntity = mActiveScene->createEntity("Camera Entity");
+		mCameraEntity = mActiveScene->createEntity("Camera A");
 		mCameraEntity.addComponent<CameraComponent>();
 
-		mSecondCamera = mActiveScene->createEntity("Clip Space Camera Entity");
+		mSecondCamera = mActiveScene->createEntity("Camera B");
 		auto& cc = mSecondCamera.addComponent<CameraComponent>();
 		cc.Primary = false;
 
@@ -185,7 +185,7 @@ namespace Mayhem
 
 		mSceneHierarchyPanel.onImGuiRender();
 
-		ImGui::Begin("Settings");
+		ImGui::Begin("Stats");
 
 		auto stats = Mayhem::Renderer2D::getStats();
 		ImGui::Text("Renderer2D Stats:");
@@ -193,33 +193,6 @@ namespace Mayhem
 		ImGui::Text("Quads: %d", stats.QuadCount);
 		ImGui::Text("Vertices: %d", stats.getTotalVertexCount());
 		ImGui::Text("Indices: %d", stats.getTotalIndexCount());
-
-		if (mSquareEntity)
-		{
-			ImGui::Separator();
-			auto& tag = mSquareEntity.getComponent<TagComponent>().Tag;
-			ImGui::Text("%s", tag.c_str());
-
-			auto& squareColor = mSquareEntity.getComponent<SpriteRendererComponent>().Color;
-			ImGui::ColorEdit4("Square Color", glm::value_ptr(squareColor));
-		}
-
-		ImGui::DragFloat3("Camera Transform", glm::value_ptr(mCameraEntity.getComponent<TransformComponent>().Transform[3]));
-
-		if (ImGui::Checkbox("Camera A", &mPrimaryCamera))
-		{
-			mCameraEntity.getComponent<CameraComponent>().Primary = mPrimaryCamera;
-			mSecondCamera.getComponent<CameraComponent>().Primary = !mPrimaryCamera;
-		}
-
-		{
-			auto& camera = mSecondCamera.getComponent<CameraComponent>().Camera;
-			float orthoSize = camera.getOrthographicSize();
-			if (ImGui::DragFloat("SecondCamera Ortho Size", &orthoSize))
-			{
-				camera.setOrthographicSize(orthoSize);
-			}
-		}
 		
 		ImGui::End();
 
