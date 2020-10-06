@@ -2,10 +2,6 @@
 	path = Mayhem/Mayhem/vendor/spdlog
 	url = https://github.com/gabime/spdlog
 	branch = v1.x
-[submodule "Mayhem/Mayhem/vendor/GLFW"]
-	path = Mayhem/Mayhem/vendor/GLFW
-	url = https://github.com/TheCherno/GLFW
-	branch = master
 [submodule "Mayhem/Mayhem/vendor/imgui"]
 	path = Mayhem/Mayhem/vendor/imgui
 	url = https://github.com/TheCherno/imgui
