@@ -18,6 +18,9 @@ namespace Mayhem
 		void onEvent(Event& e) override;
 		virtual void onImGuiRender() override;
 
+		template<typename T>
+		void drawComponent(const char* label, T& componentData);
+
 	private:
 		OrthographicCameraController mCameraController;
 		//Temp
@@ -45,4 +48,11 @@ namespace Mayhem
 		//Panels
 		SceneHierarchyPanel mSceneHierarchyPanel;
 	};
+
+	template<typename T>
+	void Mayhem::EditorLayer::drawComponent(const char* label, T& componentData)
+	{
+
+	}
+
 }
