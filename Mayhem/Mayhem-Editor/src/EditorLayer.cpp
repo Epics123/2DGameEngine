@@ -51,8 +51,8 @@ namespace Mayhem
 		public:
 			void onCreate()
 			{		
-				auto& transform = getComponent<TransformComponent>().Transform;
-				transform[3][0] = rand() % 10 - 5.0f;
+				auto& translation = getComponent<TransformComponent>().Translation;
+				translation.x = rand() % 10 - 5.0f;
 			}
 
 			void onDestroy()
@@ -62,17 +62,17 @@ namespace Mayhem
 
 			void onUpdate(Timestep ts)
 			{
-				auto& transform = getComponent<TransformComponent>().Transform;
+				auto& translation = getComponent<TransformComponent>().Translation;
 				float speed = 5.0f;
 
 				if (Input::isKeyPressed(KeyCode::A))
-					transform[3][0] -= speed * ts;
+					translation.x -= speed * ts;
 				if (Input::isKeyPressed(KeyCode::D))
-					transform[3][0] += speed * ts;
+					translation.x += speed * ts;
 				if (Input::isKeyPressed(KeyCode::W))
-					transform[3][1] += speed * ts;
+					translation.y += speed * ts;
 				if (Input::isKeyPressed(KeyCode::S))
-					transform[3][1] -= speed * ts;
+					translation.y -= speed * ts;
 			}
 		};
 
