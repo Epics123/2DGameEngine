@@ -17,8 +17,6 @@ namespace Mayhem
 
 	void EditorLayer::onAttatch()
 	{
-		MH_PROFILE_FUNCTION();
-
 		mTailsTexture = Texture2D::create("assets/textures/Tails.png");
 		mSpriteSheet = Texture2D::create("assets/game/textures/RPGpack_sheet_2X.png");
 
@@ -86,13 +84,11 @@ namespace Mayhem
 
 	void EditorLayer::onDetatch()
 	{
-		MH_PROFILE_FUNCTION();
+
 	}
 
 	void EditorLayer::onUpdate(Timestep ts)
 	{
-		MH_PROFILE_FUNCTION();
-
 		//Resize
 		mFrameBuffer->resize((uint32_t)mViewportSize.x, (uint32_t)mViewportSize.y);
 		mCameraController.onResize(mViewportSize.x, mViewportSize.y);
@@ -122,8 +118,6 @@ namespace Mayhem
 
 	void EditorLayer::onImGuiRender()
 	{
-		MH_PROFILE_FUNCTION();
-
 		static bool docspaceOpen = true;
 		static bool opt_fullscreen_persistant = true;
 		bool opt_fullscreen = opt_fullscreen_persistant;

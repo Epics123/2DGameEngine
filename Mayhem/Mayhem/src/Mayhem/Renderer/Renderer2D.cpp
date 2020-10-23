@@ -48,8 +48,6 @@ namespace Mayhem
 
 	void Renderer2D::init()
 	{
-		MH_PROFILE_FUNCTION();
-
 		sData.QuadVertexArray = VertexArray::create();
 
 		sData.QuadVertexBuffer = VertexBuffer::create(sData.MAX_VERTICIES * sizeof(QuadVertex));
@@ -107,13 +105,11 @@ namespace Mayhem
 
 	void Renderer2D::shutdown()
 	{
-		MH_PROFILE_FUNCTION();
+
 	}
 
 	void Renderer2D::beginScene(const OrthographicCamera& camera)
 	{
-		MH_PROFILE_FUNCTION();
-
 		sData.TextureShader->bind();
 		sData.TextureShader->setMat4("uViewProj", camera.getViewProjMatrix());
 
@@ -125,8 +121,6 @@ namespace Mayhem
 
 	void Renderer2D::beginScene(const Camera& camera, const glm::mat4& transform)
 	{
-		MH_PROFILE_FUNCTION();
-
 		glm::mat4 viewProj = camera.getProjection() * glm::inverse(transform);
 
 		sData.TextureShader->bind();
@@ -140,8 +134,6 @@ namespace Mayhem
 
 	void Renderer2D::endScene()
 	{
-		MH_PROFILE_FUNCTION();
-
 		uint32_t dataSize = (uint8_t*)sData.QuadVertexBufferPtr - (uint8_t*)sData.QuadVertexBufferBase;
 		sData.QuadVertexBuffer->setData(sData.QuadVertexBufferBase, dataSize);
 
@@ -177,8 +169,6 @@ namespace Mayhem
 
 	void Renderer2D::drawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color)
 	{
-		MH_PROFILE_FUNCTION();
-
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
 			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
 
@@ -192,8 +182,6 @@ namespace Mayhem
 
 	void Renderer2D::drawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture, float tilingFactor, const glm::vec4& tintColor)
 	{
-		MH_PROFILE_FUNCTION();
-
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
 			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
 
@@ -207,8 +195,6 @@ namespace Mayhem
 
 	void Renderer2D::drawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<SubTexture2D>& subtexture, float tilingFactor, const glm::vec4& tintColor)
 	{
-		MH_PROFILE_FUNCTION();
-
 		constexpr size_t quadVertexCount = 4;
 		constexpr glm::vec4 color = { 1.0f, 1.0f, 1.0f, 1.0f };
 		const glm::vec2* textureCoords = subtexture->getTexCoords();
@@ -327,8 +313,6 @@ namespace Mayhem
 
 	void Renderer2D::drawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const glm::vec4& color)
 	{
-		MH_PROFILE_FUNCTION();
-
 		constexpr size_t quadVertexCount = 4;
 		constexpr glm::vec2 textureCoords[] = { {0.0f, 0.0f}, {1.0f, 0.0f}, {1.0f , 1.0f}, {0.0f, 1.0f} };
 
@@ -363,8 +347,6 @@ namespace Mayhem
 
 	void Renderer2D::drawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const Ref<Texture2D>& texture, float tilingFactor, const glm::vec4 & tintColor)
 	{
-		MH_PROFILE_FUNCTION();
-
 		constexpr size_t quadVertexCount = 4;
 		constexpr glm::vec4 color = { 1.0f, 1.0f, 1.0f, 1.0f };
 		constexpr glm::vec2 textureCoords[] = { {0.0f, 0.0f}, {1.0f, 0.0f}, {1.0f , 1.0f}, {0.0f, 1.0f} };
@@ -416,8 +398,6 @@ namespace Mayhem
 
 	void Renderer2D::drawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const Ref<SubTexture2D>& subtexture, float tilingFactor, const glm::vec4& tintColor)
 	{
-		MH_PROFILE_FUNCTION();
-
 		constexpr size_t quadVertexCount = 4;
 		constexpr glm::vec4 color = { 1.0f, 1.0f, 1.0f, 1.0f };
 		const glm::vec2* textureCoords = subtexture->getTexCoords();

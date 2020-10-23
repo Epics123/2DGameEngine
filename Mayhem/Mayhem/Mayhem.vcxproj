@@ -141,7 +141,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Mayhem.h" />
-    <ClInclude Include="src\Mayhem\Renderer\Camera.h" />
     <ClInclude Include="src\Mayhem\Core\Application.h" />
     <ClInclude Include="src\Mayhem\Core\Core.h" />
     <ClInclude Include="src\Mayhem\Core\EntryPoint.h" />
@@ -153,13 +152,13 @@
     <ClInclude Include="src\Mayhem\Core\MouseButtonCodes.h" />
     <ClInclude Include="src\Mayhem\Core\Timestep.h" />
     <ClInclude Include="src\Mayhem\Core\Window.h" />
-    <ClInclude Include="src\Mayhem\Debug\Instramentor.h" />
     <ClInclude Include="src\Mayhem\Events\ApplicationEvent.h" />
     <ClInclude Include="src\Mayhem\Events\Event.h" />
     <ClInclude Include="src\Mayhem\Events\KeyEvent.h" />
     <ClInclude Include="src\Mayhem\Events\MouseEvent.h" />
     <ClInclude Include="src\Mayhem\ImGui\ImGuiLayer.h" />
     <ClInclude Include="src\Mayhem\Renderer\Buffer.h" />
+    <ClInclude Include="src\Mayhem\Renderer\Camera.h" />
     <ClInclude Include="src\Mayhem\Renderer\FrameBuffer.h" />
     <ClInclude Include="src\Mayhem\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\Mayhem\Renderer\OrthographicCamera.h" />

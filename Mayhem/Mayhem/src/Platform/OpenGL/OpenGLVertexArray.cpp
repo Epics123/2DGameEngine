@@ -28,36 +28,26 @@ namespace Mayhem
 
 	OpenGLVertexArray::OpenGLVertexArray()
 	{
-		MH_PROFILE_FUNCTION();
-
 		glCreateVertexArrays(1, &mRendererID);
 	}
 
 	OpenGLVertexArray::~OpenGLVertexArray()
 	{
-		MH_PROFILE_FUNCTION();
-
 		glDeleteVertexArrays(1, &mRendererID);
 	}
 
 	void OpenGLVertexArray::bind() const
 	{
-		MH_PROFILE_FUNCTION();
-
 		glBindVertexArray(mRendererID);
 	}
 
 	void OpenGLVertexArray::unBind() const
 	{
-		MH_PROFILE_FUNCTION();
-
 		glBindVertexArray(0);
 	}
 
 	void OpenGLVertexArray::addVertexBuffer(const Ref<VertexBuffer>& vertexBuffer)
 	{
-		MH_PROFILE_FUNCTION();
-
 		MH_CORE_ASSERT(vertexBuffer->getLayout().getElements().size(), "Vertex Buffer has no layout!");
 		
 		glBindVertexArray(mRendererID);
@@ -80,8 +70,6 @@ namespace Mayhem
 
 	void OpenGLVertexArray::setIndexBuffer(const Ref<IndexBuffer>& indexBuffer)
 	{
-		MH_PROFILE_FUNCTION();
-
 		glBindVertexArray(mRendererID);
 		indexBuffer->bind();
 

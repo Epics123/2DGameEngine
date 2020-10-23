@@ -10,9 +10,6 @@
     <Filter Include="src\Mayhem\Core">
       <UniqueIdentifier>{75CB2C12-E156-9AD6-EA67-1DCB5672F6D6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Mayhem\Debug">
-      <UniqueIdentifier>{3395D257-1F8E-F1A9-48C0-D62E3418D1B5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\Mayhem\Events">
       <UniqueIdentifier>{418EAF55-ADA4-ADEB-F61B-390D62717E73}</UniqueIdentifier>
     </Filter>
@@ -99,9 +96,6 @@
     <ClInclude Include="src\Mayhem\Core\Window.h">
       <Filter>src\Mayhem\Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Mayhem\Debug\Instramentor.h">
-      <Filter>src\Mayhem\Debug</Filter>
-    </ClInclude>
     <ClInclude Include="src\Mayhem\Events\ApplicationEvent.h">
       <Filter>src\Mayhem\Events</Filter>
     </ClInclude>
@@ -118,6 +112,9 @@
       <Filter>src\Mayhem\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="src\Mayhem\Renderer\Buffer.h">
+      <Filter>src\Mayhem\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mayhem\Renderer\Camera.h">
       <Filter>src\Mayhem\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Mayhem\Renderer\FrameBuffer.h">
@@ -159,7 +156,16 @@
     <ClInclude Include="src\Mayhem\Scene\Components.h">
       <Filter>src\Mayhem\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="src\Mayhem\Scene\Entity.h">
+      <Filter>src\Mayhem\Scene</Filter>
+    </ClInclude>
     <ClInclude Include="src\Mayhem\Scene\Scene.h">
+      <Filter>src\Mayhem\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mayhem\Scene\SceneCamera.h">
+      <Filter>src\Mayhem\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mayhem\Scene\ScriptableEntity.h">
       <Filter>src\Mayhem\Scene</Filter>
     </ClInclude>
     <ClInclude Include="src\Mayhem\Util\UtilMath.h">
@@ -1425,10 +1431,6 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\Mayhem\Scene\Entity.h" />
-    <ClInclude Include="src\Mayhem\Renderer\Camera.h" />
-    <ClInclude Include="src\Mayhem\Scene\SceneCamera.h" />
-    <ClInclude Include="src\Mayhem\Scene\ScriptableEntity.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Mayhem\Core\Application.cpp">
@@ -1491,7 +1493,13 @@
     <ClCompile Include="src\Mayhem\Renderer\VertexArray.cpp">
       <Filter>src\Mayhem\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Mayhem\Scene\Entity.cpp">
+      <Filter>src\Mayhem\Scene</Filter>
+    </ClCompile>
     <ClCompile Include="src\Mayhem\Scene\Scene.cpp">
+      <Filter>src\Mayhem\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mayhem\Scene\SceneCamera.cpp">
       <Filter>src\Mayhem\Scene</Filter>
     </ClCompile>
     <ClCompile Include="src\Mayhem\Util\Math.cpp">
@@ -1536,7 +1544,5 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\Mayhem\Scene\Entity.cpp" />
-    <ClCompile Include="src\Mayhem\Scene\SceneCamera.cpp" />
   </ItemGroup>
 </Project>

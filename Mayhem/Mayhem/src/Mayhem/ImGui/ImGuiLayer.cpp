@@ -24,8 +24,6 @@ namespace Mayhem
 
 	void ImGuiLayer::onAttatch()
 	{
-		MH_PROFILE_FUNCTION();
-
 		//Setup ImGui context
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
@@ -59,8 +57,6 @@ namespace Mayhem
 
 	void ImGuiLayer::onDetatch()
 	{
-		MH_PROFILE_FUNCTION();
-
 		ImGui_ImplOpenGL3_Shutdown();
 		ImGui_ImplGlfw_Shutdown();
 		ImGui::DestroyContext();
@@ -78,8 +74,6 @@ namespace Mayhem
 
 	void ImGuiLayer::begin()
 	{
-		MH_PROFILE_FUNCTION();
-
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
@@ -87,8 +81,6 @@ namespace Mayhem
 
 	void ImGuiLayer::end()
 	{
-		MH_PROFILE_FUNCTION();
-
 		ImGuiIO& io = ImGui::GetIO();
 		Application& app = Application::getInstance();
 		io.DisplaySize = ImVec2((float)app.getWindow().getWidth(), (float)app.getWindow().getHeight());

@@ -10,8 +10,6 @@ namespace Mayhem
 
 	void Renderer::init()
 	{
-		MH_PROFILE_FUNCTION();
-
 		RenderCommand::init();
 		Renderer2D::init();
 	}

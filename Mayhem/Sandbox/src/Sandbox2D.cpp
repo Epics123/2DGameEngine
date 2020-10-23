@@ -15,8 +15,6 @@ Sandbox2D::Sandbox2D()
 
 void Sandbox2D::onAttatch()
 {
-	MH_PROFILE_FUNCTION();
-
 	mTailsTexture = Mayhem::Texture2D::create("assets/textures/Tails.png");
 	mSpriteSheet = Mayhem::Texture2D::create("assets/game/textures/RPGpack_sheet_2X.png");
 
@@ -26,27 +24,22 @@ void Sandbox2D::onAttatch()
 
 void Sandbox2D::onDetatch()
 {
-	MH_PROFILE_FUNCTION();
+
 }
 
 void Sandbox2D::onUpdate(Mayhem::Timestep ts)
 {
-	MH_PROFILE_FUNCTION();
-
 	//Update
 	mCameraController.onUpdate(ts);
 
 	//Render
 	Mayhem::Renderer2D::resetStats();
 	{
-		MH_PROFILE_SCOPE("Render Prep");
 		Mayhem::RenderCommand::setClearColor({ 0.1f, 0.1f, 0.1f, 1 });
 		Mayhem::RenderCommand::clear();
 	}
 	
 	{
-		MH_PROFILE_SCOPE("Render Draw");
-
 		static float rotation = 0.0f;
 		static float texRotation = 0.0f;
 		rotation += ts * 20.0f;
@@ -74,8 +67,6 @@ void Sandbox2D::onEvent(Mayhem::Event& e)
 
 void Sandbox2D::onImGuiRender()
 {
-	MH_PROFILE_FUNCTION();
-
 	ImGui::Begin("Settings");
 
 	auto stats = Mayhem::Renderer2D::getStats();
