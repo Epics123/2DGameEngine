@@ -17,7 +17,9 @@ namespace Mayhem
 		T& addComponent(Args&&... args)
 		{
 			MH_CORE_ASSERT(!hasComponent<T>(), "Entity already has component!");
-			return mScene->mRegistry.emplace<T>(mEntityHandle, std::forward<Args>(args)...);
+			T& component = mScene->mRegistry.emplace<T>(mEntityHandle, std::forward<Args>(args)...);
+			mScene->onComponentAdded<T>(*this, component);
+			return component;
 		}
 
 		template<typename T>
@@ -34,14 +36,15 @@ namespace Mayhem
 		}
 
 		template<typename T>
-		bool removeComponent()
+		void removeComponent()
 		{
 			MH_CORE_ASSERT(hasComponent<T>(), "Entity does not have component!");
-			return mScene->mRegistry.remove<T>(mEntityHandle);
+			mScene->mRegistry.remove<T>(mEntityHandle);
 		}
 
 		operator bool() const { return mEntityHandle != entt::null; }
 		operator uint32_t() const { return (uint32_t)mEntityHandle; }
+		operator entt::entity() const { return mEntityHandle; }
 
 		bool operator==(const Entity& other) const { return mEntityHandle == other.mEntityHandle && mScene == other.mScene; }
 		bool operator!=(const Entity& other) const { return !(*this == other); }
