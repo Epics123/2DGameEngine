@@ -46,26 +46,6 @@ namespace Mayhem
 		if (mSelectionContext)
 		{
 			drawComponents(mSelectionContext);
-
-			if (ImGui::Button("Add Component"))
-				ImGui::OpenPopup("Add Component");
-
-			if (ImGui::BeginPopup("Add Component"))
-			{
-				if(ImGui::MenuItem("Camera"))
-				{
-					mSelectionContext.addComponent<CameraComponent>();
-					ImGui::CloseCurrentPopup();
-				}
-
-				if (ImGui::MenuItem("Sprite Renderer"))
-				{
-					mSelectionContext.addComponent<SpriteRendererComponent>();
-					ImGui::CloseCurrentPopup();
-				}
-
-				ImGui::EndPopup();
-			}
 		}
 		ImGui::End();
 	}
@@ -75,6 +55,7 @@ namespace Mayhem
 		auto& tag = entity.getComponent<TagComponent>().Tag;
 
 		ImGuiTreeNodeFlags flags = ((mSelectionContext == entity) ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_OpenOnArrow;
+		flags |= ImGuiTreeNodeFlags_SpanAllAvailWidth;
 		bool opened = ImGui::TreeNodeEx((void*)(uint64_t)(uint32_t)entity, flags, tag.c_str());
 		if (ImGui::IsItemClicked())
 		{
@@ -92,7 +73,7 @@ namespace Mayhem
 
 		if (opened)
 		{
-			ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow;
+			ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_SpanAllAvailWidth;
 			bool opened = ImGui::TreeNodeEx((void*)9817239, flags, tag.c_str());
 			if (opened)
 				ImGui::TreePop();
@@ -109,6 +90,9 @@ namespace Mayhem
 
 	static void DrawVec3Control(const std::string& label, glm::vec3& values, float restValue = 0.0f, float colWidth = 100.0f)
 	{
+		ImGuiIO& io = ImGui::GetIO();
+		auto boldFont = io.Fonts->Fonts[0];
+
 		ImGui::PushID(label.c_str());
 
 		ImGui::Columns(2);
@@ -126,8 +110,10 @@ namespace Mayhem
 		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.8f, 0.1f, 0.15f, 1.0f });
 		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ 0.9f, 0.2f, 0.2f, 1.0f });
 		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.8f, 0.1f, 0.15f, 1.0f });
+		ImGui::PushFont(boldFont);
 		if (ImGui::Button("X", buttonSize))
 			values.x = restValue;
+		ImGui::PopFont();
 		ImGui::PopStyleColor(3);
 
 		ImGui::SameLine();
@@ -138,8 +124,10 @@ namespace Mayhem
 		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.2f, 0.7f, 0.2f, 1.0f });
 		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ 0.3f, 0.8f, 0.3f, 1.0f });
 		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.2f, 0.7f, 0.2f, 1.0f });
+		ImGui::PushFont(boldFont);
 		if (ImGui::Button("Y", buttonSize))
 			values.y = restValue;
+		ImGui::PopFont();
 		ImGui::PopStyleColor(3);
 
 		ImGui::SameLine();
@@ -150,8 +138,10 @@ namespace Mayhem
 		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.1f, 0.25f, 0.8f, 1.0f });
 		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ 0.2f, 0.35f, 0.9f, 1.0f });
 		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.1f, 0.25f, 0.8f, 1.0f });
+		ImGui::PushFont(boldFont);
 		if (ImGui::Button("Z", buttonSize))
 			values.z = restValue;
+		ImGui::PopFont();
 		ImGui::PopStyleColor(3);
 
 		ImGui::SameLine();
@@ -165,6 +155,47 @@ namespace Mayhem
 		ImGui::PopID();
 	}
 
+	template <typename T, typename UIFunction>
+	static void drawComponent(const std::string& name, Entity entity, UIFunction uiFunction)
+	{
+		const ImGuiTreeNodeFlags treeNodeFlags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_SpanAllAvailWidth | ImGuiTreeNodeFlags_AllowItemOverlap | ImGuiTreeNodeFlags_FramePadding;
+		if (entity.hasComponent<T>())
+		{
+			auto& component = entity.getComponent<T>();
+			ImVec2 contentRegionAvialable = ImGui::GetContentRegionAvail();
+
+			ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2{ 4, 4 });
+			float lineHeight = GImGui->Font->FontSize + GImGui->Style.FramePadding.y * 2.0f;
+			ImGui::Separator();
+			bool open = ImGui::TreeNodeEx((void*)typeid(T).hash_code(), treeNodeFlags, name.c_str());
+			ImGui::PopStyleVar();
+			ImGui::SameLine(contentRegionAvialable.x - lineHeight * 0.5f);
+			if (ImGui::Button("+", ImVec2{ lineHeight, lineHeight }))
+			{
+				ImGui::OpenPopup("Component Settings");
+			}
+
+
+			bool componentDeleted = false;
+			if (ImGui::BeginPopup("Component Settings"))
+			{
+				if (ImGui::MenuItem("Remove Component"))
+					componentDeleted = true;
+
+				ImGui::EndPopup();
+			}
+
+			if (open)
+			{
+				uiFunction(component);
+				ImGui::TreePop();
+			}
+
+			if (componentDeleted)
+				entity.removeComponent<SpriteRendererComponent>();
+		}
+	}
+
 	void SceneHierarchyPanel::drawComponents(Entity entity)
 	{
 		if (entity.hasComponent<TagComponent>())
@@ -175,39 +206,50 @@ namespace Mayhem
 			memset(buffer, 0, sizeof(buffer));
 			strcpy_s(buffer, sizeof(buffer), tag.c_str());
 
-			if (ImGui::InputText("Tag", buffer, sizeof(buffer)))
+			if (ImGui::InputText("##Tag", buffer, sizeof(buffer)))
 			{
 				tag = std::string(buffer);
 			}
 		}
 
-		const ImGuiTreeNodeFlags treeNodeFlags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap;
+		ImGui::SameLine();
+		ImGui::PushItemWidth(-1);
 
-		if (entity.hasComponent<TransformComponent>())
+		if (ImGui::Button("Add Component"))
+			ImGui::OpenPopup("Add Component");
+
+		if (ImGui::BeginPopup("Add Component"))
 		{
-			bool open = ImGui::TreeNodeEx((void*)typeid(TransformComponent).hash_code(), treeNodeFlags, "Transform");
-
-			if (open)
+			if (ImGui::MenuItem("Camera"))
 			{
-				auto& tc = entity.getComponent<TransformComponent>();
-				DrawVec3Control("Translation", tc.Translation);
-				glm::vec3 rotation = glm::degrees(tc.Rotation);
-				DrawVec3Control("Rotation", rotation);
-				tc.Rotation = glm::radians(rotation);
-				DrawVec3Control("Scale", tc.Scale, 1.0f);
-
-				ImGui::TreePop();
+				mSelectionContext.addComponent<CameraComponent>();
+				ImGui::CloseCurrentPopup();
 			}
-		}
 
-		if (entity.hasComponent<CameraComponent>())
-		{
-			if (ImGui::TreeNodeEx((void*)typeid(CameraComponent).hash_code(), treeNodeFlags, "Camera"))
+			if (ImGui::MenuItem("Sprite Renderer"))
 			{
-				auto& cameraComponent = entity.getComponent<CameraComponent>();
-				auto& camera = cameraComponent.Camera;
+				mSelectionContext.addComponent<SpriteRendererComponent>();
+				ImGui::CloseCurrentPopup();
+			}
 
-				ImGui::Checkbox("Primary", &cameraComponent.Primary);
+			ImGui::EndPopup();
+		}
+		ImGui::PopItemWidth();
+
+		drawComponent<TransformComponent>("Transform", entity, [](auto& component) 
+		{
+			DrawVec3Control("Translation", component.Translation);
+			glm::vec3 rotation = glm::degrees(component.Rotation);
+			DrawVec3Control("Rotation", rotation);
+			component.Rotation = glm::radians(rotation);
+			DrawVec3Control("Scale", component.Scale, 1.0f);
+		});
+
+		drawComponent<CameraComponent>("Camera", entity, [](auto& component)
+		{
+				auto& camera = component.Camera;
+
+				ImGui::Checkbox("Primary", &component.Primary);
 
 				const char* projectionTypeStrings[] = { "Perspective", "Orthographic" };
 				const char* currentProjectionTypeString = projectionTypeStrings[(int)camera.getProjectionType()];
@@ -259,46 +301,13 @@ namespace Mayhem
 					if (ImGui::DragFloat("Far", &orthoFar))
 						camera.setOrthographicFarClip(orthoFar);
 
-					ImGui::Checkbox("Fixed Aspect Ratio", &cameraComponent.FixedAspectRatio);
+					ImGui::Checkbox("Fixed Aspect Ratio", &component.FixedAspectRatio);
 				}
+		});
 
-				ImGui::TreePop();
-			}
-		}
-
-		if (entity.hasComponent<SpriteRendererComponent>())
+		drawComponent<SpriteRendererComponent>("Sprite Renderer", entity, [](auto& component)
 		{
-			ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2{ 4, 4 });
-
-			bool open = ImGui::TreeNodeEx((void*)typeid(SpriteRendererComponent).hash_code(), treeNodeFlags, "Sprite Renderer");
-
-			ImGui::SameLine(ImGui::GetWindowWidth() - 25.0f);
-			if (ImGui::Button("+", ImVec2{ 20, 20 }))
-			{
-				ImGui::OpenPopup("Component Settings");
-			}
-
-			ImGui::PopStyleVar();
-
-			bool componentDeleted = false;
-			if (ImGui::BeginPopup("Component Settings"))
-			{
-				if (ImGui::MenuItem("Remove Component"))
-					componentDeleted = true;
-
-				ImGui::EndPopup();
-			}
-
-			if (open)
-			{
-				auto& src = entity.getComponent<SpriteRendererComponent>();
-				ImGui::ColorEdit4("Color", glm::value_ptr(src.Color));
-
-				ImGui::TreePop();
-			}
-
-			if (componentDeleted)
-				entity.removeComponent<SpriteRendererComponent>();
-		}
+			ImGui::ColorEdit4("Color", glm::value_ptr(component.Color));
+		});
 	}
 }

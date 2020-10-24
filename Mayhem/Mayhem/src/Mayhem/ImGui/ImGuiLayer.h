@@ -22,6 +22,7 @@ namespace Mayhem
 		void end();
 
 		void blockEvents(bool block) { mBlockEvents = block; }
+		void setDarkThemeColors();
 
 	private:
 		bool mBlockEvents = true;
