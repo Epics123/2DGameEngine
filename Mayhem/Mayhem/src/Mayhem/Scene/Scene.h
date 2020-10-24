@@ -29,6 +29,7 @@ namespace Mayhem
 		uint32_t mViewportWidth = 0, mViewportHeight = 0;
 
 		friend class Entity;
+		friend class SceneSerializer;
 		friend class SceneHierarchyPanel;
 	};
 }

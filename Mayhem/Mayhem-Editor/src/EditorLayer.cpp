@@ -6,6 +6,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include "Mayhem/Scene/SceneSerializer.h"
+
 
 namespace Mayhem
 {
@@ -30,6 +32,7 @@ namespace Mayhem
 
 		mActiveScene = CreateRef<Scene>();
 
+#if 0
 		//Entity
 		auto square = mActiveScene->createEntity("Green Square");
 		square.addComponent<SpriteRendererComponent>(glm::vec4{0.0f, 1.0f, 0.0f, 1.0f});
@@ -78,7 +81,7 @@ namespace Mayhem
 
 		mCameraEntity.addComponent<NativeScriptComponent>().bind<CameraController>();
 		mSecondCamera.addComponent<NativeScriptComponent>().bind<CameraController>();
-
+#endif
 		mSceneHierarchyPanel.setContext(mActiveScene);
 	}
 
@@ -175,6 +178,18 @@ namespace Mayhem
 				// Disabling fullscreen would allow the window to be moved to the front of other windows,
 				// which we can't undo at the moment without finer window depth/z control.
 				//ImGui::MenuItem("Fullscreen", NULL, &opt_fullscreen_persistant);
+
+				if (ImGui::MenuItem("Serialize"))
+				{
+					SceneSerializer serializer(mActiveScene);
+					serializer.serialize("assets/scenes/Example.mayhem");
+				}
+
+				if (ImGui::MenuItem("Deserialize"))
+				{
+					SceneSerializer serializer(mActiveScene);
+					serializer.deserialize("assets/scenes/Example.mayhem");
+				}
 
 				if (ImGui::MenuItem("Exit")) Mayhem::Application::getInstance().close();
 				ImGui::EndMenu();

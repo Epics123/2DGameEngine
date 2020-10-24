@@ -165,6 +165,9 @@
     <ClInclude Include="src\Mayhem\Scene\SceneCamera.h">
       <Filter>src\Mayhem\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="src\Mayhem\Scene\SceneSerializer.h">
+      <Filter>src\Mayhem\Scene</Filter>
+    </ClInclude>
     <ClInclude Include="src\Mayhem\Scene\ScriptableEntity.h">
       <Filter>src\Mayhem\Scene</Filter>
     </ClInclude>
@@ -1500,6 +1503,9 @@
       <Filter>src\Mayhem\Scene</Filter>
     </ClCompile>
     <ClCompile Include="src\Mayhem\Scene\SceneCamera.cpp">
+      <Filter>src\Mayhem\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mayhem\Scene\SceneSerializer.cpp">
       <Filter>src\Mayhem\Scene</Filter>
     </ClCompile>
     <ClCompile Include="src\Mayhem\Util\Math.cpp">

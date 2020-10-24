@@ -19,11 +19,13 @@ IncludeDir["ImGui"] = "Mayhem/vendor/imgui"
 IncludeDir["glm"] = "Mayhem/vendor/glm"
 IncludeDir["stb_image"] = "Mayhem/vendor/stb_image"
 IncludeDir["entt"] = "Mayhem/vendor/entt/include"
+IncludeDir["yaml_cpp"] = "Mayhem/vendor/yaml-cpp/include"
 
 group "Dependencies"
 	include "Mayhem/vendor/GLFW"
 	include "Mayhem/vendor/Glad"
 	include "Mayhem/vendor/imgui"
+	include "Mayhem/vendor/yaml-cpp"
 
 group ""
 
@@ -65,7 +67,8 @@ project "Mayhem"
 		"%{IncludeDir.ImGui}",
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.stb_image}",
-		"%{IncludeDir.entt}"
+		"%{IncludeDir.entt}",
+		"%{IncludeDir.yaml_cpp}"
 	}
 	
 	links
@@ -73,6 +76,7 @@ project "Mayhem"
 		"GLFW",
 		"Glad",
 		"ImGui",
+		"yaml-cpp",
 		"opengl32.lib"
 	}
 
