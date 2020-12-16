@@ -17,6 +17,7 @@ namespace Mayhem
 	void SceneHierarchyPanel::setContext(const Ref<Scene>& context)
 	{
 		mContext = context;
+		mSelectionContext = {};
 	}
 
 	void SceneHierarchyPanel::onImGuiRender()

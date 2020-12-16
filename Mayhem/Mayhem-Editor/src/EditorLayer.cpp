@@ -8,6 +8,8 @@
 
 #include "Mayhem/Scene/SceneSerializer.h"
 
+#include "Mayhem/Util/PlatformUtils.h"
+
 
 namespace Mayhem
 {
@@ -117,6 +119,9 @@ namespace Mayhem
 	void EditorLayer::onEvent(Mayhem::Event& e)
 	{
 		mCameraController.onEvent(e);
+
+		EventDispatcher dispatcher(e);
+		dispatcher.dispatchEvent<KeyPressedEvent>(MH_BIND_EVENT_FN(EditorLayer::onKeyPressed));
 	}
 
 	void EditorLayer::onImGuiRender()
@@ -179,17 +184,12 @@ namespace Mayhem
 				// which we can't undo at the moment without finer window depth/z control.
 				//ImGui::MenuItem("Fullscreen", NULL, &opt_fullscreen_persistant);
 
-				if (ImGui::MenuItem("Serialize"))
-				{
-					SceneSerializer serializer(mActiveScene);
-					serializer.serialize("assets/scenes/Example.mayhem");
-				}
-
-				if (ImGui::MenuItem("Deserialize"))
-				{
-					SceneSerializer serializer(mActiveScene);
-					serializer.deserialize("assets/scenes/Example.mayhem");
-				}
+				if (ImGui::MenuItem("New", "Ctrl+N"))
+					newScene();
+				if (ImGui::MenuItem("Open...", "Ctrl+O"))
+					openScene();
+				if (ImGui::MenuItem("Save As...", "Ctrl+Shift+S"))
+					saveSceneAs();
 
 				if (ImGui::MenuItem("Exit")) Mayhem::Application::getInstance().close();
 				ImGui::EndMenu();
@@ -237,6 +237,69 @@ namespace Mayhem
 		//Dockspace End
 		ImGui::End();
 
+	}
+
+	bool EditorLayer::onKeyPressed(KeyPressedEvent& e)
+	{
+		if (e.getRepeatCount() > 0)
+			return false;
+
+		bool control = Input::isKeyPressed(Key::LeftControl) || Input::isKeyPressed(Key::RightControl);
+		bool shift = Input::isKeyPressed(Key::LeftShift) || Input::isKeyPressed(Key::RightShift);
+		switch (e.getKeyCode())
+		{
+		case Key::N:
+		{
+			if (control)
+				newScene();
+			break;
+		}
+		case Key::O:
+		{
+			if (control)
+				openScene();
+			break;
+		}
+		case Key::S:
+		{
+			if (control && shift)
+				saveSceneAs();
+			break;
+		}
+		}
+		return true;
+	}
+
+
+	void EditorLayer::newScene()
+	{
+		mActiveScene = CreateRef<Scene>();
+		mActiveScene->onViewportResize((uint32_t)mViewportSize.x, (uint32_t)mViewportSize.y);
+		mSceneHierarchyPanel.setContext(mActiveScene);
+	}
+
+	void EditorLayer::openScene()
+	{
+		std::string filepath = FileDialogs::openFile("Mayhem Scene (*.mayhem)\0*.mayhem\0");
+		if (!filepath.empty())
+		{
+			mActiveScene = CreateRef<Scene>();
+			mActiveScene->onViewportResize((uint32_t)mViewportSize.x, (uint32_t)mViewportSize.y);
+			mSceneHierarchyPanel.setContext(mActiveScene);
+
+			SceneSerializer serializer(mActiveScene);
+			serializer.deserialize(filepath);
+		}
+	}
+
+	void EditorLayer::saveSceneAs()
+	{
+		std::string filepath = FileDialogs::saveFile("Mayhem Scene (*.mayhem)\0.*mayhem\0");
+		if (!filepath.empty())
+		{
+			SceneSerializer serializer(mActiveScene);
+			serializer.serialize(filepath);
+		}
 	}
 }
 

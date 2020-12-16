@@ -177,6 +177,7 @@
     <ClInclude Include="src\Mayhem\Scene\SceneCamera.h" />
     <ClInclude Include="src\Mayhem\Scene\SceneSerializer.h" />
     <ClInclude Include="src\Mayhem\Scene\ScriptableEntity.h" />
+    <ClInclude Include="src\Mayhem\Util\PlatformUtils.h" />
     <ClInclude Include="src\Mayhem\Util\UtilMath.h" />
     <ClInclude Include="src\Mayhem\Util\Vector2D.h" />
     <ClInclude Include="src\Mayhem\Util\Vector3D.h" />
@@ -635,6 +636,7 @@
     <ClCompile Include="src\Platform\OpenGL\OpenGLTexture.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
+    <ClCompile Include="src\Platform\Windows\WindowsPlatformUtils.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\mpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
