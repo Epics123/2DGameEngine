@@ -194,6 +194,8 @@ namespace Mayhem
 					openScene();
 				if (ImGui::MenuItem("Save As...", "Ctrl+Shift+S"))
 					saveSceneAs();
+				if (ImGui::MenuItem("Save", "Ctrl+S"))
+					saveScene();
 
 				if (ImGui::MenuItem("Exit")) Mayhem::Application::getInstance().close();
 				ImGui::EndMenu();
@@ -313,6 +315,8 @@ namespace Mayhem
 		{
 			if (control && shift)
 				saveSceneAs();
+			else if (control)
+				saveScene();
 			break;
 		}
 
@@ -344,6 +348,7 @@ namespace Mayhem
 	void EditorLayer::openScene()
 	{
 		std::string filepath = FileDialogs::openFile("Mayhem Scene (*.mayhem)\0*.mayhem\0");
+		mCurrentSceneFilePath = filepath;
 		if (!filepath.empty())
 		{
 			mActiveScene = CreateRef<Scene>();
@@ -358,10 +363,20 @@ namespace Mayhem
 	void EditorLayer::saveSceneAs()
 	{
 		std::string filepath = FileDialogs::saveFile("Mayhem Scene (*.mayhem)\0.*mayhem\0");
+		mCurrentSceneFilePath = filepath;
 		if (!filepath.empty())
 		{
 			SceneSerializer serializer(mActiveScene);
 			serializer.serialize(filepath);
+		}
+	}
+
+	void EditorLayer::saveScene()
+	{
+		if (!mCurrentSceneFilePath.empty())
+		{
+			SceneSerializer serializer(mActiveScene);
+			serializer.serialize(mCurrentSceneFilePath);
 		}
 	}
 }

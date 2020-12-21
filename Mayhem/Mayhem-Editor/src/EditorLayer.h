@@ -24,6 +24,7 @@ namespace Mayhem
 		void newScene();
 		void openScene();
 		void saveSceneAs();
+		void saveScene();
 
 	private:
 		OrthographicCameraController mCameraController;
@@ -49,7 +50,8 @@ namespace Mayhem
 
 		glm::vec4 mSquareColor = { 0.2f, 0.3f, 0.8f, 1.0f };
 
-		int mGizmoType = -1; //-1 = no gizmo
+		int mGizmoType = -1; //-1 = no gizmos
+		std::string mCurrentSceneFilePath;
 
 		//Panels
 		SceneHierarchyPanel mSceneHierarchyPanel;
