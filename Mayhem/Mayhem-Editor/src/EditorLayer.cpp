@@ -10,6 +10,10 @@
 
 #include "Mayhem/Util/PlatformUtils.h"
 
+#include "ImGuizmo.h"
+
+#include "Mayhem/Math/Math.h"
+
 
 namespace Mayhem
 {
@@ -215,7 +219,7 @@ namespace Mayhem
 		
 		mViewportFocused = ImGui::IsWindowFocused();
 		mViewportHovered = ImGui::IsWindowHovered();
-		Application::getInstance().getImGuiLayer()->blockEvents(!mViewportFocused || !mViewportHovered);
+		Application::getInstance().getImGuiLayer()->blockEvents(!mViewportFocused && !mViewportHovered);
 
 		ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
 		if (mViewportSize != *((glm::vec2*)&viewportPanelSize))
@@ -230,6 +234,51 @@ namespace Mayhem
 
 		uint32_t textureID = mFrameBuffer->getColorAttachmentRendererID();
 		ImGui::Image((void*)textureID, ImVec2{ mViewportSize.x, mViewportSize.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
+
+		//Gizmos
+		Entity selectedEntity = mSceneHierarchyPanel.getSelectedEntity();
+		if (selectedEntity && mGizmoType != -1)
+		{
+			ImGuizmo::SetOrthographic(false);
+			ImGuizmo::SetDrawlist();
+
+			float windowWidth = (float)ImGui::GetWindowWidth();
+			float windowHeight = (float)ImGui::GetWindowHeight();
+			ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, windowWidth, windowHeight);
+
+			//Camera
+			auto cameraEntity = mActiveScene->getPrimartyCameraEntity();
+			const auto& camera = cameraEntity.getComponent<CameraComponent>().Camera;
+			const glm::mat4& cameraProjection = camera.getProjection();
+			glm::mat4 cameraView = glm::inverse(cameraEntity.getComponent<TransformComponent>().getTransform());
+
+			//Entity Transform
+			auto& tc = selectedEntity.getComponent<TransformComponent>();
+			glm::mat4 transform = tc.getTransform();
+
+			//Snapping
+			bool snap = Input::isKeyPressed(Key::LeftControl);
+			float snapValue = 0.5f; //Snap to 0.5m for translation/scale
+			//Snap to 45 degrees for rotation
+			if (mGizmoType == ImGuizmo::OPERATION::ROTATE)
+				snapValue = 45.0f;
+
+			float snapValues[3]{ snapValue, snapValue, snapValue };
+
+			ImGuizmo::Manipulate(glm::value_ptr(cameraView), glm::value_ptr(cameraProjection), (ImGuizmo::OPERATION)mGizmoType, ImGuizmo::LOCAL, glm::value_ptr(transform), 
+				nullptr, snap ? snapValues : nullptr);
+
+			if (ImGuizmo::IsUsing())
+			{
+				glm::vec3 translation, roation, scale;
+				Math::decomposeTransform(transform, translation, roation, scale);
+
+				glm::vec3 deltaRotation = roation - tc.Rotation;
+				tc.Translation = translation;
+				tc.Rotation += deltaRotation;
+				tc.Scale = scale;
+			}
+		}
 
 		ImGui::End();
 		ImGui::PopStyleVar();
@@ -266,6 +315,20 @@ namespace Mayhem
 				saveSceneAs();
 			break;
 		}
+
+		//Gizmos
+		case Key::Q:
+			mGizmoType = -1;
+			break;
+		case Key::W:
+			mGizmoType = ImGuizmo::OPERATION::TRANSLATE;
+			break;
+		case Key::E:
+			mGizmoType = ImGuizmo::OPERATION::ROTATE;
+			break;
+		case Key::R:
+			mGizmoType = ImGuizmo::OPERATION::SCALE;
+			break;
 		}
 		return true;
 	}

@@ -49,6 +49,8 @@ namespace Mayhem
 
 		glm::vec4 mSquareColor = { 0.2f, 0.3f, 0.8f, 1.0f };
 
+		int mGizmoType = -1; //-1 = no gizmo
+
 		//Panels
 		SceneHierarchyPanel mSceneHierarchyPanel;
 	};

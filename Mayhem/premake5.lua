@@ -191,7 +191,8 @@ project "Mayhem-Editor"
 		"Mayhem/src",
 		"Mayhem/vendor",
 		"%{IncludeDir.glm}",
-		"%{IncludeDir.entt}"
+		"%{IncludeDir.entt}",
+		"%{IncludeDir.ImGuizmo}"
 	}
 
 	links

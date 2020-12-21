@@ -17,6 +17,8 @@ namespace Mayhem
 
 		void onImGuiRender();
 
+		Entity getSelectedEntity() const { return mSelectionContext; }
+
 	private:
 		void drawEntityNode(Entity entity);
 		void drawComponents(Entity entity);

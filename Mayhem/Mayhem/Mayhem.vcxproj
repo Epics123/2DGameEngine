@@ -157,6 +157,7 @@
     <ClInclude Include="src\Mayhem\Events\KeyEvent.h" />
     <ClInclude Include="src\Mayhem\Events\MouseEvent.h" />
     <ClInclude Include="src\Mayhem\ImGui\ImGuiLayer.h" />
+    <ClInclude Include="src\Mayhem\Math\Math.h" />
     <ClInclude Include="src\Mayhem\Renderer\Buffer.h" />
     <ClInclude Include="src\Mayhem\Renderer\Camera.h" />
     <ClInclude Include="src\Mayhem\Renderer\FrameBuffer.h" />
@@ -178,7 +179,6 @@
     <ClInclude Include="src\Mayhem\Scene\SceneSerializer.h" />
     <ClInclude Include="src\Mayhem\Scene\ScriptableEntity.h" />
     <ClInclude Include="src\Mayhem\Util\PlatformUtils.h" />
-    <ClInclude Include="src\Mayhem\Util\UtilMath.h" />
     <ClInclude Include="src\Mayhem\Util\Vector2D.h" />
     <ClInclude Include="src\Mayhem\Util\Vector3D.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h" />
@@ -609,6 +609,7 @@
     <ClCompile Include="src\Mayhem\Core\Window.cpp" />
     <ClCompile Include="src\Mayhem\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\Mayhem\ImGui\ImGuiLayer.cpp" />
+    <ClCompile Include="src\Mayhem\Math\Math.cpp" />
     <ClCompile Include="src\Mayhem\Renderer\Buffer.cpp" />
     <ClCompile Include="src\Mayhem\Renderer\FrameBuffer.cpp" />
     <ClCompile Include="src\Mayhem\Renderer\GraphicsContext.cpp" />
@@ -626,7 +627,6 @@
     <ClCompile Include="src\Mayhem\Scene\Scene.cpp" />
     <ClCompile Include="src\Mayhem\Scene\SceneCamera.cpp" />
     <ClCompile Include="src\Mayhem\Scene\SceneSerializer.cpp" />
-    <ClCompile Include="src\Mayhem\Util\Math.cpp" />
     <ClCompile Include="src\Mayhem\Util\Vector2D.cpp" />
     <ClCompile Include="src\Mayhem\Util\Vector3D.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />
@@ -642,11 +642,7 @@
     <ClCompile Include="src\mpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="vendor\ImGuizmo\ImGuizmo.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
-    </ClCompile>
+    <ClCompile Include="vendor\ImGuizmo\ImGuizmo.cpp" />
     <ClCompile Include="vendor\stb_image\stb_image.cpp" />
   </ItemGroup>
   <ItemGroup>
