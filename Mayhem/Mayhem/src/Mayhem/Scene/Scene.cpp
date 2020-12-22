@@ -36,7 +36,7 @@ namespace Mayhem
 		mRegistry.destroy(entity);
 	}
 
-	void Scene::onUpdate(Timestep ts)
+	void Scene::onUpdateRuntime(Timestep ts)
 	{
 		//Update Scripts
 		{
@@ -86,6 +86,21 @@ namespace Mayhem
 
 			Renderer2D::endScene();
 		}
+	}
+
+	void Scene::onUpdateEditor(Timestep ts, EditorCamera& camera)
+	{
+		Renderer2D::beginScene(camera);
+
+		auto group = mRegistry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
+		for (auto entity : group)
+		{
+			auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
+
+			Renderer2D::drawQuad(transform.getTransform(), sprite.Color);
+		}
+
+		Renderer2D::endScene();
 	}
 
 	void Scene::onViewportResize(uint32_t width, uint32_t height)

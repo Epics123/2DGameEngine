@@ -53,7 +53,7 @@ namespace Mayhem
 		mData.Width = props.Width;
 		mData.Height = props.Height;
 
-		MH_CORE_INFO("CreatingWindow {0} ({1}, {2})", props.Title, props.Width, props.Height);
+		MH_CORE_INFO("Creating Window {0} ({1}, {2})", props.Title, props.Width, props.Height);
 
 		if (sGLFWWindowCount == 0)
 		{

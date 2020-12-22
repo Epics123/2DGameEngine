@@ -3,9 +3,11 @@
 #include "Event.h"
 #include "Mayhem/Core/Input.h"
 
+#include <sstream>
+
 namespace Mayhem
 {
-	class MAYHEM_API KeyEvent : public Event
+	class KeyEvent : public Event
 	{
 	public:
 		KeyCode getKeyCode() const { return mKeyCode; }
@@ -19,10 +21,10 @@ namespace Mayhem
 		KeyCode mKeyCode;
 	};
 
-	class MAYHEM_API KeyPressedEvent : public KeyEvent
+	class KeyPressedEvent : public KeyEvent
 	{
 	public:
-		KeyPressedEvent(KeyCode keycode, int repeatCount)
+		KeyPressedEvent(const KeyCode keycode, int repeatCount)
 			: KeyEvent(keycode), mRepeatCount(repeatCount) { }
 
 		int getRepeatCount() const { return mRepeatCount; }
@@ -43,10 +45,10 @@ namespace Mayhem
 		int mRepeatCount;
 	};
 
-	class MAYHEM_API KeyReleasedEvent : public KeyEvent
+	class KeyReleasedEvent : public KeyEvent
 	{
 	public:
-		KeyReleasedEvent(KeyCode keycode)
+		KeyReleasedEvent(const KeyCode keycode)
 			:KeyEvent(keycode){}
 
 		std::string toString() const override
@@ -62,10 +64,10 @@ namespace Mayhem
 		virtual const char* getName() const override { return "KeyReleased"; }
 	};
 
-	class MAYHEM_API KeyTypedEvent : public KeyEvent
+	class KeyTypedEvent : public KeyEvent
 	{
 	public:
-		KeyTypedEvent(KeyCode keycode)
+		KeyTypedEvent(const KeyCode keycode)
 			: KeyEvent(keycode)
 		{
 		}

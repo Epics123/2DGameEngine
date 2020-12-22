@@ -3,6 +3,7 @@
 #include "entt.hpp"
 
 #include "Mayhem/Core/Timestep.h"
+#include "Mayhem/Renderer/EditorCamera.h"
 
 namespace Mayhem
 {
@@ -17,7 +18,8 @@ namespace Mayhem
 		Entity createEntity(const std::string& name = std::string());
 		void destroyEntity(Entity entity);
 
-		void onUpdate(Timestep ts);
+		void onUpdateRuntime(Timestep ts);
+		void onUpdateEditor(Timestep ts, EditorCamera& camera);
 		void onViewportResize(uint32_t width, uint32_t height);
 
 		Entity getPrimartyCameraEntity();

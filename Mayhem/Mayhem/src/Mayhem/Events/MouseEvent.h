@@ -3,9 +3,11 @@
 #include "Event.h"
 #include "Mayhem/Core/Input.h"
 
+#include <sstream>
+
 namespace Mayhem
 {
-	class MAYHEM_API MouseMoveEvent : public Event
+	class MouseMoveEvent : public Event
 	{
 	public:
 		MouseMoveEvent(float x, float y)
@@ -76,7 +78,7 @@ namespace Mayhem
 	class MAYHEM_API MouseButtonPressedEvent : public MouseButtonEvent
 	{
 	public:
-		MouseButtonPressedEvent(MouseCode button)
+		MouseButtonPressedEvent(const MouseCode button)
 			:MouseButtonEvent(button){}
 
 		std::string toString() const override

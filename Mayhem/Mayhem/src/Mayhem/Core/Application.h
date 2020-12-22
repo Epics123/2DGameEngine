@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Core.h"
-#include "Window.h"
-#include "LayerStack.h"
+#include "Mayhem/Core/Core.h"
+#include "Mayhem/Core/Window.h"
+#include "Mayhem/Core/LayerStack.h"
 #include "Mayhem/Events/ApplicationEvent.h"
 
 #include "Mayhem/Core/Timestep.h"

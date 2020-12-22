@@ -6,6 +6,7 @@
 #include "Mayhem/Renderer/SubTexture2D.h"
 
 #include "Mayhem/Renderer/Camera.h"
+#include "Mayhem/Renderer/EditorCamera.h"
 
 namespace Mayhem
 {
@@ -16,6 +17,7 @@ namespace Mayhem
 		static void shutdown();
 
 		static void beginScene(const Camera& camera, const glm::mat4& transform);
+		static void beginScene(const EditorCamera& camera);
 		static void beginScene(const OrthographicCamera& camera);
 		static void endScene();
 		static void flush();
@@ -54,5 +56,8 @@ namespace Mayhem
 
 	private:
 		static void flushAndReset();
+
+		static void startBatch();
+		static void nextBatch();
 	};
 }

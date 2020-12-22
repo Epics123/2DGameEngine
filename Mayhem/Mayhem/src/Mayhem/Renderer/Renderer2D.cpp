@@ -113,10 +113,7 @@ namespace Mayhem
 		sData.TextureShader->bind();
 		sData.TextureShader->setMat4("uViewProj", camera.getViewProjMatrix());
 
-		sData.QuadIndexCount = 0;
-		sData.QuadVertexBufferPtr = sData.QuadVertexBufferBase;
-
-		sData.TextureSlotIndex = 1;
+		startBatch();
 	}
 
 	void Renderer2D::beginScene(const Camera& camera, const glm::mat4& transform)
@@ -126,10 +123,17 @@ namespace Mayhem
 		sData.TextureShader->bind();
 		sData.TextureShader->setMat4("uViewProj", viewProj);
 
-		sData.QuadIndexCount = 0;
-		sData.QuadVertexBufferPtr = sData.QuadVertexBufferBase;
+		startBatch();
+	}
 
-		sData.TextureSlotIndex = 1;
+	void Renderer2D::beginScene(const EditorCamera& camera)
+	{
+		glm::mat4 viewProj = camera.getViewProjection();
+
+		sData.TextureShader->bind();
+		sData.TextureShader->setMat4("uViewProj", viewProj);
+
+		startBatch();
 	}
 
 	void Renderer2D::endScene()
@@ -142,11 +146,15 @@ namespace Mayhem
 
 	void Renderer2D::flush()
 	{
+		if (sData.QuadIndexCount == 0)
+			return; //Nothing to draw
+
+		uint32_t dataSize = (uint32_t)((uint8_t*)sData.QuadVertexBufferPtr - (uint8_t*)sData.QuadVertexBufferBase);
+		sData.QuadVertexBuffer->setData(sData.QuadVertexBufferBase, dataSize);
+
 		//Bind textures
 		for (uint32_t i = 0; i < sData.TextureSlotIndex; i++)
-		{
 			sData.TextureSlots[i]->bind(i);
-		}
 
 		RenderCommand::drawIndexed(sData.QuadVertexArray, sData.QuadIndexCount);
 		sData.Stats.DrawCalls++;
@@ -160,6 +168,20 @@ namespace Mayhem
 		sData.QuadVertexBufferPtr = sData.QuadVertexBufferBase;
 
 		sData.TextureSlotIndex = 1;
+	}
+
+	void Renderer2D::startBatch()
+	{
+		sData.QuadIndexCount = 0;
+		sData.QuadVertexBufferPtr = sData.QuadVertexBufferBase;
+
+		sData.TextureSlotIndex = 1;
+	}
+
+	void Renderer2D::nextBatch()
+	{
+		flush();
+		startBatch();
 	}
 
 	void Renderer2D::drawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color)
@@ -201,7 +223,7 @@ namespace Mayhem
 		const Ref<Texture2D> texture = subtexture->getTexture();
 
 		if (sData.QuadIndexCount >= Renderer2DData::MAX_INDICIES)
-			flushAndReset();
+			nextBatch();
 
 
 		float textureIndex = 0.0f;
@@ -248,7 +270,7 @@ namespace Mayhem
 		const float tilingFactor = 1.0f;
 
 		if (sData.QuadIndexCount >= Renderer2DData::MAX_INDICIES)
-			flushAndReset();
+			nextBatch();
 
 		for (size_t i = 0; i < quadVertexCount; i++)
 		{
@@ -272,7 +294,7 @@ namespace Mayhem
 		constexpr glm::vec2 textureCoords[] = { {0.0f, 0.0f}, {1.0f, 0.0f}, {1.0f , 1.0f}, {0.0f, 1.0f} };
 
 		if (sData.QuadIndexCount >= Renderer2DData::MAX_INDICIES)
-			flushAndReset();
+			nextBatch();
 
 		float textureIndex = 0.0f;
 		for (uint32_t i = 1; i < sData.TextureSlotIndex; i++)
@@ -320,7 +342,7 @@ namespace Mayhem
 		const float tilingFactor = 1.0f;
 
 		if (sData.QuadIndexCount >= Renderer2DData::MAX_INDICIES)
-			flushAndReset();
+			nextBatch();
 
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
 			* glm::rotate(glm::mat4(1.0f), glm::radians(rotation), { 0.0f, 0.0f, 1.0f, })
@@ -352,7 +374,7 @@ namespace Mayhem
 		constexpr glm::vec2 textureCoords[] = { {0.0f, 0.0f}, {1.0f, 0.0f}, {1.0f , 1.0f}, {0.0f, 1.0f} };
 
 		if (sData.QuadIndexCount >= Renderer2DData::MAX_INDICIES)
-			flushAndReset();
+			nextBatch();
 
 		float textureIndex = 0.0f;
 		for (uint32_t i = 1; i < sData.TextureSlotIndex; i++)
@@ -404,7 +426,7 @@ namespace Mayhem
 		const Ref<Texture2D> texture = subtexture->getTexture();
 		
 		if (sData.QuadIndexCount >= Renderer2DData::MAX_INDICIES)
-			flushAndReset();
+			nextBatch();
 
 		float textureIndex = 0.0f;
 		for (uint32_t i = 1; i < sData.TextureSlotIndex; i++)

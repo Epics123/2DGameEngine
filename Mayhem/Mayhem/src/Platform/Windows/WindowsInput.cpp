@@ -8,7 +8,7 @@ namespace Mayhem
 {
 	bool Input::isKeyPressed(KeyCode key)
 	{
-		auto window = static_cast<GLFWwindow*>(Application::getInstance().getWindow().getNativeWindow());
+		auto* window = static_cast<GLFWwindow*>(Application::getInstance().getWindow().getNativeWindow());
 		auto state = glfwGetKey(window, static_cast<uint32_t>(key));
 
 		return state == GLFW_PRESS || state == GLFW_REPEAT;
@@ -21,9 +21,9 @@ namespace Mayhem
 		return state == GLFW_PRESS;
 	}
 
-	std::pair<float, float> Input::getMousePosition()
+	glm::vec2 Input::getMousePosition()
 	{
-		auto window = static_cast<GLFWwindow*>(Application::getInstance().getWindow().getNativeWindow());
+		auto* window = static_cast<GLFWwindow*>(Application::getInstance().getWindow().getNativeWindow());
 		double xPos, yPos;
 		glfwGetCursorPos(window, &xPos, &yPos);
 
@@ -32,15 +32,11 @@ namespace Mayhem
 
 	float Input::getMouseX()
 	{
-		auto[x, y] = getMousePosition();
-
-		return x;
+		return getMousePosition().x;
 	}
 
 	float Input::getMouseY()
 	{
-		auto [x, y] = getMousePosition();
-
-		return y;
+		return getMousePosition().y;
 	}
 }

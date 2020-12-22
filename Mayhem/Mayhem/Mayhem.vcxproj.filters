@@ -16,6 +16,9 @@
     <Filter Include="src\Mayhem\ImGui">
       <UniqueIdentifier>{E7FF3058-D3F8-4FAA-FC2A-352FE8822FB6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Mayhem\Math">
+      <UniqueIdentifier>{F60B3212-6297-9FD6-6BA8-22CBD7B2FBD6}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Mayhem\Renderer">
       <UniqueIdentifier>{4331C776-AF92-A484-3800-EB36A460DB43}</UniqueIdentifier>
     </Filter>
@@ -114,10 +117,16 @@
     <ClInclude Include="src\Mayhem\ImGui\ImGuiLayer.h">
       <Filter>src\Mayhem\ImGui</Filter>
     </ClInclude>
+    <ClInclude Include="src\Mayhem\Math\Math.h">
+      <Filter>src\Mayhem\Math</Filter>
+    </ClInclude>
     <ClInclude Include="src\Mayhem\Renderer\Buffer.h">
       <Filter>src\Mayhem\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Mayhem\Renderer\Camera.h">
+      <Filter>src\Mayhem\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mayhem\Renderer\EditorCamera.h">
       <Filter>src\Mayhem\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Mayhem\Renderer\FrameBuffer.h">
@@ -1440,7 +1449,6 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\Mayhem\Math\Math.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Mayhem\Core\Application.cpp">
@@ -1464,7 +1472,13 @@
     <ClCompile Include="src\Mayhem\ImGui\ImGuiLayer.cpp">
       <Filter>src\Mayhem\ImGui</Filter>
     </ClCompile>
+    <ClCompile Include="src\Mayhem\Math\Math.cpp">
+      <Filter>src\Mayhem\Math</Filter>
+    </ClCompile>
     <ClCompile Include="src\Mayhem\Renderer\Buffer.cpp">
+      <Filter>src\Mayhem\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mayhem\Renderer\EditorCamera.cpp">
       <Filter>src\Mayhem\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Mayhem\Renderer\FrameBuffer.cpp">
@@ -1560,6 +1574,5 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\Mayhem\Math\Math.cpp" />
   </ItemGroup>
 </Project>

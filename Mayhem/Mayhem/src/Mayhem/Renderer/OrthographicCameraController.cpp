@@ -15,21 +15,21 @@ namespace Mayhem
 
 	void OrthographicCameraController::onUpdate(Timestep ts)
 	{
-		if (Input::isKeyPressed(MH_KEY_A))
+		if (Input::isKeyPressed(Key::A))
 			mCameraPosition.x -= mCameraTranslationSpeed * ts;
-		else if (Input::isKeyPressed(MH_KEY_D))
+		else if (Input::isKeyPressed(Key::D))
 			mCameraPosition.x += mCameraTranslationSpeed * ts;
 
-		if (Input::isKeyPressed(MH_KEY_S))
+		if (Input::isKeyPressed(Key::S))
 			mCameraPosition.y -= mCameraTranslationSpeed * ts;
-		else if (Input::isKeyPressed(MH_KEY_W))
+		else if (Input::isKeyPressed(Key::W))
 			mCameraPosition.y += mCameraTranslationSpeed * ts;
 
 		if (mRotation)
 		{
-			if (Input::isKeyPressed(MH_KEY_Q))
+			if (Input::isKeyPressed(Key::Q))
 				mCameraRotation += mCameraRotationSpeed * ts;
-			else if (Input::isKeyPressed(MH_KEY_E))
+			else if (Input::isKeyPressed(Key::E))
 				mCameraRotation -= mCameraRotationSpeed * ts;
 
 			mCamera.setRotation(mCameraRotation);

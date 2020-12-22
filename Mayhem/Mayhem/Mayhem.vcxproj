@@ -160,6 +160,7 @@
     <ClInclude Include="src\Mayhem\Math\Math.h" />
     <ClInclude Include="src\Mayhem\Renderer\Buffer.h" />
     <ClInclude Include="src\Mayhem\Renderer\Camera.h" />
+    <ClInclude Include="src\Mayhem\Renderer\EditorCamera.h" />
     <ClInclude Include="src\Mayhem\Renderer\FrameBuffer.h" />
     <ClInclude Include="src\Mayhem\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\Mayhem\Renderer\OrthographicCamera.h" />
@@ -611,6 +612,7 @@
     <ClCompile Include="src\Mayhem\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\Mayhem\Math\Math.cpp" />
     <ClCompile Include="src\Mayhem\Renderer\Buffer.cpp" />
+    <ClCompile Include="src\Mayhem\Renderer\EditorCamera.cpp" />
     <ClCompile Include="src\Mayhem\Renderer\FrameBuffer.cpp" />
     <ClCompile Include="src\Mayhem\Renderer\GraphicsContext.cpp" />
     <ClCompile Include="src\Mayhem\Renderer\OrthographicCamera.cpp" />

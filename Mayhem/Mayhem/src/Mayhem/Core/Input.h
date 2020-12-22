@@ -1,18 +1,18 @@
 #pragma once
 
-#include "Mayhem/Core/Core.h"
 #include "Mayhem/Core/KeyCodes.h"
 #include "Mayhem/Core/MouseButtonCodes.h"
 
+#include <glm/glm.hpp>
+
 namespace Mayhem
 {
-
-	class MAYHEM_API Input
+	class Input
 	{
 	public:
 		static bool isKeyPressed(KeyCode key);
 		static bool isMouseButtonPressed(MouseCode button);
-		static std::pair<float, float> getMousePosition();
+		static glm::vec2 getMousePosition();
 		static float getMouseX();
 		static float getMouseY();
 	};

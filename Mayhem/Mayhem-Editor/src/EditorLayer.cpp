@@ -38,6 +38,8 @@ namespace Mayhem
 
 		mActiveScene = CreateRef<Scene>();
 
+		mEditorCamera = EditorCamera(30.0f, 1.778, 0.1f, 1000.0f);
+
 #if 0
 		//Entity
 		auto square = mActiveScene->createEntity("Green Square");
@@ -99,14 +101,21 @@ namespace Mayhem
 	void EditorLayer::onUpdate(Timestep ts)
 	{
 		//Resize
-		mFrameBuffer->resize((uint32_t)mViewportSize.x, (uint32_t)mViewportSize.y);
-		mCameraController.onResize(mViewportSize.x, mViewportSize.y);
+		if (FrameBufferSpec spec = mFrameBuffer->getSpecification(); mViewportSize.x > 0.0f && mViewportSize.y > 0.0f &&
+			(spec.Width != mViewportSize.x || spec.Height != mViewportSize.y))
+		{
+			mFrameBuffer->resize((uint32_t)mViewportSize.x, (uint32_t)mViewportSize.y);
+			mCameraController.onResize(mViewportSize.x, mViewportSize.y);
+			mEditorCamera.setViewportSize(mViewportSize.x, mViewportSize.y);
 
-		mActiveScene->onViewportResize((uint32_t)mViewportSize.x, (uint32_t)mViewportSize.y);
-
+			mActiveScene->onViewportResize((uint32_t)mViewportSize.x, (uint32_t)mViewportSize.y);
+		}
+		
 		//Update
-		if(mViewportFocused)
+		if (mViewportFocused)
 			mCameraController.onUpdate(ts);
+
+		mEditorCamera.onUpdate(ts);
 
 		//Render
 		Renderer2D::resetStats();
@@ -115,7 +124,7 @@ namespace Mayhem
 		RenderCommand::clear();
 		
 		//Update Scene
-		mActiveScene->onUpdate(ts);
+		mActiveScene->onUpdateEditor(ts, mEditorCamera);
 
 		mFrameBuffer->unbind();
 	}
@@ -123,6 +132,7 @@ namespace Mayhem
 	void EditorLayer::onEvent(Mayhem::Event& e)
 	{
 		mCameraController.onEvent(e);
+		mEditorCamera.onEvent(e);
 
 		EventDispatcher dispatcher(e);
 		dispatcher.dispatchEvent<KeyPressedEvent>(MH_BIND_EVENT_FN(EditorLayer::onKeyPressed));
@@ -249,10 +259,16 @@ namespace Mayhem
 			ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, windowWidth, windowHeight);
 
 			//Camera
-			auto cameraEntity = mActiveScene->getPrimartyCameraEntity();
-			const auto& camera = cameraEntity.getComponent<CameraComponent>().Camera;
-			const glm::mat4& cameraProjection = camera.getProjection();
-			glm::mat4 cameraView = glm::inverse(cameraEntity.getComponent<TransformComponent>().getTransform());
+
+			//Runtime camera from entity
+			//auto cameraEntity = mActiveScene->getPrimartyCameraEntity();
+			//const auto& camera = cameraEntity.getComponent<CameraComponent>().Camera;
+			//const glm::mat4& cameraProjection = camera.getProjection();
+			//glm::mat4 cameraView = glm::inverse(cameraEntity.getComponent<TransformComponent>().getTransform());
+
+			//Editor Camera
+			const glm::mat4& cameraProjection = mEditorCamera.getProjection();
+			glm::mat4 cameraView = mEditorCamera.getViewMatrix();
 
 			//Entity Transform
 			auto& tc = selectedEntity.getComponent<TransformComponent>();

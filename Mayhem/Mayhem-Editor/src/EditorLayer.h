@@ -2,6 +2,7 @@
 
 #include "Mayhem.h"
 #include "Panels/SceneHierarchyPanel.h"
+#include "Mayhem/Renderer/EditorCamera.h"
 
 namespace Mayhem
 {
@@ -40,13 +41,15 @@ namespace Mayhem
 
 		bool mPrimaryCamera = true;
 
+		EditorCamera mEditorCamera;
+
 		Ref<Texture2D> mTailsTexture;
 		Ref<Texture2D> mSpriteSheet;
 		Ref<SubTexture2D> mTextureStairs;
 		Ref<SubTexture2D> mTextureTree;
 
 		bool mViewportFocused = false, mViewportHovered = false;
-		glm::vec2 mViewportSize = { 0, 0 };
+		glm::vec2 mViewportSize = { 0.0f, 0.0f };
 
 		glm::vec4 mSquareColor = { 0.2f, 0.3f, 0.8f, 1.0f };
 
